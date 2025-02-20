@@ -1,6 +1,5 @@
 import { useState } from "react";
-import "./Login.css";
-import profileIcon from "./assets/profile-icon.png"; // Ensure you have a profile icon image in your project
+import styles from "./Login.module.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,51 +13,36 @@ const Login = () => {
   };
 
   return (
-
-    <div className="login-container">
-      <div className="login-card">
+    <div className={styles.loginContainer}>
+      <div className={styles.loginCard}>
         <div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="100"
-            height="90"
-            viewBox="0 0 68 68"
-            fill="none"
-          >
-            <path
-              d="M46.75 29.75C46.75 36.805 41.055 42.5 34 42.5C26.945 42.5 21.25 36.805 21.25 29.75C21.25 22.695 26.945 17 34 17C41.055 17 46.75 22.695 46.75 29.75Z"
-              fill="black"
-            />
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M68 34C68 52.785 52.785 68 34 68C15.215 68 0 52.785 0 34C0 15.215 15.215 0 34 0C52.785 0 68 15.215 68 34ZM17 58.4375C17.68 57.307 24.2675 46.75 33.9575 46.75C43.605 46.75 50.235 57.3325 50.915 58.4375C54.8669 55.7047 58.0959 52.0528 60.3243 47.796C62.5527 43.5392 63.7137 38.8048 63.7075 34C63.7075 17.5525 50.405 4.25 33.9575 4.25C17.51 4.25 4.2075 17.5525 4.2075 34C4.2075 44.115 9.265 53.0825 17 58.4375Z"
-              fill="black"
-            />
+          <svg xmlns="http://www.w3.org/2000/svg" width="100" height="90" viewBox="0 0 68 68" fill="none">
+            <path d="M46.75 29.75C46.75 36.805 41.055 42.5 34 42.5C26.945 42.5 21.25 36.805 21.25 29.75C21.25 22.695 26.945 17 34 17C41.055 17 46.75 22.695 46.75 29.75Z" fill="black"/>
+            <path fillRule="evenodd" clipRule="evenodd" d="M68 34C68 52.785 52.785 68 34 68C15.215 68 0 52.785 0 34C0 15.215 15.215 0 34 0C52.785 0 68 15.215 68 34ZM17 58.4375C17.68 57.307 24.2675 46.75 33.9575 46.75C43.605 46.75 50.235 57.3325 50.915 58.4375C54.8669 55.7047 58.0959 52.0528 60.3243 47.796C62.5527 43.5392 63.7137 38.8048 63.7075 34C63.7075 17.5525 50.405 4.25 33.9575 4.25C17.51 4.25 4.2075 17.5525 4.2075 34C4.2075 44.115 9.265 53.0825 17 58.4375Z" fill="black"/>
           </svg>
         </div>
-        <h1>LOGIN</h1>
-        <form className="login-form" onSubmit={handleLogin}>
+        <h1 className={styles.title}>LOGIN</h1>
+        <form className={styles.loginForm} onSubmit={handleLogin}>
           <input
             type="email"
             placeholder="Email"
-            className="login-input"
+            className={styles.loginInput}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
 
-          <div className="password-container">
+          <div className={styles.passwordContainer}>
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Password"
-              className="login-input"
+              className={styles.loginInput}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
             <span
-              className="password-toggle"
+              className={styles.passwordToggle}
               style={{ opacity: password.length ? 1 : 0 }}
               onClick={() => setShowPassword((prev) => !prev)}
             >
@@ -86,8 +70,10 @@ const Login = () => {
             </span>
           </div>
 
-          <div className="login-options">
-            <span onClick={() => setRememberMe(!rememberMe)}>
+          <div className={styles.loginOptions}>
+            <span 
+            className={styles.loginOptionsSpan}
+            onClick={() => setRememberMe(!rememberMe)}>
               {rememberMe ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -119,16 +105,15 @@ const Login = () => {
             <label>
               <input
                 type="checkbox"
+                className={styles.checkBox}
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
               />
-              remember Me
+              remember me
             </label>
           </div>
 
-          <button type="submit" className="login-button">
-            Login
-          </button>
+          <button type="submit" className={styles.loginButton}>Login</button>
         </form>
       </div>
     </div>

@@ -1,0 +1,134 @@
+.parent {
+  color: rgb(250, 250, 250);
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background-color: #212121;
+}
+
+.userInfo {
+  background-color: #212121;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 25vh;
+  gap: 1rem;
+  padding: 2rem 0rem 1.5rem 0rem;
+}
+.userName{
+    padding-top: .5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    font-size: 3rem;
+}
+.userNameP{
+    font-family: 'Monomakh';
+}
+.img{
+    width: 5rem;
+    border-radius: 50%;
+}
+.text{
+    text-align: center;
+    font-size: 2.5rem;
+}
+.textP{
+    font-family:Merriweather;
+}
+.work {
+  padding: 1.5rem 2rem;
+  border-top: 0.12rem solid rgba(245, 245, 245, 0.708);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 75vh;
+
+  /* border-radius: 1.25rem 1.25rem 0rem 0rem;
+  border-top: 2.5px solid #fff;
+  background: linear-gradient(
+    179deg,
+    #4c659c -3.25%,
+    #3a4e79 1.54%,
+    #254384 56.44%,
+    #003099 110.37%
+  );
+  box-shadow: inset 0px 21px 6px 0px rgba(0, 0, 0, 0),
+            inset 0px 13px 5px 0px rgba(0, 0, 0, 0.03),
+            inset 0px 8px 5px 0px rgba(0, 0, 0, 0.1),
+            inset 0px 3px 3px 0px rgba(0, 0, 0, 0.17),
+            inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2); */
+}
+/* .searchBox {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.searchInputBox {
+  border-radius: 0.6rem;
+  border: 0.1rem solid #000;
+  background: #ffffff;
+  width: 75%;
+  padding: 0.34375rem 1rem 0.3em 1rem;
+  font-size: 1.5rem;
+  color: #000000;
+  outline: none;
+  transition: background 0.3s ease;
+  font-family: Barlow;
+  font-weight: 500;
+}
+.searchBtn {
+  padding: 0.4rem;
+  font-family: Barlow;
+  font-weight: 600;
+  font-size: 1.3rem;
+  border-radius: 0.6rem;
+  border: 0.1rem solid #000;
+}
+
+.searchInputBox::placeholder {
+  color: #878787;
+  font-family: Barlow;
+  /* font-size: 0.75rem; *//*
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.searchInputBox:focus {
+  background: rgb(255, 255, 255);
+} */
+
+.contentBox {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  width: 100%;
+  max-height: 100%;
+}
+.contentBox::-webkit-scrollbar {
+    display: none;
+}
+.content {
+    width: 100%;
+    background-color: #323232;
+    border-radius: .6rem;
+    padding: 1rem 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .85rem;
+}
+.contentData{
+    display: flex;
+    justify-content: space-between;
+}
+.contentDataP{
+    font-family: Roboto;
+}
