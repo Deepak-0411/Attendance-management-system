@@ -1,14 +1,16 @@
 import { useState } from 'react'
 import './App.css'
 import Login from './Login'
-import DispalyDuty from './DispalyDuty'
+import DisplayDuty from './DisplayDuty'
 import Students from './Students'
+import MarkAttendence from './MarkAttendence'
+import ScanSheet from './ScanSheet'
 
 function App() {
 
   return (
     <>
-    <Students/>
+    <MarkAttendence/>
     </>
   )
 }

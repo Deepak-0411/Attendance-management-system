@@ -1,0 +1,88 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+.ScanSheetOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+.card {
+  /* background: #2d2d2d; */
+  color: #fff;
+  padding: 2rem 2.2rem;
+  border-radius: 0.9rem;
+  width: 20rem;
+  height: 32rem;
+  border: 0.1rem solid white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.details {
+  margin-bottom: 1rem;
+}
+
+.scanSheet {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem 0rem;
+}
+
+.scanButton {
+  padding: 0.8rem 2rem;
+  border-radius: 2rem;
+  background: transparent;
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: 0.1rem solid white;
+}
+
+.statusButtons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.8rem;
+}
+.presentBtn,
+.absentBtn,
+.ufmBtn {
+  background-color: #e4e4e4;
+  padding: 0.5rem 0.7rem;
+  border-radius: 0.5rem;
+  border: 1px solid #fff;
+  color: #000000;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.navButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2.5rem;
+}
+
+.back,
+.next {
+  padding: 0.4rem 0.7rem;
+  border: 0.094rem solid #fff;
+  background: transparent;
+  color: #fff;
+  border-radius: 1.5rem;
+}
