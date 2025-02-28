@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./DisplayDuty.module.css";
-import profileMale from "./assets/profileMale.jpg";
+import profileMale from "../assets/profileMale.jpg";
 
 const dutyData = [
   { room: "IL202", shift: "Shift-1", secondTeacher: "38" },
