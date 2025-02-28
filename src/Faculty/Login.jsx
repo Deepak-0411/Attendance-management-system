@@ -1,4 +1,6 @@
-import { useState , useEffect} from "react";
+import { useState , useEffect } from "react";
+import { useAuth } from "../AuthContext";
+import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 
 const Login = () => {
@@ -7,6 +9,9 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showError, setShowError] = useState(false);
+
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     let timer;
@@ -21,6 +26,8 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     console.log({ email, password, rememberMe });
+    login("Deepak"); // Save user data in context
+    navigate("/display-duty");
   };
 
   return (
@@ -119,7 +126,8 @@ const Login = () => {
               <input
                 type="checkbox"
                 className={styles.checkBox}
-                checked={rememberMe}
+                // checked={rememberMe}
+                defaultChecked={true}
                 onClick={() => setShowError(true)}
                 //   onChange={(e) => setRememberMe(e.target.checked)}
               />
