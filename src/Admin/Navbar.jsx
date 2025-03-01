@@ -1,32 +1,32 @@
 import React, { useState } from "react";
-import styles from "./Dashboard.module.css"; // Reuse same styles
+import { Link, useLocation } from "react-router-dom";
+import styles from "./Dashboard.module.css";
 
 const Navbar = () => {
-  const [activeButton, setActiveButton] = useState("Home");
-
-  const handleButtonClick = (buttonName) => {
-    setActiveButton(buttonName);
-  };
+  const location = useLocation(); // Get the current route
+  const navItems = [
+    { name: "Home", path: "/admin/dashboard" },
+    { name: "Teachers", path: "/admin/teachers" },
+    { name: "Students", path: "/admin/students" },
+    { name: "Course details", path: "/admin/course-details" },
+    { name: "Search", path: "/admin/search" }
+  ];
 
   return (
     <div className={styles.navbar}>
       <div className={styles.navbarHeading}>
-        <h2>Hey Admin </h2>
+        <h2>Hey Admin</h2>
       </div>
       <div className={styles.navbarBtns}>
-      {["Home", "Teachers", "Students", "Course details", "Search"].map(
-        (buttonName) => (
-          <button
-            key={buttonName}
-            className={`${styles.navbarBtn} ${
-              activeButton === buttonName ? styles.navbarBtnActive : ""
-            }`}
-            onClick={() => handleButtonClick(buttonName)}
+        {navItems.map(({ name, path }) => (
+          <Link 
+            key={name} 
+            to={path} 
+            className={`${styles.navbarBtn} ${location.pathname === path ? styles.navbarBtnActive : ""}`}
           >
-            {buttonName}
-          </button>
-        )
-      )}
+            {name}
+          </Link>
+        ))}
       </div>
     </div>
   );

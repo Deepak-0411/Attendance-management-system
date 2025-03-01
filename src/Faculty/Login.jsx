@@ -26,7 +26,7 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     console.log({ email, password, rememberMe });
-    login("Deepak"); // Save user data in context
+    // login("Deepak"); // Save user data in context
     navigate("/display-duty");
   };
 
