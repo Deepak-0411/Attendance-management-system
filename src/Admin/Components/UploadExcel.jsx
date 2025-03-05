@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useAuth } from "../AuthContext";
+import { useAuth } from "../../Auth/AuthContext";
 import styles from "./UploadExcel.module.css";
 
 const UploadExcel = ({ closebulk ,apiEndPoint}) => {

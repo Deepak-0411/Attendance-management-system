@@ -15,9 +15,12 @@
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #333;
+  color: #000;
+  font-family: Poppins;
+  font-size: 2.5rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 
 .searchBox {
@@ -30,19 +33,19 @@
   left: 0;
   width: 100dvw;
   height: 100dvh;
-  background: rgba(0, 0, 0, 0.7); 
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .searchInput {
-  border-radius: 0.3125rem;
+  border-radius: 2rem;
   border: 0.1rem solid #000;
   background: #fff;
-  max-width: 20rem;
+  max-width: 22rem;
   max-height: 2.6rem;
-  padding: 0.34375rem 6.5rem 0.34375rem 0.375rem;
+  padding: 0.35rem 0.8rem;
   font-size: 1rem;
   color: #000000;
   outline: none;
@@ -51,20 +54,20 @@
 }
 
 .searchInput::placeholder {
-  color: #878787;
-  font-family: Barlow;
-  font-style: normal;
+  color: #7a7878;
+  font-style: italic;
   font-weight: 500;
-  line-height: normal;
 }
 
 .addButton {
-  background-color: #007bff;
+  background-color: #736acf;
+  font-family: "PT Serif";
   color: white;
-  padding: 10px 15px;
+  padding: 0.5rem 0.8rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 2rem;
   cursor: pointer;
+  font-size: 0.9rem;
   transition: background 0.3s ease-in-out;
 }
 
@@ -82,7 +85,7 @@
 .spinner {
   width: 3rem;
   height: 3rem;
-  border: .2rem solid rgba(0, 123, 255, 0.3);
+  border: 0.2rem solid rgba(0, 123, 255, 0.3);
   border-top: 5px solid #007bff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
@@ -112,17 +115,17 @@
   max-height: 84dvh;
 }
 .tableBox::-webkit-scrollbar {
-  width: .6rem;
+  width: 0.6rem;
 }
 
 .tableBox::-webkit-scrollbar-track {
   background: #f1f1f1;
-  border-radius: .6rem;
+  border-radius: 0.6rem;
 }
 
 .tableBox::-webkit-scrollbar-thumb {
   background: #888;
-  border-radius: .6rem;
+  border-radius: 0.6rem;
 }
 
 .tableBox::-webkit-scrollbar-thumb:hover {
@@ -136,15 +139,32 @@
 
 .table th,
 .table td {
-  padding: .9rem;
-  border-bottom: .1rem solid #ddd;
+  padding: 0.9rem;
+  border-bottom: 0.1rem solid #ddd;
   text-align: left;
 }
 
 .tableHeading {
-  background: #3091f9;
-  color: white;
-  font-weight: bold;
+  background: #9a93e9;
+  color: #fff;
+  font-family: Roboto;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.tableLayout1, .tableDataLayout1{
+  width: 20%;
+}
+.tableLayout2 ,.tableDataLayout2{
+  width: 40%;
+}
+.tableLayout3{
+  width: 40%;
+}
+.tableDataLayout3{
+  width: 25%;
+}
+.tableDataLayout4{
+  width: 15%;
 }
 
 .noData {
@@ -152,4 +172,9 @@
   font-style: italic;
   color: #777;
   padding: 1.5rem;
+}
+.deleteBtn {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }

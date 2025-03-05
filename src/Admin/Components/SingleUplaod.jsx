@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "../AuthContext";
+import { useAuth } from "../../Auth/AuthContext";
 import styles from "./SingleUpload.module.css";
 import UploadExcel from "./UploadExcel";
 

@@ -1,4 +1,4 @@
-import error404 from "./assets/error404.svg";
+import error404 from "../assets/error404.svg";
 
 const Error404 = () => {
   const container = {

@@ -1,21 +1,19 @@
-import "./App.css";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Error404 from "./Error404";
+import Error404 from "./Auth/Error404";
 import Login from "./Faculty/Login";
 import DisplayDuty from "./Faculty/DisplayDuty";
 import Students from "./Faculty/Students";
 import MarkAttendence from "./Faculty/MarkAttendence";
 import ScanSheet from "./Faculty/ScanSheet";
-import AdminLogin from "./Admin/AdminLogin";
+import AdminLogin from "./Admin/Pages/AdminLogin";
 import Dashboard from "./Admin/Dashboard";
-import StudentDetails from "./Admin/StudentDetails";
 import Content from "./Admin/Content";
-import { AuthProvider } from "./AuthContext";
-import ProtectedRoute from "./ProtectedRoute";
+import { AuthProvider } from "./Auth/AuthContext";
+import ProtectedRoute from "./Auth/ProtectedRoute";
 import React from "react";
-import Faculty from "./Admin/Faculty";
-import CourseDetails from "./Admin/CourseDetails";
+import Faculty from "./Admin/Pages/Faculty";
+import CourseDetails from "./Admin/Pages/CourseDetails";
 
 function App() {
   const [defaultRoot, setDefaultRoot] = useState("/displayDuty");
@@ -41,7 +39,7 @@ function App() {
             <Route index element={<Navigate to="/admin/dashboard" />} />
             <Route path="dashboard" element={<Content />} />
             <Route path="faculty" element={<Faculty />} />
-            <Route path="students" element={<StudentDetails/>} />
+            <Route path="students" element={<Content/>} />
             <Route path="course-details" element={<CourseDetails />} />
             <Route path="search" element={<Content />} />
           </Route>

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../AuthContext";
+import { useAuth } from "../../Auth/AuthContext";
 import { useNavigate } from "react-router-dom";
-import styles from "./AdminLogin.module.css";
-import loginsvg from "../assets/login illustration.svg";
+import styles from "./CSS/AdminLogin.module.css";
+import loginsvg from "../../assets/login illustration.svg";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
