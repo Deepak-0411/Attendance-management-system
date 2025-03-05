@@ -3,7 +3,7 @@ import { useAuth } from "./AuthContext";
 import { useEffect, useState, useMemo } from "react";
 import styles from "./ProtectedRoute.module.css";
 
-const ProtectedRoute = ({ element }) => {
+const ProtectedRoute = ({ element ,user}) => {
   const { token, logout } = useAuth();
   const [isAuthorized, setIsAuthorized] = useState(null);
   const [defaultRoot,setDefaultRoot]=useState("/login");
@@ -24,7 +24,6 @@ const ProtectedRoute = ({ element }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        console.log(authToken);
         const response = await fetch(
           "https://gbu-server.vercel.app/api/user/dash",
           {
@@ -36,7 +35,6 @@ const ProtectedRoute = ({ element }) => {
           }
         );
         const data = await response.json();
-        console.log("Auth Response:", data);
 
         setIsAuthorized(response.ok);
       } catch (error) {

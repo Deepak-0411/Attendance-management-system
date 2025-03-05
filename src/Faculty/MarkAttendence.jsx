@@ -23,8 +23,7 @@ const MarkAttendence = () => {
             scan sheet
           </button>
           {scanning ? (
-            <div className={styles.ScanSheetOverlay}
-            onClick={console.log("Hello")}>
+            <div className={styles.ScanSheetOverlay}>
               <ScanSheet closeDiv={() => setScanning(false)} />
             </div>
           ) : (

@@ -7,7 +7,6 @@ import loginsvg from "../assets/login illustration.svg";
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [rememberMe, setRememberMe] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showError, setShowError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -38,6 +37,7 @@ const AdminLogin = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+
           },
           body: JSON.stringify({ username, password }),
         }

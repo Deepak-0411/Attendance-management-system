@@ -14,6 +14,8 @@ import Content from "./Admin/Content";
 import { AuthProvider } from "./AuthContext";
 import ProtectedRoute from "./ProtectedRoute";
 import React from "react";
+import Faculty from "./Admin/Faculty";
+import CourseDetails from "./Admin/CourseDetails";
 
 function App() {
   const [defaultRoot, setDefaultRoot] = useState("/displayDuty");
@@ -30,17 +32,17 @@ function App() {
           <Route path="/login" element={<Login />} />
 
           {/* Faculty Routes */}
-          <Route path="/displayDuty" element={<ProtectedRoute element={<DisplayDuty />} />} />
-          <Route path="/students" element={<ProtectedRoute element={<Students />} />} />
-          <Route path="/markAttendance" element={<ProtectedRoute element={<MarkAttendence />} />} />
+          <Route path="/displayDuty" element={<ProtectedRoute element={<DisplayDuty />} user="faculty" />} />
+          <Route path="/students" element={<ProtectedRoute element={<Students />} user="faculty" />} />
+          <Route path="/markAttendance" element={<ProtectedRoute element={<MarkAttendence />} user="faculty" />} />
 
           {/* Admin Routes with Dashboard Layout */}
-          <Route path="/admin" element={<ProtectedRoute element={<Dashboard />} />}>
+          <Route path="/admin" element={<ProtectedRoute element={<Dashboard />} user="admin"/>}>
             <Route index element={<Navigate to="/admin/dashboard" />} />
             <Route path="dashboard" element={<Content />} />
-            <Route path="teachers" element={<Content />} />
+            <Route path="faculty" element={<Faculty />} />
             <Route path="students" element={<StudentDetails/>} />
-            <Route path="course-details" element={<Content />} />
+            <Route path="course-details" element={<CourseDetails />} />
             <Route path="search" element={<Content />} />
           </Route>
 

@@ -6,7 +6,7 @@ const Navbar = () => {
   const location = useLocation(); // Get the current route
   const navItems = [
     { name: "Home", path: "/admin/dashboard" },
-    { name: "Teachers", path: "/admin/teachers" },
+    { name: "Faculty", path: "/admin/faculty" },
     { name: "Students", path: "/admin/students" },
     { name: "Course details", path: "/admin/course-details" },
     { name: "Search", path: "/admin/search" }
