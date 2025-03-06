@@ -153,12 +153,15 @@
 }
 .tableLayout1, .tableDataLayout1{
   width: 20%;
+  border-top-left-radius:.8rem ;
 }
 .tableLayout2 ,.tableDataLayout2{
   width: 40%;
 }
 .tableLayout3{
   width: 40%;
+  border-top-right-radius:.8rem ;
+
 }
 .tableDataLayout3{
   width: 25%;

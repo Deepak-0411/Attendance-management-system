@@ -14,6 +14,7 @@ import ProtectedRoute from "./Auth/ProtectedRoute";
 import React from "react";
 import Faculty from "./Admin/Pages/Faculty";
 import CourseDetails from "./Admin/Pages/CourseDetails";
+import StudentDetails from "./Admin/Pages/StudentDetails";
 
 function App() {
   const [defaultRoot, setDefaultRoot] = useState("/displayDuty");
@@ -39,7 +40,7 @@ function App() {
             <Route index element={<Navigate to="/admin/dashboard" />} />
             <Route path="dashboard" element={<Content />} />
             <Route path="faculty" element={<Faculty />} />
-            <Route path="students" element={<Content/>} />
+            <Route path="students" element={<StudentDetails/>} />
             <Route path="course-details" element={<CourseDetails />} />
             <Route path="search" element={<Content />} />
           </Route>

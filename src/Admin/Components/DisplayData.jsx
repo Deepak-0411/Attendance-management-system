@@ -16,7 +16,7 @@ const DisplayData = ({ type }) => {
 
   const config = {
     course: {
-      title: "Courses Available",
+      title: "Courses",
       apiGet: "https://gbu-server.vercel.app/api/admin/courses",
       apiDelete: "https://gbu-server.vercel.app/api/admin/courses",
       idKey: "courseCode",
@@ -37,8 +37,7 @@ const DisplayData = ({ type }) => {
       nameKey: "fName",
       addText: "+ Add Faculty",
       formFields: {
-        fName: { value: "", placeholder: "First Name" },
-        lName: { value: "", placeholder: "Last Name" },
+        fName: { value: "", placeholder: "Name" },
         teacherId: { value: "", placeholder: "Teacher ID" },
         username: { value: "", placeholder: "Username" },
         password: { value: "", placeholder: "Password" },
@@ -63,9 +62,9 @@ const DisplayData = ({ type }) => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
+      setError(null);
       try {
         const response = await fetch(apiGet, {
-          method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -77,8 +76,7 @@ const DisplayData = ({ type }) => {
             `Error ${response.status}: Failed to fetch ${type} data`
           );
 
-        const data = await response.json();
-        setDataList(data);
+        setDataList(await response.json());
       } catch (err) {
         setError(err.message);
       } finally {
@@ -87,28 +85,24 @@ const DisplayData = ({ type }) => {
     };
 
     fetchData();
-  }, [token, refreshTrigger]);
+  }, [apiGet, token, refreshTrigger]);
 
-  const handleSearch = (e) => {
+  const handleSearch = (e) =>
     setSearchTerm(e.target.value.toLowerCase().trim());
-  };
 
   const handleDelete = async (id) => {
     if (!window.confirm(`Are you sure you want to delete this ${type}?`))
       return;
 
+    setIsDeleting(true);
     try {
-      setIsDeleting(true);
       const response = await fetch(apiDelete, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body:
-          type === "faculty"
-            ? JSON.stringify({ teacherId: id })
-            : JSON.stringify({ courseCode: id }),
+        body: JSON.stringify({ [idKey]: id }),
       });
 
       if (!response.ok) throw new Error(`Failed to delete ${type}.`);
@@ -122,12 +116,8 @@ const DisplayData = ({ type }) => {
   };
 
   const filteredData = dataList.filter((item) => {
-    const name =
-      (item.fName
-        ? `${item.fName} ${item.lName}`
-        : item[nameKey]
-      )?.toLowerCase() || "";
-    const id = String(item[idKey] || "");
+    const name = item[nameKey]?.toLowerCase() || "";
+    const id = item[idKey]?.toString().toLowerCase() || "";
     return name.includes(searchTerm) || id.includes(searchTerm);
   });
 
@@ -182,7 +172,7 @@ const DisplayData = ({ type }) => {
                 </th>
                 <th
                   colSpan={2}
-                  className={`${styles.tableHeading} ${styles.tableLayout2}`}
+                  className={`${styles.tableHeading} ${styles.tableLayout3}`}
                 >
                   {type === "faculty" ? "Faculty ID" : "Course Code"}
                 </th>
@@ -193,11 +183,7 @@ const DisplayData = ({ type }) => {
                 filteredData.map((item, index) => (
                   <tr key={item[idKey]}>
                     <td className={styles.tableDataLayout1}>{index + 1}</td>
-                    <td className={styles.tableDataLayout2}>
-                      {type === "faculty"
-                        ? `${item.fName} ${item.lName}`
-                        : item[nameKey]}
-                    </td>
+                    <td className={styles.tableDataLayout2}>{item[nameKey]}</td>
                     <td className={styles.tableDataLayout3}>{item[idKey]}</td>
                     <td className={styles.tableDataLayout4}>
                       <button
@@ -205,45 +191,24 @@ const DisplayData = ({ type }) => {
                         className={styles.deleteBtn}
                         onClick={() => handleDelete(item[idKey])}
                       >
-                        {isDeleting ? (
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="28"
-                            height="28"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                          >
-                            <rect
-                              width="24"
-                              height="24"
-                              rx="3"
-                              fill="#919191"
-                            />
-                            <path
-                              d="M7.71429 17.5556C7.71429 18.35 8.35714 19 9.14286 19H14.8571C15.6429 19 16.2857 18.35 16.2857 17.5556V8.88889H7.71429V17.5556ZM17 6.72222H14.5L13.7857 6H10.2143L9.5 6.72222H7V8.16667H17V6.72222Z"
-                              fill="white"
-                            />
-                          </svg>
-                        ) : (
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="28"
-                            height="28"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                          >
-                            <rect
-                              width="24"
-                              height="24"
-                              rx="3"
-                              fill="#F04343"
-                            />
-                            <path
-                              d="M7.71429 17.5556C7.71429 18.35 8.35714 19 9.14286 19H14.8571C15.6429 19 16.2857 18.35 16.2857 17.5556V8.88889H7.71429V17.5556ZM17 6.72222H14.5L13.7857 6H10.2143L9.5 6.72222H7V8.16667H17V6.72222Z"
-                              fill="white"
-                            />
-                          </svg>
-                        )}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="28"
+                          height="28"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                        >
+                          <rect
+                            width="24"
+                            height="24"
+                            rx="3"
+                            fill={isDeleting ? "#919191" : "#F04343"}
+                          />
+                          <path
+                            d="M7.71429 17.5556C7.71429 18.35 8.35714 19 9.14286 19H14.8571C15.6429 19 16.2857 18.35 16.2857 17.5556V8.88889H7.71429V17.5556ZM17 6.72222H14.5L13.7857 6H10.2143L9.5 6.72222H7V8.16667H17V6.72222Z"
+                            fill="white"
+                          />
+                        </svg>
                       </button>
                     </td>
                   </tr>
