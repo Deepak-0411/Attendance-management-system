@@ -1,4 +1,4 @@
-import { useState , useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../Auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
@@ -6,9 +6,10 @@ import styles from "./Login.module.css";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [loginerror, setloginError] = useState("");
 
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -23,11 +24,39 @@ const Login = () => {
     return () => clearTimeout(timer);
   }, [showError]);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log({ email, password, rememberMe });
-    // login("Deepak"); // Save user data in context
-    navigate("/displayduty");
+    setLoading(true);
+    setloginError("");
+    const username = email;
+
+    try {
+      const response = await fetch(
+        " https://gbu-server.vercel.app/api/faculty/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        }
+      );
+
+      const data = await response.json();
+      console.log(data.message);
+      
+      if (data.message === "ok") {
+        login(data.token);
+        navigate("/displayduty");
+      } else if (data.message === "Incorrect credentials") {
+        setloginError("Invalid username or password");
+      }
+    } catch (error) {
+      setloginError("Server error, please try again later.");
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -61,7 +90,7 @@ const Login = () => {
         <h1 className={styles.title}>LOGIN</h1>
         <form className={styles.loginForm} onSubmit={handleLogin}>
           <input
-            type="email"
+            type="text"
             placeholder="Email"
             className={styles.loginInput}
             value={email}
@@ -126,7 +155,6 @@ const Login = () => {
               <input
                 type="checkbox"
                 className={styles.checkBox}
-                // checked={rememberMe}
                 defaultChecked={true}
                 onClick={() => setShowError(true)}
                 //   onChange={(e) => setRememberMe(e.target.checked)}
@@ -134,9 +162,13 @@ const Login = () => {
               remember me
             </label>
           </div>
-
-          <button type="submit" className={styles.loginButton}>
-            Login
+          {loginerror && <p className={styles.error}>{loginerror}</p>}
+          <button
+            className={styles.loginButton}
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
       </div>

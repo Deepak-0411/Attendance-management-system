@@ -45,6 +45,22 @@ const DisplayData = ({ type }) => {
       apiEndPointSingle: "faculty",
       apiEndPointBulk: "faculty/import",
     },
+    ExamDuty: {
+      title: "Exam Duty",
+      apiGet: "https://gbu-server.vercel.app/api/admin/faculty",
+      apiDelete: "https://gbu-server.vercel.app/api/admin/faculty",
+      idKey: "roomno",
+      nameKey: "fName",
+      addText: "+ Assign Duty",
+      formFields: {
+        teacherId: { value: "", placeholder: "Teacher ID" },
+        roomno: { value: "", placeholder: "Room no." },
+        date: { value: "", placeholder: "Date" },
+        shift: { value: "", placeholder: "Shift" },
+      },
+      apiEndPointSingle: "faculty",
+      apiEndPointBulk: "faculty/import",
+    },
   };
 
   const {
@@ -65,6 +81,7 @@ const DisplayData = ({ type }) => {
       setError(null);
       try {
         const response = await fetch(apiGet, {
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,

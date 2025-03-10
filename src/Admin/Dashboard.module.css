@@ -6,9 +6,9 @@
 }
 
 .navbar {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   background: #fff;
-  border: 1px solid #000;
-  border-radius: 1.25rem;
+  border-radius: .8rem;
   padding: 1rem;
   margin: 1.5rem 1rem 2rem 1rem;
   display: flex;
@@ -50,7 +50,7 @@
 .navbarBtnActive {
   color: #5a4fcf;
   background-color: #dbd9f5;
-  font-weight: bold;
+  /* font-weight: bold; */
 
 }
 .navIcon{
@@ -62,4 +62,7 @@
 .content {
   margin: 1.5rem 1rem 2rem 1rem;
   overflow-y: hidden;
+  border-radius: .8rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
 }

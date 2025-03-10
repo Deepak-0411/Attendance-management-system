@@ -24,8 +24,8 @@ const ProtectedRoute = ({ element ,user}) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch(
-          "https://gbu-server.vercel.app/api/user/dash",
+        const response = await fetch(user==="faculty" ? "https://gbu-server.vercel.app/api/user/dashboard":
+          "https://gbu-server.vercel.app/api/admin/dash",
           {
             method: "POST",
             headers: {
