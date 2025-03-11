@@ -11,34 +11,24 @@ const StudentDetails = () => {
   const [show, setShow] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [loadData, setLoadData] = useState(false);
+  const [rollno , setRollno] = useState("");
   const [refresh, setRefresh] = useState(true);
 
-  // Filter states
-  const [filters, setFilters] = useState({
-    year: "",
-    programme: "",
-    branch: "",
-  });
-  const { year, programme, branch } = filters;
+  const [selectedClass, setSelectedClass] = useState(null);
 
-  // Filter options from API
-  const [filterOptions, setFilterOptions] = useState({
-    year: [],
-    programme: [],
-    branch: [],
-  });
+  const [filterOptions, setFilterOptions] = useState([]);
 
   const { token } = useAuth();
 
   const config = {
     student: {
-      title: "Students",
+      title: "FORM 1",
       apiGet: "https://gbu-server.vercel.app/api/admin/students",
       apiFilter: "https://gbu-server.vercel.app/api/admin/fillterStudents",
       apiDelete: "https://gbu-server.vercel.app/api/admin/students",
       idKey: "rollNo",
       nameKey: "name",
-      addText: "+ Add Student",
+      addText: "+ upload sitting plan",
       formFields: {
         rollNo: { value: "", placeholder: "Roll No" },
         name: { value: "", placeholder: "Student Name" },
@@ -47,8 +37,6 @@ const StudentDetails = () => {
         programmeName: { value: "", placeholder: "Programme" },
         semester: { value: "", placeholder: "Semester" },
       },
-      tableHeading: [" Name", "Roll no."],
-      tableData: ["name", "rollNo"],
       apiEndPointSingle: "students",
       apiEndPointBulk: "importStudents",
     },
@@ -63,15 +51,14 @@ const StudentDetails = () => {
     nameKey,
     addText,
     formFields,
-    tableHeading,
-    tableData,
     apiEndPointSingle,
     apiEndPointBulk,
   } = config["student"];
 
-  // Fetch filter options (Year, Programme, Branch)
+//   used for get list of rooms
   useEffect(() => {
     const fetchOptions = async () => {
+      
       try {
         const response = await fetch(apiFilter, {
           method: "GET",
@@ -84,12 +71,8 @@ const StudentDetails = () => {
         if (!response.ok) throw new Error("Failed to fetch filter options");
 
         const data = await response.json();
-
-        setFilterOptions({
-          year: data.years || [],
-          programme: data.programmeNames || [],
-          branch: data.branches || [],
-        });
+        
+        setFilterOptions(data);
       } catch (err) {
         console.error("API Fetch Error:", err);
         setError("Failed to load filter options.");
@@ -97,21 +80,21 @@ const StudentDetails = () => {
     };
 
     fetchOptions();
-  }, [token, refresh]);
+  }, [token,refresh]);
 
   // Fetch students based on filters
   useEffect(() => {
     const fetchData = async () => {
-      if (!(year && programme && branch && loadData)) return;
-
+      if (!(selectedClass && loadData)) return;
+      
       setLoading(true);
       setError(null);
 
       try {
-        const url = new URL(apiGet);
-        Object.keys(filters).forEach((key) =>
-          url.searchParams.append(key, filters[key])
-        );
+        // const url = new URL(apiGet);
+        // Object.keys(filters).forEach((key) =>
+        //   url.searchParams.append(key, filters[key])
+        // );
 
         const response = await fetch(url, {
           method: "GET",
@@ -122,6 +105,7 @@ const StudentDetails = () => {
         });
 
         if (!response.ok) throw new Error("Failed to fetch student data");
+        
 
         setDataList(await response.json());
       } catch (err) {
@@ -132,7 +116,7 @@ const StudentDetails = () => {
     };
 
     fetchData();
-  }, [filters, loadData, refresh]);
+  }, [selectedClass, loadData ,refresh]);
 
   const handleSearch = useCallback((e) => {
     setSearchTerm(e.target.value.toLowerCase().trim());
@@ -162,12 +146,14 @@ const StudentDetails = () => {
       setIsDeleting(false);
     }
   };
+  
 
   const filteredData = dataList.filter((item) => {
+    
     const name = item[nameKey]?.toLowerCase() || "";
     const id = item[idKey]?.toString().toLowerCase() || "";
     console.log(id);
-
+    
     return name.includes(searchTerm) || id.includes(searchTerm);
   });
 
@@ -189,34 +175,29 @@ const StudentDetails = () => {
         </div>
       </div>
 
-      {/* Filters */}
+      {/* Search div */}
       <div className={styles.filterContainer}>
-        {["year", "programme", "branch"].map((filter) => (
           <select
-            key={filter}
             className={styles.filterInput}
-            value={filters[filter]}
+            value={filterOptions}
             onChange={(e) =>
-              setFilters((prev) => ({ ...prev, [filter]: e.target.value }))
+              setSelectedClass(e.target.value)
             }
           >
-            <option value="">{`Select ${
-              filter.charAt(0).toUpperCase() + filter.slice(1)
-            }`}</option>
-            {Array.isArray(filterOptions[filter])
-              ? filterOptions[filter].map((option) => (
+            <option value="">{`Select class`}</option>
+            {Array.isArray(filterOptions)
+              ? filterOptions.map((option) => (
                   <option key={option} value={option}>
                     {option}
                   </option>
                 ))
-              : null}
+              : ""}
           </select>
-        ))}
 
         <button
           className={styles.searchButton}
           onClick={() => setLoadData(true)}
-          disabled={!(year && programme && branch)}
+          disabled={!selectedClass}
         >
           Search
         </button>
@@ -228,7 +209,7 @@ const StudentDetails = () => {
             dataToSend={formFields}
             close={() => {
               setShow(false);
-              setRefresh((prev) => !prev);
+              setRefresh((prev)=>!prev);
             }}
             apiEndPointSingle={apiEndPointSingle}
             apiEndPointBulk={apiEndPointBulk}
@@ -253,27 +234,28 @@ const StudentDetails = () => {
                   >
                     SR No.
                   </th>
-                  {tableHeading.map((heading, index) => (
-                    <th
-                      key={heading + index}
-                      className={`${styles.tableHeading} `}
-                    >
-                      {heading}
-                    </th>
-                  ))}
                   <th
+                    className={`${styles.tableHeading} ${styles.tableLayout2}`}
+                  >
+                    Name
+                  </th>
+                  <th
+                    colSpan={2}
                     className={`${styles.tableHeading} ${styles.tableLayout3}`}
-                  ></th>
+                  >
+                    Roll no.
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                {filteredData.length > 0 ? (
+                {filteredData.length ? (
                   filteredData.map((item, index) => (
                     <tr key={item[idKey]}>
-                      <td>{index + 1}</td>
-                      {tableData.map((row) => (
-                        <td key={row + index}>{item[row]}</td>
-                      ))}
+                      <td className={styles.tableDataLayout1}>{index + 1}</td>
+                      <td className={styles.tableDataLayout2}>
+                        {item[nameKey]}
+                      </td>
+                      <td className={styles.tableDataLayout3}>{item[idKey]}</td>
                       <td className={styles.tableDataLayout4}>
                         <button
                           disabled={isDeleting}
@@ -304,12 +286,7 @@ const StudentDetails = () => {
                   ))
                 ) : (
                   <tr>
-                    <td
-                      colSpan={2 + tableHeading.length}
-                      className={styles.noData}
-                    >
-                      No {type} found.
-                    </td>
+                    <td colSpan="4">No student found.</td>
                   </tr>
                 )}
               </tbody>

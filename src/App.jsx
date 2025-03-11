@@ -16,6 +16,7 @@ import Faculty from "./Admin/Pages/Faculty";
 import CourseDetails from "./Admin/Pages/CourseDetails";
 import StudentDetails from "./Admin/Pages/StudentDetails";
 import ExamDuty from "./Admin/Pages/ExamDuty";
+import Form1 from "./Admin/Pages/Form1";
 
 function App() {
   const [defaultRoot, setDefaultRoot] = useState("/displayDuty");
@@ -40,6 +41,7 @@ function App() {
           <Route path="/admin" element={<ProtectedRoute element={<Dashboard />} user="admin"/>}>
             <Route index element={<Navigate to="/admin/dashboard" />} />
             <Route path="dashboard" element={<Content />} />
+            <Route path="form1" element={<Form1 />} />
             <Route path="examDuty" element={<ExamDuty />} />
             <Route path="faculty" element={<Faculty />} />
             <Route path="students" element={<StudentDetails/>} />

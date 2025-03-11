@@ -36,9 +36,9 @@
 .navbarBtn {
   color: rgb(0, 0, 0);
   border: none;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   font-size: 1.25rem;
-  height: 2.5;
+  height: 2.5rem;  
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -50,9 +50,17 @@
 .navbarBtnActive {
   color: #5a4fcf;
   background-color: #dbd9f5;
-  /* font-weight: bold; */
-
 }
+
+.navbarBtn:hover {
+  background: #f6f6f6;
+}
+
+.navbarBtnActive:hover {
+  background-color: #dbd9f5;
+}
+
+
 .navIcon{
   display: flex;
   align-items: center;

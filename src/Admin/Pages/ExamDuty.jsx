@@ -1,6 +1,8 @@
+import DisplayData from "../Components/DisplayData"
+
 const ExamDuty = () => {
   return (
-    <div>ExamDuty</div>
+    <DisplayData type="ExamDuty" />
   )
 }
 export default ExamDuty

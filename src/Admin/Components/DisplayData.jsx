@@ -26,6 +26,8 @@ const DisplayData = ({ type }) => {
         courseName: { value: "", placeholder: "Course Name" },
         courseCode: { value: "", placeholder: "Course Code" },
       },
+      tableHeading: ["Course Name", "Course Code"],
+      tableData: ["courseName" ,"courseCode" ],
       apiEndPointSingle: "courses",
       apiEndPointBulk: "importCourses",
     },
@@ -41,25 +43,45 @@ const DisplayData = ({ type }) => {
         teacherId: { value: "", placeholder: "Teacher ID" },
         username: { value: "", placeholder: "Username" },
         password: { value: "", placeholder: "Password" },
+        schoolName: { value: "", placeholder: "School Name" },
       },
+      tableHeading: ["Faculty Name", "Faculty-ID", "School Name"],
+      tableData: ["fName", "teacherId","schoolName"],
       apiEndPointSingle: "faculty",
       apiEndPointBulk: "faculty/import",
     },
     ExamDuty: {
       title: "Exam Duty",
-      apiGet: "https://gbu-server.vercel.app/api/admin/faculty",
+      apiGet: "https://gbu-server.vercel.app/api/admin/duty",
       apiDelete: "https://gbu-server.vercel.app/api/admin/faculty",
       idKey: "roomno",
       nameKey: "fName",
       addText: "+ Assign Duty",
       formFields: {
-        teacherId: { value: "", placeholder: "Teacher ID" },
+        teacherId: { value: "", placeholder: "Faculty-ID" },
+        buildingName: { value: "", placeholder: "Building Name" },
         roomno: { value: "", placeholder: "Room no." },
-        date: { value: "", placeholder: "Date" },
         shift: { value: "", placeholder: "Shift" },
+        date: { value: "", placeholder: "Date" },
       },
-      apiEndPointSingle: "faculty",
-      apiEndPointBulk: "faculty/import",
+      tableHeading: [
+        "Faculty Name",
+        "Faculty-ID",
+        "Building Name",
+        "Room No.",
+        "Shift",
+        "Date",
+      ],
+      tableData: [
+        "fName",
+        "teacherId",
+        "buildingName",
+        "roomNO.",
+        "shift",
+        "Date",
+      ],
+      apiEndPointSingle: "duty",
+      apiEndPointBulk: "duty/import",
     },
   };
 
@@ -71,6 +93,8 @@ const DisplayData = ({ type }) => {
     nameKey,
     addText,
     formFields,
+    tableHeading,
+    tableData,
     apiEndPointSingle,
     apiEndPointBulk,
   } = config[type];
@@ -92,8 +116,8 @@ const DisplayData = ({ type }) => {
           throw new Error(
             `Error ${response.status}: Failed to fetch ${type} data`
           );
-
-        setDataList(await response.json());
+        const data = await response.json();
+        setDataList(data);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -181,27 +205,21 @@ const DisplayData = ({ type }) => {
           <table className={styles.table}>
             <thead>
               <tr>
-                <th className={`${styles.tableHeading} ${styles.tableLayout1}`}>
-                  SR No.
-                </th>
-                <th className={`${styles.tableHeading} ${styles.tableLayout2}`}>
-                  {type === "faculty" ? "Name" : "Course Name"}
-                </th>
-                <th
-                  colSpan={2}
-                  className={`${styles.tableHeading} ${styles.tableLayout3}`}
-                >
-                  {type === "faculty" ? "Faculty ID" : "Course Code"}
-                </th>
+                <th className={`${styles.tableHeading} ${styles.tableLayout1}`}> SR No. </th>
+                {tableHeading.map((heading,index) => (
+                  <th key={heading+index} className={`${styles.tableHeading} `}> {heading} </th>
+                ))}
+                <th className={`${styles.tableHeading} ${styles.tableLayout3}`}> </th>
               </tr>
             </thead>
             <tbody>
               {filteredData.length > 0 ? (
                 filteredData.map((item, index) => (
                   <tr key={item[idKey]}>
-                    <td className={styles.tableDataLayout1}>{index + 1}</td>
-                    <td className={styles.tableDataLayout2}>{item[nameKey]}</td>
-                    <td className={styles.tableDataLayout3}>{item[idKey]}</td>
+                    <td >{index + 1}</td>
+                    {tableData.map((row)=>(
+                      <td key={row+index}>{item[row]}</td>
+                    ))}
                     <td className={styles.tableDataLayout4}>
                       <button
                         disabled={isDeleting}
@@ -232,7 +250,7 @@ const DisplayData = ({ type }) => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="4" className={styles.noData}>
+                  <td colSpan={2+tableHeading.length} className={styles.noData}>
                     No {type} found.
                   </td>
                 </tr>

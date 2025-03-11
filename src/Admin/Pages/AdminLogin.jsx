@@ -44,7 +44,6 @@ const AdminLogin = () => {
       );
       
       const data = await response.json();
-      console.log(data.message);
       
       if (data.message === "ok") {
         login(data.token);
