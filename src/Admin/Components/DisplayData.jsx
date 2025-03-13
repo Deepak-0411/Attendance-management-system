@@ -27,7 +27,7 @@ const DisplayData = ({ type }) => {
         courseCode: { value: "", placeholder: "Course Code" },
       },
       tableHeading: ["Course Name", "Course Code"],
-      tableData: ["courseName" ,"courseCode" ],
+      tableData: ["courseName", "courseCode"],
       apiEndPointSingle: "courses",
       apiEndPointBulk: "importCourses",
     },
@@ -46,15 +46,32 @@ const DisplayData = ({ type }) => {
         schoolName: { value: "", placeholder: "School Name" },
       },
       tableHeading: ["Faculty Name", "Faculty-ID", "School Name"],
-      tableData: ["fName", "teacherId","schoolName"],
+      tableData: ["fName", "teacherId", "schoolName"],
       apiEndPointSingle: "faculty",
       apiEndPointBulk: "faculty/import",
+    },
+    room: {
+      title: "Rooms Available",
+      apiGet: "https://gbu-server.vercel.app/api/admin/examRooms",
+      apiDelete: "https://gbu-server.vercel.app/api/admin/faculty",
+      idKey: "roomNo",
+      nameKey: "buildingName",
+      addText: "+ Add Room",
+      formFields: {
+        buildingName: { value: "", placeholder: "Building Name" },
+        roomNo: { value: "", placeholder: "Room No." },
+        capacity: { value: "", placeholder: "Capacity" },
+      },
+      tableHeading: ["Building Name", "Room No", "Capacity"],
+      tableData: ["buildingName", "roomNo", "capacity"],
+      apiEndPointSingle: "faculty",
+      apiEndPointBulk: "roomImport",
     },
     ExamDuty: {
       title: "Exam Duty",
       apiGet: "https://gbu-server.vercel.app/api/admin/duty",
       apiDelete: "https://gbu-server.vercel.app/api/admin/faculty",
-      idKey: "roomno",
+      idKey: "teacherId",
       nameKey: "fName",
       addText: "+ Assign Duty",
       formFields: {
@@ -76,7 +93,7 @@ const DisplayData = ({ type }) => {
         "fName",
         "teacherId",
         "buildingName",
-        "roomNO.",
+        "roomNo",
         "shift",
         "Date",
       ],
@@ -157,9 +174,13 @@ const DisplayData = ({ type }) => {
   };
 
   const filteredData = dataList.filter((item) => {
-    const name = item[nameKey]?.toLowerCase() || "";
+    const name = item[nameKey]?.toLowerCase() || ""; 
     const id = item[idKey]?.toString().toLowerCase() || "";
-    return name.includes(searchTerm) || id.includes(searchTerm);
+    const room = type === "room" || type ==="ExamDuty"
+    ? (item["buildingName"]?.toLowerCase() || "") +
+      (item["roomNo"]?.toString().toLowerCase() || "") : "";
+
+    return name.includes(searchTerm) || id.includes(searchTerm) || room.includes(searchTerm);
   });
 
   return (
@@ -205,20 +226,29 @@ const DisplayData = ({ type }) => {
           <table className={styles.table}>
             <thead>
               <tr>
-                <th className={`${styles.tableHeading} ${styles.tableLayout1}`}> SR No. </th>
-                {tableHeading.map((heading,index) => (
-                  <th key={heading+index} className={`${styles.tableHeading} `}> {heading} </th>
+                <th className={`${styles.tableHeading} ${styles.tableLayout1}`}>
+                  SR No.
+                </th>
+                {tableHeading.map((heading, index) => (
+                  <th
+                    key={heading + index}
+                    className={`${styles.tableHeading} `}
+                  >
+                    {heading}
+                  </th>
                 ))}
-                <th className={`${styles.tableHeading} ${styles.tableLayout3}`}> </th>
+                <th
+                  className={`${styles.tableHeading} ${styles.tableLayout3}`}
+                ></th>
               </tr>
             </thead>
             <tbody>
               {filteredData.length > 0 ? (
                 filteredData.map((item, index) => (
-                  <tr key={item[idKey]}>
-                    <td >{index + 1}</td>
-                    {tableData.map((row)=>(
-                      <td key={row+index}>{item[row]}</td>
+                  <tr key={item[idKey]+index}>
+                    <td>{index + 1}</td>
+                    {tableData.map((row) => (
+                      <td key={row + index}>{item[row]}</td>
                     ))}
                     <td className={styles.tableDataLayout4}>
                       <button
@@ -250,7 +280,10 @@ const DisplayData = ({ type }) => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={2+tableHeading.length} className={styles.noData}>
+                  <td
+                    colSpan={2 + tableHeading.length}
+                    className={styles.noData}
+                  >
                     No {type} found.
                   </td>
                 </tr>

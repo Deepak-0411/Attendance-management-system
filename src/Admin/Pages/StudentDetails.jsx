@@ -166,7 +166,6 @@ const StudentDetails = () => {
   const filteredData = dataList.filter((item) => {
     const name = item[nameKey]?.toLowerCase() || "";
     const id = item[idKey]?.toString().toLowerCase() || "";
-    console.log(id);
 
     return name.includes(searchTerm) || id.includes(searchTerm);
   });
@@ -308,7 +307,7 @@ const StudentDetails = () => {
                       colSpan={2 + tableHeading.length}
                       className={styles.noData}
                     >
-                      No {type} found.
+                      No student found.
                     </td>
                   </tr>
                 )}

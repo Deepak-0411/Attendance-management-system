@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./MarkAttendence.module.css";
+import styles from "./CSS/MarkAttendence.module.css";
 import ScanSheet from "./ScanSheet";
 
 const MarkAttendence = () => {

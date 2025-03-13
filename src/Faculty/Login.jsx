@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../Auth/AuthContext";
 import { useNavigate } from "react-router-dom";
-import styles from "./Login.module.css";
+import styles from "./CSS/Login.module.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -43,7 +43,6 @@ const Login = () => {
       );
 
       const data = await response.json();
-      console.log(data.message);
       
       if (data.message === "ok") {
         login(data.token);

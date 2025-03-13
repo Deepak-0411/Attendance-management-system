@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import styles from "./Students.module.css";
+import styles from "./CSS/Students.module.css";
 
 const DisplayDuty = () => {
   const [search, setSearch] = useState("");

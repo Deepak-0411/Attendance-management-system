@@ -3,9 +3,9 @@
   display: grid;
   grid-template-rows: 20vh 1fr; /* Fixed top section (25vh), scrollable bottom section */
   width: 100vw;
-  height: 100vh; /* Prevents entire page scrolling */
+  height: 100vh;
   background-color: #212121;
-  overflow: hidden; /* Prevents parent scrolling */
+  overflow: auto; 
 }
 
 /* 🟢 User Info (Fixed at Top) */
@@ -23,7 +23,7 @@
   align-items: center;
   justify-content: center;
   gap: 2rem;
-  font-size: 3rem;
+  font-size: 2.5rem;
 }
 .userNameP {
   font-family: 'Monomakh';
@@ -84,4 +84,10 @@
 }
 .contentDataP {
   font-family: Roboto;
+}
+
+.noData{
+  text-align: center;
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 2.5rem;
 }

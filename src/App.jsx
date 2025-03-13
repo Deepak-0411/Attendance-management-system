@@ -16,6 +16,7 @@ import Faculty from "./Admin/Pages/Faculty";
 import CourseDetails from "./Admin/Pages/CourseDetails";
 import StudentDetails from "./Admin/Pages/StudentDetails";
 import ExamDuty from "./Admin/Pages/ExamDuty";
+import Rooms from "./Admin/Pages/Rooms";
 import Form1 from "./Admin/Pages/Form1";
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
             <Route path="dashboard" element={<Content />} />
             <Route path="form1" element={<Form1 />} />
             <Route path="examDuty" element={<ExamDuty />} />
+            <Route path="rooms" element={<Rooms />} />
             <Route path="faculty" element={<Faculty />} />
             <Route path="students" element={<StudentDetails/>} />
             <Route path="course-details" element={<CourseDetails />} />
