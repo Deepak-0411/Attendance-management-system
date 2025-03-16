@@ -142,6 +142,7 @@ const DisplayData = ({ type }) => {
             `Error ${response.status}: Failed to fetch ${type} data`
           );
         const data = await response.json();
+        
         setDataList(data);
       } catch (err) {
         setError(err.message);
@@ -234,6 +235,7 @@ const DisplayData = ({ type }) => {
       {/* Date input from-to only appear if type == examduty */}
       {type === "ExamDuty" ? (
         <div className={styles.filterContainer}>
+          <div className={styles.containerInside}>
           <p>From -</p>
           <input
             type="date"
@@ -250,6 +252,8 @@ const DisplayData = ({ type }) => {
             value={toDate}
             onChange={handleToDateChange}
           />
+          </div>
+          <button>Export data</button>
         </div>
       ) : (
         ""

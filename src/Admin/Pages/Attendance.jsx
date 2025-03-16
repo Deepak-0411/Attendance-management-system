@@ -3,7 +3,13 @@ import { useAuth } from "../../Auth/AuthContext";
 import styles from "../Components/DisplayData.module.css";
 import SingleUpload from "../Components/SingleUplaod";
 
-const StudentDetails = () => {
+const Attendance = () => {
+  const today = new Date();
+  const day = String(today.getDate()).padStart(2, "0");
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const year = today.getFullYear();
+  const formattedDate = `${year}-${month}-${day}`;
+
   const [dataList, setDataList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
@@ -11,24 +17,35 @@ const StudentDetails = () => {
   const [show, setShow] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [loadData, setLoadData] = useState(false);
-  const [rollno , setRollno] = useState("");
   const [refresh, setRefresh] = useState(true);
 
-  const [selectedClass, setSelectedClass] = useState(null);
+  const [fromDate, setFromDate] = useState(formattedDate);
+  const [toDate, setToDate] = useState(formattedDate);
 
-  const [filterOptions, setFilterOptions] = useState([]);
+  // Filter states
+  const [filters, setFilters] = useState({
+    room: "",
+    shift: "",
+  });
+  const { room, shift } = filters;
+
+  // Filter options from API
+  const [filterOptions, setFilterOptions] = useState({
+    rooms: [],
+    shifts: [],
+  });
 
   const { token } = useAuth();
 
   const config = {
-    student: {
-      title: "FORM 1",
-      apiGet: "https://gbu-server.vercel.app/api/admin/students",
-      apiFilter: "https://gbu-server.vercel.app/api/admin/fillterStudents",
+    Attendance: {
+      title: "Attendance",
+      apiGet: "https://gbu-server.vercel.app/api/admin/viewEntries",
+      apiFilter: "https://gbu-server.vercel.app/api/admin/formFilterData",
       apiDelete: "https://gbu-server.vercel.app/api/admin/students",
       idKey: "rollNo",
-      nameKey: "name",
-      addText: "+ upload sitting plan",
+      nameKey: "roomNo",
+      addText: "+ Add Student",
       formFields: {
         rollNo: { value: "", placeholder: "Roll No" },
         name: { value: "", placeholder: "Student Name" },
@@ -37,6 +54,8 @@ const StudentDetails = () => {
         programmeName: { value: "", placeholder: "Programme" },
         semester: { value: "", placeholder: "Semester" },
       },
+      tableHeading: ["Date","Shift","Building Name", "Room No.", "Roll No.","Course Code" ,"Booklet No.","Status","Marked By"],
+      tableData: ["date","shift","buildingName", "roomNo", "rollNo","courseCode" ,"bookletNumber","status","signature"],
       apiEndPointSingle: "students",
       apiEndPointBulk: "importStudents",
     },
@@ -51,14 +70,15 @@ const StudentDetails = () => {
     nameKey,
     addText,
     formFields,
+    tableHeading,
+    tableData,
     apiEndPointSingle,
     apiEndPointBulk,
-  } = config["student"];
+  } = config["Attendance"];
 
-//   used for get list of rooms
+  // Fetch filter options (Year, Programme, Branch)
   useEffect(() => {
     const fetchOptions = async () => {
-      
       try {
         const response = await fetch(apiFilter, {
           method: "GET",
@@ -71,8 +91,11 @@ const StudentDetails = () => {
         if (!response.ok) throw new Error("Failed to fetch filter options");
 
         const data = await response.json();
-        
-        setFilterOptions(data);
+
+        setFilterOptions({
+          rooms: data.rooms || [],
+          shifts: data.shifts || [],
+        });
       } catch (err) {
         console.error("API Fetch Error:", err);
         setError("Failed to load filter options.");
@@ -80,21 +103,26 @@ const StudentDetails = () => {
     };
 
     fetchOptions();
-  }, [token,refresh]);
+  }, [token, refresh]);
 
   // Fetch students based on filters
   useEffect(() => {
     const fetchData = async () => {
-      if (!(selectedClass && loadData)) return;
-      
+      if (!(room && shift && loadData && fromDate && toDate)) return;
+
       setLoading(true);
       setError(null);
 
-      try {
-        // const url = new URL(apiGet);
-        // Object.keys(filters).forEach((key) =>
-        //   url.searchParams.append(key, filters[key])
-        // );
+      try {        
+        const roomSplit =room.split("-");
+        
+        const url = new URL(apiGet);
+        url.searchParams.append("buildingName", roomSplit[0]);
+        url.searchParams.append("roomNo", roomSplit[1]);
+        url.searchParams.append("shift", shift);
+        url.searchParams.append("from", fromDate);
+        url.searchParams.append("to", toDate);
+        
 
         const response = await fetch(url, {
           method: "GET",
@@ -105,9 +133,8 @@ const StudentDetails = () => {
         });
 
         if (!response.ok) throw new Error("Failed to fetch student data");
-        
-
-        setDataList(await response.json());
+        const data=await response.json();
+        setDataList(data.entries);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -116,7 +143,7 @@ const StudentDetails = () => {
     };
 
     fetchData();
-  }, [selectedClass, loadData ,refresh]);
+  }, [refresh]);
 
   const handleSearch = useCallback((e) => {
     setSearchTerm(e.target.value.toLowerCase().trim());
@@ -149,13 +176,26 @@ const StudentDetails = () => {
   
 
   const filteredData = dataList.filter((item) => {
-    
     const name = item[nameKey]?.toLowerCase() || "";
     const id = item[idKey]?.toString().toLowerCase() || "";
-    console.log(id);
-    
+
     return name.includes(searchTerm) || id.includes(searchTerm);
   });
+
+  const handleFromDateChange = (e) => {
+    const value = e.target.value;
+    setFromDate(value);
+
+    if (toDate < value) {
+      setToDate(value);
+    }
+    setRefresh((prev) => !prev);
+  };
+
+  const handleToDateChange = (e) => {
+    setToDate(e.target.value);
+    setRefresh((prev) => !prev);
+  };
 
   return (
     <div className={styles.container}>
@@ -175,32 +215,57 @@ const StudentDetails = () => {
         </div>
       </div>
 
-      {/* Search div */}
+      {/* Filters */}
       <div className={styles.filterContainer}>
-          <select
-            className={styles.filterInput}
-            value={filterOptions}
-            onChange={(e) =>
-              setSelectedClass(e.target.value)
-            }
-          >
-            <option value="">{`Select class`}</option>
-            {Array.isArray(filterOptions)
-              ? filterOptions.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))
-              : ""}
-          </select>
+        <div className={styles.containerInside}>
 
-        <button
-          className={styles.searchButton}
-          onClick={() => setLoadData(true)}
-          disabled={!selectedClass}
-        >
-          Search
-        </button>
+          <p>From -</p>
+          <input
+            type="date"
+            className={styles.filterInput}
+            value={fromDate}
+            onChange={handleFromDateChange}
+          />
+          <p> To -</p>
+          <input
+            type="date"
+            className={styles.filterInput}
+            min={fromDate}
+            value={toDate}
+            onChange={handleToDateChange}
+          />
+
+          {["room", "shift"].map((filter) => (
+            <select
+              key={filter}
+              className={styles.filterInput}
+              value={filters[filter]}
+              onChange={(e) =>
+                setFilters((prev) => ({ ...prev, [filter]: e.target.value }))
+              }
+            >
+              <option value="">{`Select ${
+                filter.charAt(0).toUpperCase() + filter.slice(1)
+              }`}</option>
+              {Array.isArray(filterOptions[filter+"s"])
+                ? filterOptions[filter+"s"].map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))
+                : null}
+            </select>
+          ))}
+ 
+          <button
+            className={styles.searchButton}
+            onClick={() => {setLoadData(true); setRefresh((prev) => !prev);}}
+            disabled={!(room && shift && fromDate && toDate)}
+          >
+            Search
+          </button>
+        </div>
+        <button>Export data</button>
       </div>
 
       {show && (
@@ -209,7 +274,7 @@ const StudentDetails = () => {
             dataToSend={formFields}
             close={() => {
               setShow(false);
-              setRefresh((prev)=>!prev);
+              setRefresh((prev) => !prev);
             }}
             apiEndPointSingle={apiEndPointSingle}
             apiEndPointBulk={apiEndPointBulk}
@@ -234,29 +299,25 @@ const StudentDetails = () => {
                   >
                     SR No.
                   </th>
-                  <th
-                    className={`${styles.tableHeading} ${styles.tableLayout2}`}
-                  >
-                    Name
-                  </th>
-                  <th
-                    colSpan={2}
-                    className={`${styles.tableHeading} ${styles.tableLayout3}`}
-                  >
-                    Roll no.
-                  </th>
+                  {tableHeading.map((heading, index) => (
+                    <th
+                      key={heading + index}
+                      className={`${styles.tableHeading} ${index===tableHeading.length-1? styles.tableLayout3 : ""}`}
+                    >
+                      {heading}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
-                {filteredData.length ? (
+                {filteredData.length > 0 ? (
                   filteredData.map((item, index) => (
-                    <tr key={item[idKey]}>
-                      <td className={styles.tableDataLayout1}>{index + 1}</td>
-                      <td className={styles.tableDataLayout2}>
-                        {item[nameKey]}
-                      </td>
-                      <td className={styles.tableDataLayout3}>{item[idKey]}</td>
-                      <td className={styles.tableDataLayout4}>
+                    <tr key={item[idKey]+index}>
+                      <td>{index + 1}</td>
+                      {tableData.map((row) => (
+                        <td key={row + index}>{item[row]} </td>
+                      ))}
+                      {/* <td className={styles.tableDataLayout4}>
                         <button
                           disabled={isDeleting}
                           className={styles.deleteBtn}
@@ -281,12 +342,17 @@ const StudentDetails = () => {
                             />
                           </svg>
                         </button>
-                      </td>
+                      </td> */}
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="4">No student found.</td>
+                    <td
+                      colSpan={2 + tableHeading.length}
+                      className={styles.noData}
+                    >
+                      No student found.
+                    </td>
                   </tr>
                 )}
               </tbody>
@@ -297,4 +363,4 @@ const StudentDetails = () => {
   );
 };
 
-export default StudentDetails;
+export default Attendance;

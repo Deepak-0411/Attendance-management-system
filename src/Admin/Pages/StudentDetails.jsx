@@ -47,7 +47,7 @@ const StudentDetails = () => {
         programmeName: { value: "", placeholder: "Programme" },
         semester: { value: "", placeholder: "Semester" },
       },
-      tableHeading: [" Name", "Roll no."],
+      tableHeading: ["Name", "Roll no."],
       tableData: ["name", "rollNo"],
       apiEndPointSingle: "students",
       apiEndPointBulk: "importStudents",
@@ -132,7 +132,7 @@ const StudentDetails = () => {
     };
 
     fetchData();
-  }, [filters, loadData, refresh]);
+  }, [refresh]);
 
   const handleSearch = useCallback((e) => {
     setSearchTerm(e.target.value.toLowerCase().trim());
@@ -190,6 +190,7 @@ const StudentDetails = () => {
 
       {/* Filters */}
       <div className={styles.filterContainer}>
+        <div className={styles.containerInside}>
         {["year", "programme", "branch"].map((filter) => (
           <select
             key={filter}
@@ -214,11 +215,12 @@ const StudentDetails = () => {
 
         <button
           className={styles.searchButton}
-          onClick={() => setLoadData(true)}
+          onClick={() => {setLoadData(true); setRefresh((prev) => !prev);}}
           disabled={!(year && programme && branch)}
         >
           Search
         </button>
+        </div>
       </div>
 
       {show && (
