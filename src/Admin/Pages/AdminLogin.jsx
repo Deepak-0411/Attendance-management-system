@@ -141,7 +141,6 @@ const AdminLogin = () => {
                   className={styles.checkBox}
                   defaultChecked={true}
                   onClick={() => setShowError(true)}
-                  //   onChange={(e) => setRememberMe(e.target.checked)}
                 />
                 remember me
               </label>
@@ -155,7 +154,7 @@ const AdminLogin = () => {
             >
               {loading ? "Logging in..." : "Login"}
             </button>
-          </form>{" "}
+          </form>
         </div>
       </div>
     </div>

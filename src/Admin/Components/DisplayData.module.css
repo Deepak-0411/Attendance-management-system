@@ -89,6 +89,7 @@
   border-radius: .5rem;
   outline: none;
   cursor: pointer;
+  font-family: "Poppins";
 }
 .searchButton{
   background-color: #9a93e9;

@@ -4,6 +4,12 @@ import styles from "./DisplayData.module.css";
 import SingleUpload from "./SingleUplaod";
 
 const DisplayData = ({ type }) => {
+  const today = new Date();
+  const day = String(today.getDate()).padStart(2, "0");
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const year = today.getFullYear();
+  const formattedDate = `${year}-${month}-${day}`;
+
   const [dataList, setDataList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
@@ -11,6 +17,8 @@ const DisplayData = ({ type }) => {
   const [show, setShow] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [fromDate, setFromDate] = useState(formattedDate);
+  const [toDate, setToDate] = useState(formattedDate);
 
   const { token } = useAuth();
 
@@ -77,9 +85,9 @@ const DisplayData = ({ type }) => {
       formFields: {
         teacherId: { value: "", placeholder: "Faculty-ID" },
         buildingName: { value: "", placeholder: "Building Name" },
-        roomno: { value: "", placeholder: "Room no." },
+        roomNo: { value: "", placeholder: "Room no." },
         shift: { value: "", placeholder: "Shift" },
-        date: { value: "", placeholder: "Date" },
+        Date: { value: "", placeholder: "Date" },
       },
       tableHeading: [
         "Faculty Name",
@@ -174,17 +182,39 @@ const DisplayData = ({ type }) => {
   };
 
   const filteredData = dataList.filter((item) => {
-    const name = item[nameKey]?.toLowerCase() || ""; 
+    const name = item[nameKey]?.toLowerCase() || "";
     const id = item[idKey]?.toString().toLowerCase() || "";
-    const room = type === "room" || type ==="ExamDuty"
-    ? (item["buildingName"]?.toLowerCase() || "") +
-      (item["roomNo"]?.toString().toLowerCase() || "") : "";
+    const room =
+      type === "room" || type === "ExamDuty"
+        ? (item["buildingName"]?.toLowerCase() || "") +
+          (item["roomNo"]?.toString().toLowerCase() || "")
+        : "";
 
-    return name.includes(searchTerm) || id.includes(searchTerm) || room.includes(searchTerm);
+    return (
+      name.includes(searchTerm) ||
+      id.includes(searchTerm) ||
+      room.includes(searchTerm)
+    );
   });
+
+  const handleFromDateChange = (e) => {
+    const value = e.target.value;
+    setFromDate(value);
+
+    if (toDate < value) {
+      setToDate(value);
+    }
+    setRefreshTrigger((prev) => !prev);
+  };
+
+  const handleToDateChange = (e) => {
+    setToDate(e.target.value);
+    setRefreshTrigger((prev) => !prev);
+  };
 
   return (
     <div className={styles.container}>
+      {/* This is header  */}
       <div className={styles.header}>
         <p className={styles.title}>{title}</p>
         <div className={styles.searchBox}>
@@ -201,6 +231,31 @@ const DisplayData = ({ type }) => {
         </div>
       </div>
 
+      {/* Date input from-to only appear if type == examduty */}
+      {type === "ExamDuty" ? (
+        <div className={styles.filterContainer}>
+          <p>From -</p>
+          <input
+            type="date"
+            className={styles.filterInput}
+            value={fromDate}
+            onChange={handleFromDateChange}
+          />
+          <p></p>
+          <p> To -</p>
+          <input
+            type="date"
+            className={styles.filterInput}
+            min={fromDate}
+            value={toDate}
+            onChange={handleToDateChange}
+          />
+        </div>
+      ) : (
+        ""
+      )}
+
+      {/* file upload */}
       {show && (
         <div className={styles.uploadData}>
           <SingleUpload
@@ -215,6 +270,7 @@ const DisplayData = ({ type }) => {
         </div>
       )}
 
+      {/* loading spinner  and table*/}
       {loading ? (
         <div className={styles.spinnerContainer}>
           <div className={styles.spinner}></div>
@@ -222,7 +278,10 @@ const DisplayData = ({ type }) => {
       ) : error ? (
         <p className={styles.error}>{error}</p>
       ) : (
-        <div className={styles.tableBox}>
+        <div
+          id={type === "ExamDuty" ? styles.tableBoxAddon : ""}
+          className={styles.tableBox}
+        >
           <table className={styles.table}>
             <thead>
               <tr>
@@ -245,7 +304,7 @@ const DisplayData = ({ type }) => {
             <tbody>
               {filteredData.length > 0 ? (
                 filteredData.map((item, index) => (
-                  <tr key={item[idKey]+index}>
+                  <tr key={item[idKey] + index}>
                     <td>{index + 1}</td>
                     {tableData.map((row) => (
                       <td key={row + index}>{item[row]}</td>

@@ -27,7 +27,6 @@ const DisplayDuty = () => {
         if (!response.ok) throw new Error(`Error ${response.status}: Failed to fetch data`);
 
         const data = await response.json();
-console.log(data);
 
         setDataList(data); 
       } catch (err) {
@@ -38,7 +37,7 @@ console.log(data);
     };
 
     fetchData();
-  }, [token]);
+  }, []);
 
   return (
     <div className={styles.parent}>
@@ -73,7 +72,7 @@ console.log(data);
                       <p className={styles.contentDataP}>
                         {duty.buildingName + " - " + duty.roomNo}
                       </p>
-                      <p className={styles.contentDataP}>{"Shift-"+duty.shift}</p>
+                      <p className={styles.contentDataP}>{"Shift - "+duty.shift}</p>
                     </div>
                     <div className={styles.contentData}>
                       <p className={styles.contentDataP}>

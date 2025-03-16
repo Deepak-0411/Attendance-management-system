@@ -55,7 +55,7 @@ const SingleUplaod = ({ dataToSend = {}, close, apiEndPointSingle, apiEndPointBu
           <input
             key={key}
             required
-            type={key === "password" ? "password" : key==="date" ? "date" : "text"}
+            type={key === "password" ? "password" : key==="Date" ? "date" : "text"}
             name={key}
             placeholder={dataToSend[key].placeholder}
             value={data[key] || ""}

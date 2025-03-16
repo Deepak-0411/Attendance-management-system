@@ -83,3 +83,6 @@
   border-radius: 50%;
   cursor: pointer;
 }
+.closeBtn:hover{
+  background-color: #4b4b4b;
+}
