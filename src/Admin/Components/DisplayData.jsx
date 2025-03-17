@@ -142,7 +142,7 @@ const DisplayData = ({ type }) => {
             `Error ${response.status}: Failed to fetch ${type} data`
           );
         const data = await response.json();
-        
+
         setDataList(data);
       } catch (err) {
         setError(err.message);
@@ -152,7 +152,7 @@ const DisplayData = ({ type }) => {
     };
 
     fetchData();
-  }, [apiGet, token, refreshTrigger]);
+  }, [token, refreshTrigger]);
 
   const handleSearch = (e) =>
     setSearchTerm(e.target.value.toLowerCase().trim());
@@ -205,12 +205,10 @@ const DisplayData = ({ type }) => {
     if (toDate < value) {
       setToDate(value);
     }
-    setRefreshTrigger((prev) => !prev);
   };
 
   const handleToDateChange = (e) => {
     setToDate(e.target.value);
-    setRefreshTrigger((prev) => !prev);
   };
 
   return (
@@ -236,22 +234,29 @@ const DisplayData = ({ type }) => {
       {type === "ExamDuty" ? (
         <div className={styles.filterContainer}>
           <div className={styles.containerInside}>
-          <p>From -</p>
-          <input
-            type="date"
-            className={styles.filterInput}
-            value={fromDate}
-            onChange={handleFromDateChange}
-          />
-          <p></p>
-          <p> To -</p>
-          <input
-            type="date"
-            className={styles.filterInput}
-            min={fromDate}
-            value={toDate}
-            onChange={handleToDateChange}
-          />
+            <p>From -</p>
+            <input
+              type="date"
+              className={styles.filterInput}
+              value={fromDate}
+              onChange={handleFromDateChange}
+            />
+            <p></p>
+            <p> To -</p>
+            <input
+              type="date"
+              className={styles.filterInput}
+              min={fromDate}
+              value={toDate}
+              onChange={handleToDateChange}
+            />
+            <button
+              className={styles.searchButton}
+              onClick={()=>setRefreshTrigger((prev) => !prev)}
+              disabled={!(fromDate && toDate)}
+            >
+              Search
+            </button>
           </div>
           <button>Export data</button>
         </div>

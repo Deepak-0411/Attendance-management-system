@@ -1,133 +1,181 @@
 import { useEffect, useState, useMemo } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../Auth/AuthContext";
 import styles from "./CSS/Students.module.css";
+import spinnerStyles from "./CSS/Spinner.module.css";
+import errorStyles from "./CSS/Error.module.css";
 
 const DisplayDuty = () => {
   const [search, setSearch] = useState("");
   const [activeBtn, setActiveBtn] = useState("All");
+  const [dataList, setDataList] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [refresh , setRefresh] = useState(false);
 
-  const [studentsData, setStudentsData] = useState([
-    { roll: "235/UCS/101", name: "Amit", status: "" },
-    { roll: "235/UCS/102", name: "Raj", status: "Absent" },
-    { roll: "235/UCS/103", name: "Neha", status: "" },
-    { roll: "235/UCS/104", name: "Sara", status: "Present" },
-    { roll: "235/UCS/105", name: "Vikram", status: "" },
-    { roll: "235/UCS/106", name: "Priya", status: "Present" },
-    { roll: "235/UCS/107", name: "Alok", status: "UFM" },
-    { roll: "235/UCS/108", name: "Manoj", status: "Absent" },
-    { roll: "235/UCS/109", name: "Simran", status: "" },
-    { roll: "235/UCS/110", name: "Kabir", status: "Present" },
-    { roll: "235/UCS/111", name: "Ravi", status: "Absent" },
-    { roll: "235/UCS/112", name: "Kiran", status: "UFM" },
-    { roll: "235/UCS/113", name: "Suman", status: "Present" },
-    { roll: "235/UCS/114", name: "Deepak", status: "Absent" },
-    { roll: "235/UCS/115", name: "Anjali", status: "UFM" },
-    { roll: "235/UCS/116", name: "Rohit", status: "Present" },
-    { roll: "235/UCS/117", name: "Pooja", status: "Absent" },
-    { roll: "235/UCS/118", name: "Arjun", status: "Present" },
-    { roll: "235/UCS/119", name: "Sneha", status: "UFM" },
-    { roll: "235/UCS/120", name: "Gaurav", status: "Present" },
-    { roll: "235/UCS/121", name: "Sunita", status: "Absent" },
-    { roll: "235/UCS/122", name: "Harsh", status: "Present" },
-    { roll: "235/UCS/123", name: "Meena", status: "UFM" },
-    { roll: "235/UCS/124", name: "Rahul", status: "Absent" },
-    { roll: "235/UCS/125", name: "Kavita", status: "Present" },
-    { roll: "235/UCS/126", name: "Tarun", status: "Absent" },
-    { roll: "235/UCS/127", name: "Nisha", status: "UFM" },
-    { roll: "235/UCS/128", name: "Suresh", status: "Present" },
-    { roll: "235/UCS/129", name: "Varun", status: "Absent" },
-    { roll: "235/UCS/130", name: "Maya", status: "Present" },
-    { roll: "235/UCS/131", name: "Jatin", status: "UFM" },
-    { roll: "235/UCS/132", name: "Payal", status: "Present" },
-    { roll: "235/UCS/133", name: "Anil", status: "Absent" },
-    { roll: "235/UCS/134", name: "Komal", status: "Present" },
-    { roll: "235/UCS/135", name: "Sachin", status: "UFM" },
-    { roll: "225/UCM/136", name: "Rina", status: "Absent" },
-    { roll: "225/UCM/137", name: "Kaniska", status: "Absent" },
-    { roll: "225/UCM/138", name: "UCMs", status: "Absent" },
-  ]);
+  const { token } = useAuth();
+  const navigate = useNavigate();
+  const { state } = useLocation();
 
-  const filteredStudents = useMemo(
-    () =>
-      studentsData
-        .filter(
-          (student) => activeBtn === "All" || student.status === activeBtn
-        )
-        .filter(
-          (student) =>
-            student.name.toLowerCase().startsWith(search.toLowerCase()) ||
-            student.roll.toLowerCase().includes(search.toLowerCase())
-        )
-        ,
-    [studentsData, activeBtn, search]
-  );
-return(
+  const shift = state?.shift;
+  const buildingName = state?.buildingName;
+  const roomNo = state?.roomNo;
+  const fName = state?.fName || "N/A";
+  const secondTeacher = state?.secondTeacher || "N/A";
+
+  useEffect(() => {
+    if (!(shift && buildingName && roomNo)) {
+      navigate("/displayDuty");
+      return;
+    }
+
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await fetch(
+          "https://gbu-server.vercel.app/api/faculty/studentList",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Error ${response.status}: Failed to fetch data`);
+        }
+
+        const data = await response.json();
+
+        if (!Array.isArray(data)) {
+          throw new Error("Unexpected response format");
+        }
+
+        setDataList(data);
+      } catch (err) {
+        console.error("Fetch Error:", err);
+        setError(err.message || "An unexpected error occurred");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [token,refresh]);
+
+  const filteredStudents = useMemo(() => {
+    return dataList
+      .filter(
+        (student) => activeBtn === "All" || student.status === activeBtn
+      )
+      .filter((student) => {
+        const query = search.toLowerCase();
+        return (
+          student.name.toLowerCase().includes(query) ||
+          student.rollNo.toLowerCase().includes(query)
+        );
+      });
+  }, [dataList, activeBtn, search]);
+
+  const statuses = ["Present", "Absent", "UFM", "All"];
+
+  return (
     <div className={styles.parent}>
-      <div className={styles.roomInfo}>
-        <p className={styles.roomInfoP}>Room no - IL201</p>
-        <p className={styles.roomInfoP}>Duty - Teacher 1 , Teacher 2</p>
-        <p className={styles.roomInfoP}>Timings - 2pm to 5pm</p>
-        <p className={styles.roomInfoP}>Shift - 1</p>
-      </div>
-
-      <div className={styles.Studentlist}>
-        <div className={styles.filterBtns}>
-          {["Present", "Absent", "UFM", "All"].map((status) => (
-            <div key={status}>
-              <button
-                onClick={() => setActiveBtn(status)}
-                className={`${styles.filterBtn} ${
-                  activeBtn === status ? styles[`filterBtn${status}`] : ""
-                }`}
-              >
-                {
-                  studentsData.filter(
-                    (s) => status === "All" || s.status === status
-                  ).length
-                }
-              </button>
-              <p className={styles.filterBtnP}>{status}</p>
-            </div>
-          ))}
+      {loading ? (
+        <div className={`${spinnerStyles.spinnerContainer} ${styles.spinner}`}>
+          <div className={spinnerStyles.spinner}></div>
         </div>
-
-        <div className={styles.searchBox}>
-          <input
-            type="text"
-            placeholder="Search student by roll no. or name"
-            className={styles.searchInputBox}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            required
-          />
-        </div>
-
-        <div className={styles.contentBox}>
-          {filteredStudents.length > 0 ? (
-            filteredStudents.map((student) => (
-              <div key={student.roll} className={styles.content}>
-                <div className={styles.contentData}>
-                  <p className={styles.contentDataP}>{student.roll}</p>
-                  <p className={styles.contentDataP}>{student.name}</p>
-                </div>
-
-                <div className={styles.contentStatusBox}>
-                  <p
-                    className={`${styles.contentStatus} ${
-                      student.status === ""
-                        ? ""
-                        : styles[`contentStatus${student.status.toLowerCase()}`]
-                    }`}
-                  >
-                    {student.status === "" ? "not yet marked" : student.status.toLowerCase()}
-                  </p>
-                </div>
+      ) : error ? (
+        <div className={errorStyles.errorBox}>
+                <p className={errorStyles.errorp}>{error}</p>
+                <button className={errorStyles.retryBtn} onClick={()=>setRefresh(prev=>!prev)}>
+                  Retry
+                </button>
               </div>
-            ))
-          ) : (
-            <p className={styles.noResults}>No students found</p>
-          )}
-        </div>
-      </div>
+      ) : (
+        <>
+          <div className={styles.roomInfo}>
+            <p className={styles.roomInfoP}>Room no: {roomNo || "N/A"}</p>
+            <p className={styles.roomInfoP}>
+              Duty: {fName} , {secondTeacher}
+            </p>
+            <p className={styles.roomInfoP}>Shift: {shift || "N/A"}</p>
+          </div>
+
+          <div className={styles.Studentlist}>
+            <div className={styles.filterBtns}>
+              {statuses.map((status) => {
+                const count =
+                  status === "All"
+                    ? dataList.length
+                    : dataList.filter((s) => s.status === status).length;
+
+                return (
+                  <div key={status}>
+                    <button
+                      onClick={() => setActiveBtn(status)}
+                      className={`${styles.filterBtn} ${
+                        activeBtn === status ? styles[`filterBtn${status}`] : ""
+                      }`}
+                    >
+                      {count}
+                    </button>
+                    <p className={styles.filterBtnP}>{status}</p>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className={styles.searchBox}>
+              <input
+                type="text"
+                placeholder="Search student by roll no. or name"
+                className={styles.searchInputBox}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+
+            <div className={styles.contentBox}>
+              {filteredStudents.length > 0 ? (
+                filteredStudents.map((student) => (
+                  <div key={student.rollNo} className={styles.content}>
+                    <div className={styles.contentData}>
+                      <p className={styles.contentDataP}>
+                        {student.rollNo || "N/A"}
+                      </p>
+                      <p className={styles.contentDataP}>
+                        {student.name || "N/A"}
+                      </p>
+                    </div>
+
+                    <div className={styles.contentStatusBox}>
+                      <p
+                        className={`${styles.contentStatus} ${
+                          student.status && student.status !== "N/A"
+                            ? styles[
+                                `contentStatus${student.status.toLowerCase()}`
+                              ]
+                            : ""
+                        }`}
+                      >
+                        {student.status && student.status !== "N/A"
+                          ? student.status.toLowerCase()
+                          : "not yet marked"}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className={styles.noResults}>No student found</p>
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

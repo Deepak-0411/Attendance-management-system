@@ -9,28 +9,25 @@
 
 .roomInfo {
   background-color: #212121;
-  padding: 1.5rem 2rem 0.5rem 2rem;
-  /* display: flex; */
-  /* width: 100%; */
-  /* flex-direction: column; */
-  /* overflow: auto; */
+  padding: 1.5rem 2rem 1rem 2rem;
+  display: flex; 
+  width: 100%; 
+  flex-direction: column; 
+  overflow: auto;
   /* height: clamp(15vh, 17vh, 17vh); */
 }
 .roomInfoP {
   color: #fff;
   font-family: "PT Serif";
-  font-size: clamp(1rem, 1.4rem, 1.7rem); /* Dynamic text size */
-  font-style: normal;
+  font-size: 1.5rem;
   font-weight: 700;
-  line-height: 1.2;
-  text-align: start;
-  display: block;
+  /* line-height: 1.7; */
 }
 
 .Studentlist {
   flex-grow: 1;
   padding: 1.5rem 2rem 0.5rem 2rem;
-  border-top: 0.12rem solid rgba(245, 245, 245, 0.708);
+  border-top: 0.12rem solid rgba(245, 245, 245, 0.6);
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -155,8 +152,8 @@
   background-color: #00cf0042;
 }
 .contentStatusabsent {
-  color: #e80000;
-  background-color: #aa00006b;
+  color: #c40202;
+  background-color: #cd01014e;
 }
 .contentStatusufm {
   color: #14bce1;

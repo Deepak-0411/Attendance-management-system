@@ -5,7 +5,7 @@
   width: 100vw;
   height: 100vh;
   background-color: #212121;
-  overflow: auto; 
+  overflow: auto;
 }
 
 /* 🟢 User Info (Fixed at Top) */
@@ -26,7 +26,7 @@
   font-size: 2.5rem;
 }
 .userNameP {
-  font-family: 'Monomakh';
+  font-family: "Monomakh";
 }
 .img {
   width: 5rem;
@@ -53,9 +53,8 @@
 
 /* Hide Scrollbar for Clean Look */
 .work::-webkit-scrollbar {
-  display:none;
+  display: none;
 }
-
 
 /* 🟢 Content Box */
 .contentBox {
@@ -86,7 +85,7 @@
   font-family: Roboto;
 }
 
-.noData{
+.noData {
   text-align: center;
   color: rgba(255, 255, 255, 0.2);
   font-size: 2.5rem;

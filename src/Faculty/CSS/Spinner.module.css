@@ -22,9 +22,3 @@
       transform: rotate(360deg);
     }
   }
-  
-  .error {
-    text-align: center;
-    font-size: 1.2rem;
-    color: red;
-  }

@@ -44,7 +44,7 @@ const Attendance = () => {
       apiFilter: "https://gbu-server.vercel.app/api/admin/formFilterData",
       apiDelete: "https://gbu-server.vercel.app/api/admin/students",
       idKey: "rollNo",
-      nameKey: "roomNo",
+      nameKey: "courseCode",
       addText: "+ Add Student",
       formFields: {
         rollNo: { value: "", placeholder: "Roll No" },
@@ -109,7 +109,7 @@ const Attendance = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (!(room && shift && loadData && fromDate && toDate)) return;
-
+      
       setLoading(true);
       setError(null);
 
@@ -189,12 +189,10 @@ const Attendance = () => {
     if (toDate < value) {
       setToDate(value);
     }
-    setRefresh((prev) => !prev);
   };
 
   const handleToDateChange = (e) => {
     setToDate(e.target.value);
-    setRefresh((prev) => !prev);
   };
 
   return (
