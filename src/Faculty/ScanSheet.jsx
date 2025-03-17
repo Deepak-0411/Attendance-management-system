@@ -2,8 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Html5Qrcode } from "html5-qrcode";
 import styles from "./CSS/ScanSheet.module.css";
 
-const QRScanner = ({closeDiv}) => {
-  const [scannedText, setScannedText] = useState("");
+const QRScanner = ({closeDiv,sheetno}) => {
   const [isScanning, setIsScanning] = useState(false);
   const [cameraFacing, setCameraFacing] = useState("environment");
   const html5QrCodeRef = useRef(null);
@@ -40,7 +39,6 @@ const QRScanner = ({closeDiv}) => {
     if (!(await checkCameraPermissions())) return;
     stopScanning();
     setIsScanning(true);
-    setScannedText("");
 
     setTimeout(async () => {
       if (!document.getElementById("reader")) return setIsScanning(false);
@@ -54,8 +52,9 @@ const QRScanner = ({closeDiv}) => {
         async (decodedText) => {
           if (!scannedOnce) {
             scannedOnce = true;
-            setScannedText(decodedText);
             await stopScanning();
+            sheetno(decodedText);
+            closeDiv();
           }
         }
       );
@@ -79,8 +78,6 @@ const QRScanner = ({closeDiv}) => {
 
   return (
     <div className={styles.container}>
-      {!scannedText ? (
-        <>
         <div className={styles.close}>
             <button className={styles.closeBtn}
             onClick={closeDiv}
@@ -125,15 +122,6 @@ const QRScanner = ({closeDiv}) => {
           >
             {isScanning ? "Stop Scanning" : "Start Scanning"}
           </button>
-        </>
-      ) : (
-        <>
-          <p className={styles.verificationMessage}>{scannedText}</p>
-          <button className={styles.btn} onClick={() => startScanning()}>
-            Scan Another
-          </button>
-        </>
-      )}
     </div>
   );
 };

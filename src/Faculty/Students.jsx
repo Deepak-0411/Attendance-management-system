@@ -1,9 +1,11 @@
 import { useEffect, useState, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../Auth/AuthContext";
-import styles from "./CSS/Students.module.css";
 import spinnerStyles from "./CSS/Spinner.module.css";
 import errorStyles from "./CSS/Error.module.css";
+import styles from "./CSS/Students.module.css";
+
+const statuses = ["Present", "Absent", "UFM", "All"];
 
 const DisplayDuty = () => {
   const [search, setSearch] = useState("");
@@ -80,7 +82,10 @@ const DisplayDuty = () => {
       });
   }, [dataList, activeBtn, search]);
 
-  const statuses = ["Present", "Absent", "UFM", "All"];
+
+  const handleClick = (index)=>{
+    navigate("/markAttendance",{state:{dataList,index}})
+  };
 
   return (
     <div className={styles.parent}>
@@ -141,8 +146,8 @@ const DisplayDuty = () => {
 
             <div className={styles.contentBox}>
               {filteredStudents.length > 0 ? (
-                filteredStudents.map((student) => (
-                  <div key={student.rollNo} className={styles.content}>
+                filteredStudents.map((student,index) => (
+                  <div key={student.rollNo} className={styles.content} onClick={()=>handleClick(index)}>
                     <div className={styles.contentData}>
                       <p className={styles.contentDataP}>
                         {student.rollNo || "N/A"}

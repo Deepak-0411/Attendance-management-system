@@ -77,8 +77,8 @@ const DisplayData = ({ type }) => {
     },
     ExamDuty: {
       title: "Exam Duty",
-      apiGet: "https://gbu-server.vercel.app/api/admin/duty",
-      apiDelete: "https://gbu-server.vercel.app/api/admin/faculty",
+      apiGet: `https://gbu-server.vercel.app/api/admin/duty?from=${fromDate}&to=${toDate}`,
+      apiDelete: "https://gbu-server.vercel.app/api/admin/duty",
       idKey: "teacherId",
       nameKey: "fName",
       addText: "+ Assign Duty",
@@ -158,7 +158,7 @@ const DisplayData = ({ type }) => {
     setSearchTerm(e.target.value.toLowerCase().trim());
 
   const handleDelete = async (id) => {
-    if (!window.confirm(`Are you sure you want to delete this ${type}?`))
+    if (!window.confirm(`Are you sure you want to delete this ${type} with id=${id} ?`))
       return;
 
     setIsDeleting(true);
