@@ -141,7 +141,7 @@ const MarkAttendence = () => {
           </p>
           <p className={styles.details}>Status: {student.status || "N/A"}</p>
           <p className={styles.details}>
-            Sheet no: {student.bookletNumber || "N/A"}
+            Sheet no: {student.bookletNumber || sheetNo || "N/A"}
           </p>
         </div>
 

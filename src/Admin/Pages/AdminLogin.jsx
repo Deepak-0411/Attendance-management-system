@@ -28,7 +28,6 @@ const AdminLogin = () => {
     e.preventDefault();
     setLoading(true);
     setloginError("");
-    const username = email;
 
     try {
       const response = await fetch(
@@ -39,7 +38,7 @@ const AdminLogin = () => {
             "Content-Type": "application/json",
 
           },
-          body: JSON.stringify({ username, password }),
+          body: JSON.stringify({ username : email, password : password }),
         }
       );
       
