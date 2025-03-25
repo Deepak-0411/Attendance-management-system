@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
+import setHeight from "../../SetHeight";
 import { useAuth } from "../../Auth/AuthContext";
 import styles from "../Components/DisplayData.module.css";
 import SingleUpload from "../Components/SingleUplaod";
@@ -12,6 +13,8 @@ const StudentDetails = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [loadData, setLoadData] = useState(false);
   const [refresh, setRefresh] = useState(true);
+
+  const {tableHeight}=setHeight();
 
   // Filter states
   const [filters, setFilters] = useState({
@@ -171,8 +174,8 @@ const StudentDetails = () => {
   });
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
+    <div className={`${styles.container} container`}>
+      <div className={`${styles.header} header`}>
         <p className={styles.title}>{title}</p>
         <div className={styles.searchBox}>
           <input
@@ -189,7 +192,7 @@ const StudentDetails = () => {
       </div>
 
       {/* Filters */}
-      <div className={styles.filterContainer}>
+      <div className={`${styles.filterContainer} filterContainer`}>
         <div className={styles.containerInside}>
         {["year", "programme", "branch"].map((filter) => (
           <select
@@ -245,7 +248,7 @@ const StudentDetails = () => {
         ) : error ? (
           <p className={styles.error}>{error}</p>
         ) : (
-          <div className={styles.tableBox} id={styles.tableBoxAddon}>
+          <div className={styles.tableBox} style={{ height: tableHeight}}>
             <table className={styles.table}>
               <thead>
                 <tr>

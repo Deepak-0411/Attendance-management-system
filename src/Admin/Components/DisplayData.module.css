@@ -140,16 +140,13 @@
   font-size: 1.2rem;
   color: red;
 }
-#tableBoxAddon{ 
-  max-height: 75dvh;
-}
+
 .tableBox {
   overflow: auto;
   background: white;
   border-radius: 8px;
   padding: 1rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  max-height: 84dvh;
 }
 .tableBox::-webkit-scrollbar {
   width: 0.6rem;
@@ -181,10 +178,10 @@
   text-align: left;
   width: auto;
 }
-.table th:last-child,
+/* .table th:last-child,
 .table td:last-child{
   width: 10%;
-}
+} */
 .table tr:hover{
   background-color: #f6f6f6;
 }

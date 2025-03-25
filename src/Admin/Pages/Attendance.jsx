@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useAuth } from "../../Auth/AuthContext";
 import styles from "../Components/DisplayData.module.css";
 import SingleUpload from "../Components/SingleUplaod";
+import setHeight from "../../SetHeight";
 
 const Attendance = () => {
   const today = new Date();
@@ -9,6 +10,8 @@ const Attendance = () => {
   const month = String(today.getMonth() + 1).padStart(2, "0");
   const year = today.getFullYear();
   const formattedDate = `${year}-${month}-${day}`;
+
+  const { tableHeight } = setHeight();
 
   const [dataList, setDataList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -196,8 +199,8 @@ const Attendance = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
+    <div className={`${styles.container} container`} >
+      <div className={`${styles.header} header`}>
         <p className={styles.title}>{title}</p>
         <div className={styles.searchBox}>
           <input
@@ -214,7 +217,7 @@ const Attendance = () => {
       </div>
 
       {/* Filters */}
-      <div className={styles.filterContainer}>
+      <div className={`${styles.filterContainer} filterContainer`}> 
         <div className={styles.containerInside}>
 
           <p>From -</p>
@@ -288,7 +291,7 @@ const Attendance = () => {
         ) : error ? (
           <p className={styles.error}>{error}</p>
         ) : (
-          <div className={styles.tableBox} id={styles.tableBoxAddon}>
+          <div className={styles.tableBox} style={{ height: tableHeight}}>
             <table className={styles.table}>
               <thead>
                 <tr>

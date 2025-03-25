@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import setHeight from "../../SetHeight";
 import { useAuth } from "../../Auth/AuthContext";
 import styles from "./DisplayData.module.css";
 import SingleUpload from "./SingleUplaod";
@@ -9,6 +10,8 @@ const DisplayData = ({ type }) => {
   const month = String(today.getMonth() + 1).padStart(2, "0");
   const year = today.getFullYear();
   const formattedDate = `${year}-${month}-${day}`;
+
+  const { tableHeight} = setHeight();
 
   const [dataList, setDataList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -124,6 +127,7 @@ const DisplayData = ({ type }) => {
     apiEndPointBulk,
   } = config[type];
 
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -212,9 +216,9 @@ const DisplayData = ({ type }) => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} container`}>
       {/* This is header  */}
-      <div className={styles.header}>
+      <div className={`${styles.header} header`} >
         <p className={styles.title}>{title}</p>
         <div className={styles.searchBox}>
           <input
@@ -232,7 +236,7 @@ const DisplayData = ({ type }) => {
 
       {/* Date input from-to only appear if type == examduty */}
       {type === "ExamDuty" ? (
-        <div className={styles.filterContainer}>
+        <div className={`${styles.filterContainer} filterContainer`} >
           <div className={styles.containerInside}>
             <p>From -</p>
             <input
@@ -288,8 +292,8 @@ const DisplayData = ({ type }) => {
         <p className={styles.error}>{error}</p>
       ) : (
         <div
-          id={type === "ExamDuty" ? styles.tableBoxAddon : ""}
           className={styles.tableBox}
+          style={{ height: tableHeight}}
         >
           <table className={styles.table}>
             <thead>
