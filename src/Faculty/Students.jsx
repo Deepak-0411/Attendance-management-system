@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../Auth/AuthContext";
 import spinnerStyles from "./CSS/Spinner.module.css";
 import errorStyles from "./CSS/Error.module.css";
+import useTableHeight from "../SetHeight";
 import styles from "./CSS/Students.module.css";
 
 const statuses = ["Present", "Absent", "UFM", "All"];
@@ -14,6 +15,8 @@ const DisplayDuty = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [refresh , setRefresh] = useState(false);
+
+  const tableHeight =  useTableHeight();
 
   const { token } = useAuth();
   const navigate = useNavigate();
@@ -102,7 +105,7 @@ const DisplayDuty = () => {
               </div>
       ) : (
         <>
-          <div className={styles.roomInfo}>
+          <div className={styles.roomInfo} id="header">
             <p className={styles.roomInfoP}>Room no: {roomNo || "N/A"}</p>
             <p className={styles.roomInfoP}>
               Duty: {fName} , {secondTeacher}
@@ -111,7 +114,7 @@ const DisplayDuty = () => {
           </div>
 
           <div className={styles.Studentlist}>
-            <div className={styles.filterBtns}>
+            <div className={styles.filterBtns} id="filterContainer">
               {statuses.map((status) => {
                 const count =
                   status === "All"
@@ -137,6 +140,7 @@ const DisplayDuty = () => {
             <div className={styles.searchBox}>
               <input
                 type="text"
+                id="searchBox"
                 placeholder="Search student by roll no. or name"
                 className={styles.searchInputBox}
                 value={search}
@@ -144,7 +148,7 @@ const DisplayDuty = () => {
               />
             </div>
 
-            <div className={styles.contentBox}>
+            <div className={styles.contentBox} style={{maxHeight:tableHeight}}>
               {filteredStudents.length > 0 ? (
                 filteredStudents.map((student,index) => (
                   <div key={student.rollNo} className={styles.content} onClick={()=>handleClick(index)}>

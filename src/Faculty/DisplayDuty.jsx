@@ -5,12 +5,16 @@ import styles from "./CSS/DisplayDuty.module.css";
 import errorStyles from "./CSS/Error.module.css";
 import spinnerStyles from "./CSS/Spinner.module.css";
 import profileMale from "../assets/profileMale.jpg";
+import useTableHeight from "../SetHeight";
 
 const DisplayDuty = () => {
   const [dataList, setDataList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [refresh , setRefresh] = useState(false);
+
+  const tableHeight =  useTableHeight();
+  
 
   const { token } = useAuth();
   const navigate = useNavigate();
@@ -66,7 +70,7 @@ const DisplayDuty = () => {
       </div>
       ) : (
         <>
-          <div className={styles.userInfo}>
+          <div className={styles.userInfo} id="header" >
             <div className={styles.userName}>
               {/* <img className={styles.img} src={profileMale} alt="User Profile" /> */}
               <p className={styles.userNameP}>
@@ -81,7 +85,7 @@ const DisplayDuty = () => {
           </div>
 
           {/* Duty List Section */}
-          <div className={styles.work}>
+          <div className={styles.work} style={{maxHeight:tableHeight}}>
             <div className={styles.contentBox}>
               {dataList.length > 0 ? (
                 dataList.map((duty, index) => (

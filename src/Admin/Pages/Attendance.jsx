@@ -2,7 +2,8 @@ import { useEffect, useState, useCallback } from "react";
 import { useAuth } from "../../Auth/AuthContext";
 import styles from "../Components/DisplayData.module.css";
 import SingleUpload from "../Components/SingleUplaod";
-import setHeight from "../../SetHeight";
+import Header from "../Components/Header";
+import Table from "../Components/Table";
 
 const Attendance = () => {
   const today = new Date();
@@ -11,7 +12,6 @@ const Attendance = () => {
   const year = today.getFullYear();
   const formattedDate = `${year}-${month}-${day}`;
 
-  const { tableHeight } = setHeight();
 
   const [dataList, setDataList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -200,21 +200,13 @@ const Attendance = () => {
 
   return (
     <div className={`${styles.container} container`} >
-      <div className={`${styles.header} header`}>
-        <p className={styles.title}>{title}</p>
-        <div className={styles.searchBox}>
-          <input
-            type="text"
-            placeholder="Search by name or ID"
-            value={searchTerm}
-            onChange={handleSearch}
-            className={styles.searchInput}
-          />
-          <button className={styles.addButton} onClick={() => setShow(true)}>
-            {addText}
-          </button>
-        </div>
-      </div>
+      <Header
+        title={title}
+        searchTerm={searchTerm}
+        handleSearch={handleSearch}
+        setShow={() => setShow(true)}
+        addText={addText}
+      />
 
       {/* Filters */}
       <div className={`${styles.filterContainer} filterContainer`}> 
@@ -291,74 +283,14 @@ const Attendance = () => {
         ) : error ? (
           <p className={styles.error}>{error}</p>
         ) : (
-          <div className={styles.tableBox} style={{ height: tableHeight}}>
-            <table className={styles.table}>
-              <thead>
-                <tr>
-                  <th
-                    className={`${styles.tableHeading} ${styles.tableLayout1}`}
-                  >
-                    SR No.
-                  </th>
-                  {tableHeading.map((heading, index) => (
-                    <th
-                      key={heading + index}
-                      className={`${styles.tableHeading} ${index===tableHeading.length-1? styles.tableLayout3 : ""}`}
-                    >
-                      {heading}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {filteredData.length > 0 ? (
-                  filteredData.map((item, index) => (
-                    <tr key={item[idKey]+index}>
-                      <td>{index + 1}</td>
-                      {tableData.map((row) => (
-                        <td key={row + index}>{item[row]} </td>
-                      ))}
-                      {/* <td className={styles.tableDataLayout4}>
-                        <button
-                          disabled={isDeleting}
-                          className={styles.deleteBtn}
-                          onClick={() => handleDelete(item[idKey])}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="28"
-                            height="28"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                          >
-                            <rect
-                              width="24"
-                              height="24"
-                              rx="3"
-                              fill={isDeleting ? "#919191" : "#F04343"}
-                            />
-                            <path
-                              d="M7.71429 17.5556C7.71429 18.35 8.35714 19 9.14286 19H14.8571C15.6429 19 16.2857 18.35 16.2857 17.5556V8.88889H7.71429V17.5556ZM17 6.72222H14.5L13.7857 6H10.2143L9.5 6.72222H7V8.16667H17V6.72222Z"
-                              fill="white"
-                            />
-                          </svg>
-                        </button>
-                      </td> */}
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td
-                      colSpan={2 + tableHeading.length}
-                      className={styles.noData}
-                    >
-                      No student found.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+          <Table
+          tableHeading={tableHeading}
+          filteredData={filteredData}
+          idKey={idKey}
+          tableData={tableData}
+          isDeleting={isDeleting}
+          deleteData={() => handleDelete(item[idKey])}
+        />
         ))}
     </div>
   );
