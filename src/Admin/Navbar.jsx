@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../Auth/AuthContext";
 import styles from "./Dashboard.module.css";
 
 const Navbar = () => {
   const location = useLocation();
+  const { logout } = useAuth();
+  const navigate = useNavigate();
 
   const navItems = [
     {
@@ -316,6 +319,26 @@ const Navbar = () => {
             {name}
           </Link>
         ))}
+      </div>
+
+      <div className={styles.logoutBtnBox}>
+      <button onClick={logout} className={styles.logoutBtn}>
+        LOGOUT
+        <span id={styles.logoutSpan}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="25"
+            height="24"
+            viewBox="0 0 25 24"
+            fill="none"
+          >
+            <path
+              d="M17.5 7L16.09 8.41L18.67 11H8.5V13H18.67L16.09 15.58L17.5 17L22.5 12L17.5 7ZM4.5 5H12.5V3H4.5C3.4 3 2.5 3.9 2.5 5V19C2.5 20.1 3.4 21 4.5 21H12.5V19H4.5V5Z"
+              fill="#5A4FCF"
+            />
+          </svg>
+        </span>
+      </button>
       </div>
     </div>
   );

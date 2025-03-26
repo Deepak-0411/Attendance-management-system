@@ -3,29 +3,25 @@ import { useAuth } from "./AuthContext";
 import { useEffect, useState, useMemo } from "react";
 import styles from "./ProtectedRoute.module.css";
 
-const ProtectedRoute = ({ element ,user}) => {
+const ProtectedRoute = ({ element, user }) => {
   const { token, logout } = useAuth();
   const [isAuthorized, setIsAuthorized] = useState(null);
-  const [defaultRoot,setDefaultRoot]=useState("/login");
+  const [defaultRoot, setDefaultRoot] = useState("/login");
 
   // Memoized token to prevent unnecessary re-renders
   const authToken = useMemo(() => token, [token]);
 
   useEffect(() => {
-    if (window.innerWidth > 600) 
-      setDefaultRoot("/admin/login");
-    
+    if (window.innerWidth > 600) setDefaultRoot("/admin/login");
   }, []);
-  
-  if (!authToken) {
-    return <Navigate to={`${defaultRoot}`} />;
-  }
-  
+
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch(user==="faculty" ? "https://gbu-server.vercel.app/api/user/dashboard":
-          "https://gbu-server.vercel.app/api/admin/dash",
+        const response = await fetch(
+          user === "faculty"
+            ? "https://gbu-server.vercel.app/api/user/dashboard"
+            : "https://gbu-server.vercel.app/api/admin/dash",
           {
             method: "POST",
             headers: {
@@ -45,6 +41,10 @@ const ProtectedRoute = ({ element ,user}) => {
 
     checkAuth();
   }, [authToken]);
+
+  if (!authToken) {
+    return <Navigate to={`${defaultRoot}`} />;
+  }
 
   // Handle loading state
   if (isAuthorized === null) {
