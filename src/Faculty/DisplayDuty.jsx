@@ -11,12 +11,11 @@ const DisplayDuty = () => {
   const [dataList, setDataList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [refresh , setRefresh] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
-  const tableHeight =  useTableHeight();
-  
+  const tableHeight = useTableHeight();
 
-  const { token } = useAuth();
+  const { token, logout } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -49,10 +48,12 @@ const DisplayDuty = () => {
     };
 
     fetchData();
-  }, [token,refresh]);
+  }, [token, refresh]);
 
-  const handleClick = (shift,buildingName,roomNo,fName,secondTeacher) => {
-    navigate('/students', { state: { shift,buildingName,roomNo,fName,secondTeacher } });
+  const handleClick = (shift, buildingName, roomNo, fName, secondTeacher) => {
+    navigate("/students", {
+      state: { shift, buildingName, roomNo, fName, secondTeacher },
+    });
   };
 
   return (
@@ -63,14 +64,17 @@ const DisplayDuty = () => {
         </div>
       ) : error ? (
         <div className={errorStyles.errorBox}>
-        <p className={errorStyles.errorp}>{error}</p>
-        <button className={errorStyles.retryBtn} onClick={()=>setRefresh(prev=>!prev)} >
-          Retry
-        </button>
-      </div>
+          <p className={errorStyles.errorp}>{error}</p>
+          <button
+            className={errorStyles.retryBtn}
+            onClick={() => setRefresh((prev) => !prev)}
+          >
+            Retry
+          </button>
+        </div>
       ) : (
         <>
-          <div className={styles.userInfo} id="header" >
+          <div className={styles.userInfo} id="header">
             <div className={styles.userName}>
               {/* <img className={styles.img} src={profileMale} alt="User Profile" /> */}
               <p className={styles.userNameP}>
@@ -85,7 +89,7 @@ const DisplayDuty = () => {
           </div>
 
           {/* Duty List Section */}
-          <div className={styles.work} style={{maxHeight:tableHeight}}>
+          <div className={styles.work} style={{ maxHeight: tableHeight }}>
             <div className={styles.contentBox}>
               {dataList.length > 0 ? (
                 dataList.map((duty, index) => (
@@ -93,7 +97,13 @@ const DisplayDuty = () => {
                     key={index}
                     className={styles.content}
                     onClick={() =>
-                      handleClick(duty.shift,duty.buildingName,duty.roomNo,duty.fName,duty.secondTeacher)
+                      handleClick(
+                        duty.shift,
+                        duty.buildingName,
+                        duty.roomNo,
+                        duty.fName,
+                        duty.secondTeacher
+                      )
                     }
                   >
                     <div className={styles.contentData}>
@@ -118,6 +128,25 @@ const DisplayDuty = () => {
                 <p className={styles.noData}>No duty assigned</p>
               )}
             </div>
+          </div>
+          <div className={styles.logoutBtnBox}>
+            <button onClick={logout} className={styles.logoutBtn}>
+              LOGOUT
+              <span id={styles.logoutSpan}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="24"
+                  viewBox="0 0 25 24"
+                  fill="none"
+                >
+                  <path
+                    d="M17.5 7L16.09 8.41L18.67 11H8.5V13H18.67L16.09 15.58L17.5 17L22.5 12L17.5 7ZM4.5 5H12.5V3H4.5C3.4 3 2.5 3.9 2.5 5V19C2.5 20.1 3.4 21 4.5 21H12.5V19H4.5V5Z"
+                    fill="#000"
+                  />
+                </svg>
+              </span>
+            </button>
           </div>
         </>
       )}

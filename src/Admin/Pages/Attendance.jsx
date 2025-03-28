@@ -12,7 +12,6 @@ const Attendance = () => {
   const year = today.getFullYear();
   const formattedDate = `${year}-${month}-${day}`;
 
-
   const [dataList, setDataList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
@@ -57,8 +56,28 @@ const Attendance = () => {
         courseCode: { value: "", placeholder: "Course Code" },
         Date: { value: "", placeholder: "Date" },
       },
-      tableHeading: ["Date","Shift","Building Name", "Room No.", "Roll No.","Course Code" ,"Booklet No.","Status","Marked By"],
-      tableData: ["date","shift","buildingName", "roomNo", "rollNo","courseCode" ,"bookletNumber","status","signature"],
+      tableHeading: [
+        "Date",
+        "Shift",
+        "Building Name",
+        "Room No.",
+        "Roll No.",
+        "Course Code",
+        "Booklet No.",
+        "Status",
+        "Marked By",
+      ],
+      tableData: [
+        "date",
+        "shift",
+        "buildingName",
+        "roomNo",
+        "rollNo",
+        "courseCode",
+        "bookletNumber",
+        "status",
+        "signature",
+      ],
       apiEndPointSingle: "addStudent",
       apiEndPointBulk: "importExcel",
     },
@@ -112,20 +131,19 @@ const Attendance = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (!(room && shift && loadData && fromDate && toDate)) return;
-      
+
       setLoading(true);
       setError(null);
 
-      try {        
-        const roomSplit =room.split("-");
-        
+      try {
+        const roomSplit = room.split("-");
+
         const url = new URL(apiGet);
         url.searchParams.append("buildingName", roomSplit[0]);
         url.searchParams.append("roomNo", roomSplit[1]);
         url.searchParams.append("shift", shift);
         url.searchParams.append("from", fromDate);
         url.searchParams.append("to", toDate);
-        
 
         const response = await fetch(url, {
           method: "GET",
@@ -136,7 +154,7 @@ const Attendance = () => {
         });
 
         if (!response.ok) throw new Error("Failed to fetch student data");
-        const data=await response.json();
+        const data = await response.json();
         setDataList(data.entries);
       } catch (err) {
         setError(err.message);
@@ -176,7 +194,6 @@ const Attendance = () => {
       setIsDeleting(false);
     }
   };
-  
 
   const filteredData = dataList.filter((item) => {
     const name = item[nameKey]?.toLowerCase() || "";
@@ -199,7 +216,7 @@ const Attendance = () => {
   };
 
   return (
-    <div className={`${styles.container} container`} >
+    <div className={`${styles.container} container`}>
       <Header
         title={title}
         searchTerm={searchTerm}
@@ -209,9 +226,8 @@ const Attendance = () => {
       />
 
       {/* Filters */}
-      <div className={`${styles.filterContainer} filterContainer`}> 
+      <div className={`${styles.filterContainer} filterContainer`}>
         <div className={styles.containerInside}>
-
           <p>From -</p>
           <input
             type="date"
@@ -240,8 +256,8 @@ const Attendance = () => {
               <option value="">{`Select ${
                 filter.charAt(0).toUpperCase() + filter.slice(1)
               }`}</option>
-              {Array.isArray(filterOptions[filter+"s"])
-                ? filterOptions[filter+"s"].map((option) => (
+              {Array.isArray(filterOptions[filter + "s"])
+                ? filterOptions[filter + "s"].map((option) => (
                     <option key={option} value={option}>
                       {option}
                     </option>
@@ -249,32 +265,35 @@ const Attendance = () => {
                 : null}
             </select>
           ))}
- 
+
           <button
             className={styles.searchButton}
-            onClick={() => {setLoadData(true); setRefresh((prev) => !prev);}}
+            onClick={() => {
+              setLoadData(true);
+              setRefresh((prev) => !prev);
+            }}
             disabled={!(room && shift && fromDate && toDate)}
           >
             Search
           </button>
         </div>
         <button className={styles.exportBtn}>
-                    EXPORT
-                    <span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="18"
-                        height="18"
-                        viewBox="0 0 18 18"
-                        fill="none"
-                      >
-                        <path
-                          d="M3.7873 16.7812L2.7373 15.7125L4.9498 13.5H3.2623V12H7.4998V16.2375H5.9998V14.5687L3.7873 16.7812ZM8.9998 16.5V15H13.4998V6.75H9.7498V3H4.4998V10.5H2.9998V3C2.9998 2.5875 3.1468 2.2345 3.4408 1.941C3.7348 1.6475 4.0878 1.5005 4.4998 1.5H10.4998L14.9998 6V15C14.9998 15.4125 14.8531 15.7657 14.5596 16.0597C14.2661 16.3538 13.9128 16.5005 13.4998 16.5H8.9998Z"
-                          fill="black"
-                        />
-                      </svg>
-                    </span>
-                  </button>
+          EXPORT
+          <span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+            >
+              <path
+                d="M3.7873 16.7812L2.7373 15.7125L4.9498 13.5H3.2623V12H7.4998V16.2375H5.9998V14.5687L3.7873 16.7812ZM8.9998 16.5V15H13.4998V6.75H9.7498V3H4.4998V10.5H2.9998V3C2.9998 2.5875 3.1468 2.2345 3.4408 1.941C3.7348 1.6475 4.0878 1.5005 4.4998 1.5H10.4998L14.9998 6V15C14.9998 15.4125 14.8531 15.7657 14.5596 16.0597C14.2661 16.3538 13.9128 16.5005 13.4998 16.5H8.9998Z"
+                fill="black"
+              />
+            </svg>
+          </span>
+        </button>
       </div>
 
       {show && (
@@ -300,13 +319,13 @@ const Attendance = () => {
           <p className={styles.error}>{error}</p>
         ) : (
           <Table
-          tableHeading={tableHeading}
-          filteredData={filteredData}
-          idKey={idKey}
-          tableData={tableData}
-          isDeleting={isDeleting}
-          deleteData={() => handleDelete(item[idKey])}
-        />
+            tableHeading={tableHeading}
+            filteredData={filteredData}
+            idKey={idKey}
+            tableData={tableData}
+            isDeleting={isDeleting}
+            deleteData={() => handleDelete(item[idKey])}
+          />
         ))}
     </div>
   );

@@ -5,7 +5,7 @@ import styles from "./CSS/AdminLogin.module.css";
 import loginsvg from "../../assets/login illustration.svg";
 
 const AdminLogin = () => {
-  const [email, setEmail] = useState("");
+  const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showError, setShowError] = useState(false);
@@ -38,7 +38,7 @@ const AdminLogin = () => {
             "Content-Type": "application/json",
 
           },
-          body: JSON.stringify({ username : email, password : password }),
+          body: JSON.stringify({ username : userId, password : password }),
         }
       );
       
@@ -74,10 +74,10 @@ const AdminLogin = () => {
           <form className={styles.loginForm} onSubmit={handleLogin}>
             <input
               type="text"
-              placeholder="Email"
+              placeholder="userId"
               className={styles.loginInput}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
               required
             />
 

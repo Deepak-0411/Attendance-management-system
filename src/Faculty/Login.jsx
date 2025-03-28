@@ -90,7 +90,7 @@ const Login = () => {
         <form className={styles.loginForm} onSubmit={handleLogin}>
           <input
             type="text"
-            placeholder="Email"
+            placeholder="userId"
             className={styles.loginInput}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -100,7 +100,7 @@ const Login = () => {
           <div className={styles.passwordContainer}>
             <input
               type={showPassword ? "text" : "password"}
-              placeholder="Password"
+              placeholder="password"
               className={styles.loginInput}
               value={password}
               onChange={(e) => setPassword(e.target.value)}

@@ -123,6 +123,10 @@
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: .05rem;
+  cursor: pointer;
+}
+.exportBtn:hover{
+  background-color: #a9a9a9;
 }
 
 .spinnerContainer {

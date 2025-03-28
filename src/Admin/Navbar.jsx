@@ -6,7 +6,6 @@ import styles from "./Dashboard.module.css";
 const Navbar = () => {
   const location = useLocation();
   const { logout } = useAuth();
-  const navigate = useNavigate();
 
   const navItems = [
     {

@@ -6,6 +6,7 @@
   height: 100vh;
   background-color: #212121;
   overflow: auto;
+  position:relative;
 }
 
 /* 🟢 User Info (Fixed at Top) */
@@ -88,4 +89,27 @@
   text-align: center;
   color: rgba(255, 255, 255, 0.2);
   font-size: 2.5rem;
+}
+.logoutBtnBox{
+  position: absolute;
+  bottom: 2.1rem;
+  right: 2.1rem;
+}
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7f7f7;
+  color: #000000;
+  padding: 0.6rem .8rem .6rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.15rem;
+  border-radius: 3rem;
+  border: none;
+  gap: .7rem;
+}
+#logoutSpan{
+  display: flex;
+  align-items: center;
 }

@@ -257,8 +257,8 @@ const DisplayData = ({ type }) => {
             </button>
           </div>
           <button className={styles.exportBtn}>
-            EXPORT
-            <span>
+            <span className={styles.exportBtnText}>EXPORT</span>
+            <span className={styles.exportBtnSvg}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
