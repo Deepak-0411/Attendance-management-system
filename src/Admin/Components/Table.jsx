@@ -16,7 +16,7 @@ const Table = ({
       <table className={styles.table}>
         <thead>
           <tr>
-            <th className={`${styles.tableHeading} ${styles.tableLayout1}`}>
+            <th className={`${styles.tableHeading} `}>
               SR No.
             </th>
             {tableHeading.map((heading, index) => (
@@ -25,7 +25,7 @@ const Table = ({
               </th>
             ))}
             <th
-              className={`${styles.tableHeading} ${styles.tableLayout3}`}
+              className={`${styles.tableHeading} `}
             ></th>
           </tr>
         </thead>

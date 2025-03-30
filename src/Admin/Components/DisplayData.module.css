@@ -88,12 +88,15 @@
 }
 .filterInput {
   border: none;
-  background-color: rgb(211, 211, 211);
   padding: 0.5rem;
   border-radius: 0.5rem;
   outline: none;
+  background: #d7d7d7;
+  height: 2rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: .05rem;
   cursor: pointer;
-  font-family: "Poppins";
 }
 .searchButton {
   background-color: #9a93e9;
@@ -212,13 +215,19 @@
   font-size: 1rem;
   font-weight: 500;
 }
-.tableLayout1 {
+/* .tableLayout1 {
   border-top-left-radius: 0.8rem;
 }
 
 .tableLayout3 {
   border-top-right-radius: 0.8rem;
-}
+} */
+ .tableHeading:first-child{
+  border-top-left-radius: 0.8rem;
+ }
+ .tableHeading:last-child{
+  border-top-right-radius: 0.8rem;
+ }
 
 .noData {
   text-align: center;
