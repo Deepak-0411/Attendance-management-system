@@ -46,15 +46,12 @@ const useTableHeight = () => {
         getMargin(getStyles(content)) +
         getMargin(getStyles(container)) +
         getMargin(getStyles(header)) +
-        getMargin(getStyles(filterContainer))
+        getMargin(getStyles(filterContainer))+
         getMargin(getStyles(searchBox));
 
       const totalPadding =
         getPadding(getStyles(content)) +
-        getPadding(getStyles(container)) +
-        getPadding(getStyles(header)) +
-        getPadding(getStyles(filterContainer))
-        getPadding(getStyles(searchBox));
+        getPadding(getStyles(container)) ;
 
       // Calculate available height
       const availableHeight =
@@ -68,17 +65,19 @@ const useTableHeight = () => {
       //   "Header height:",
       //   headerHeight,
       //   "| margin:",
-      //   getMargin(getStyles(header)),
-      //   "| padding:",
-      //   getPadding(getStyles(header))
+      //   getMargin(getStyles(header))
       // );
       // console.log(
       //   "Filter height:",
       //   filterHeight,
       //   "| margin:",
-      //   getMargin(getStyles(filterContainer)),
-      //   "| padding:",
-      //   getPadding(getStyles(filterContainer))
+      //   getMargin(getStyles(filterContainer))
+      // );
+      // console.log(
+      //   "Search height:",
+      //   searchBoxHeight,
+      //   "| margin:",
+      //   getMargin(getStyles(searchBox))
       // );
       // console.log(
       //   "Content margin:",
@@ -92,6 +91,8 @@ const useTableHeight = () => {
       //   "| padding:",
       //   getPadding(getStyles(container))
       // );
+      // console.log("Total margins: ",totalMargins,"| padding: ",totalPadding);
+      
     };
 
     updateHeight();

@@ -16,7 +16,8 @@ const DisplayDuty = () => {
   const [error, setError] = useState(null);
   const [refresh , setRefresh] = useState(false);
 
-  const tableHeight =  useTableHeight();
+  const {tableHeight} =  useTableHeight();
+  
 
   const { token } = useAuth();
   const navigate = useNavigate();
@@ -113,7 +114,7 @@ const DisplayDuty = () => {
             <p className={styles.roomInfoP}>Shift: {shift || "N/A"}</p>
           </div>
 
-          <div className={styles.Studentlist}>
+          <div className={styles.Studentlist} id="container">
             <div className={styles.filterBtns} id="filterContainer">
               {statuses.map((status) => {
                 const count =
@@ -137,10 +138,9 @@ const DisplayDuty = () => {
               })}
             </div>
 
-            <div className={styles.searchBox}>
+            <div className={styles.searchBox} id="searchBox" >
               <input
                 type="text"
-                id="searchBox"
                 placeholder="Search student by roll no. or name"
                 className={styles.searchInputBox}
                 value={search}
@@ -148,7 +148,7 @@ const DisplayDuty = () => {
               />
             </div>
 
-            <div className={styles.contentBox} style={{maxHeight:tableHeight}}>
+            <div className={styles.contentBox} style={{maxHeight:tableHeight || "665px"}}>
               {filteredStudents.length > 0 ? (
                 filteredStudents.map((student,index) => (
                   <div key={student.rollNo} className={styles.content} onClick={()=>handleClick(index)}>
