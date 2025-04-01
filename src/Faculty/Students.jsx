@@ -87,7 +87,7 @@ const DisplayDuty = () => {
   }, [dataList, activeBtn, search]);
 
 
-  const handleClick = (index)=>{
+  const handleClick = (index)=>{    
     navigate("/markAttendance",{state:{dataList,index}})
   };
 

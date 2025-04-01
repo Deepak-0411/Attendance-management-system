@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Html5Qrcode } from "html5-qrcode";
 import styles from "./CSS/ScanSheet.module.css";
 
-const QRScanner = ({closeDiv,sheetno}) => {
+const QRScanner = ({closeDiv,setSheet}) => {
   const [isScanning, setIsScanning] = useState(false);
   const [cameraFacing, setCameraFacing] = useState("environment");
   const html5QrCodeRef = useRef(null);
@@ -53,7 +53,7 @@ const QRScanner = ({closeDiv,sheetno}) => {
           if (!scannedOnce) {
             scannedOnce = true;
             await stopScanning();
-            sheetno(decodedText);
+            setSheet(decodedText);
             closeDiv();
           }
         }

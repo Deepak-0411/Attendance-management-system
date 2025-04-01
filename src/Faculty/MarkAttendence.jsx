@@ -17,7 +17,7 @@ const MarkAttendence = () => {
   const [showError, setShowError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("")
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);  
 
   useEffect(() => {
     if (!dataList || dataList.length === 0) {
