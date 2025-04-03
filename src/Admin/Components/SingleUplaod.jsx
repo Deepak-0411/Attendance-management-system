@@ -10,7 +10,6 @@ const SingleUplaod = ({ dataToSend = {}, close, apiEndPointSingle, apiEndPointBu
   const [isUploading, setIsUploading] = useState(false);
   const [showBulkUpload, setShowBulkUpload] = useState(false);
   const { token } = useAuth();
-
   const handleChange = (e) => {
     setData((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
   };
@@ -55,7 +54,7 @@ const SingleUplaod = ({ dataToSend = {}, close, apiEndPointSingle, apiEndPointBu
           <input
             key={key}
             required
-            type={key === "password" ? "password" : key==="Date" ? "date" : "text"}
+            type={key === "password" ? "password" : key==="date" ? "date" : "text"}
             name={key}
             placeholder={dataToSend[key].placeholder}
             value={data[key] || ""}

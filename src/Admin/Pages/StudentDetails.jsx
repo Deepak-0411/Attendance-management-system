@@ -174,7 +174,7 @@ const StudentDetails = () => {
   });
 
   return (
-    <div className={`${styles.container} container`}>
+    <div className={`${styles.container} `} id="container">
       <Header
         title={title}
         searchTerm={searchTerm}
@@ -184,7 +184,7 @@ const StudentDetails = () => {
       />
 
       {/* Filters */}
-      <div className={`${styles.filterContainer} filterContainer`}>
+      <div className={`${styles.filterContainer} `} id="filterContainer">
         <div className={styles.containerInside}>
         {["year", "programme", "branch"].map((filter) => (
           <select

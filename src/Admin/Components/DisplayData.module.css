@@ -86,7 +86,7 @@
   align-items: center;
   gap: 1.2rem;
 }
-.filterInput {
+.filterInput,.filterInput option {
   border: none;
   padding: 0.5rem;
   border-radius: 0.5rem;

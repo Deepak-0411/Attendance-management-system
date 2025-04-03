@@ -54,7 +54,7 @@ const Attendance = () => {
         shift: { value: "", placeholder: "Shift" },
         rollNo: { value: "", placeholder: "Roll No." },
         courseCode: { value: "", placeholder: "Course Code" },
-        Date: { value: "", placeholder: "Date" },
+        date: { value: "", placeholder: "Date" },
       },
       tableHeading: [
         "Date",
@@ -113,7 +113,7 @@ const Attendance = () => {
         if (!response.ok) throw new Error("Failed to fetch filter options");
 
         const data = await response.json();
-
+        
         setFilterOptions({
           rooms: data.rooms || [],
           shifts: data.shifts || [],
@@ -142,9 +142,10 @@ const Attendance = () => {
         url.searchParams.append("buildingName", roomSplit[0]);
         url.searchParams.append("roomNo", roomSplit[1]);
         url.searchParams.append("shift", shift);
-        url.searchParams.append("from", fromDate);
-        url.searchParams.append("to", toDate);
-
+        url.searchParams.append("fromDate", fromDate);
+        url.searchParams.append("toDate", toDate);
+        console.log(url);
+        
         const response = await fetch(url, {
           method: "GET",
           headers: {
@@ -155,6 +156,8 @@ const Attendance = () => {
 
         if (!response.ok) throw new Error("Failed to fetch student data");
         const data = await response.json();
+        console.log(data);
+        
         setDataList(data.entries);
       } catch (err) {
         setError(err.message);
