@@ -89,7 +89,7 @@ const DisplayData = ({ type }) => {
         buildingName: { value: "", placeholder: "Building Name" },
         roomNo: { value: "", placeholder: "Room no." },
         shift: { value: "", placeholder: "Shift" },
-        date: { value: "", placeholder: "Date" },
+        Date: { value: "", placeholder: "Date" },
       },
       tableHeading: [
         "Faculty Name",
