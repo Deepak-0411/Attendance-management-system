@@ -142,8 +142,8 @@ const Attendance = () => {
         url.searchParams.append("buildingName", roomSplit[0]);
         url.searchParams.append("roomNo", roomSplit[1]);
         url.searchParams.append("shift", shift);
-        url.searchParams.append("fromDate", fromDate);
-        url.searchParams.append("toDate", toDate);
+        url.searchParams.append("fromdate",fromDate);
+        url.searchParams.append("todate", toDate);
         console.log(url);
         
         const response = await fetch(url, {

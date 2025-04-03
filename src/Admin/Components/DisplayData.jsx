@@ -144,7 +144,6 @@ const DisplayData = ({ type }) => {
             `Error ${response.status}: Failed to fetch ${type} data`
           );
         const data = await response.json();
-          console.log(data);
           
         setDataList(data);
       } catch (err) {
