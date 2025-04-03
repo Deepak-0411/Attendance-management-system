@@ -79,7 +79,7 @@ const DisplayData = ({ type }) => {
     },
     ExamDuty: {
       title: "Exam Duty",
-      apiGet: `https://gbu-server.vercel.app/api/admin/duty?from=${fromDate}&to=${toDate}`,
+      apiGet: `https://gbu-server.vercel.app/api/admin/duty?from=${fromdate}&to=${todate}`,
       apiDelete: "https://gbu-server.vercel.app/api/admin/duty",
       idKey: "teacherId",
       nameKey: "fName",
