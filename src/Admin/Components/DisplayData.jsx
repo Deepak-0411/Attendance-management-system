@@ -79,7 +79,7 @@ const DisplayData = ({ type }) => {
     },
     ExamDuty: {
       title: "Exam Duty",
-      apiGet: `https://gbu-server.vercel.app/api/admin/duty?from=${fromDate}&to=${toDate}`,
+      apiGet: `https://gbu-server.vercel.app/api/admin/duty?fromdate=${fromDate}&todate=${toDate}`,
       apiDelete: "https://gbu-server.vercel.app/api/admin/duty",
       idKey: "teacherId",
       nameKey: "fName",
@@ -89,7 +89,7 @@ const DisplayData = ({ type }) => {
         buildingName: { value: "", placeholder: "Building Name" },
         roomNo: { value: "", placeholder: "Room no." },
         shift: { value: "", placeholder: "Shift" },
-        Date: { value: "", placeholder: "Date" },
+        date: { value: "", placeholder: "Date" },
       },
       tableHeading: [
         "Faculty Name",
@@ -105,7 +105,7 @@ const DisplayData = ({ type }) => {
         "buildingName",
         "roomNo",
         "shift",
-        "Date",
+        "date",
       ],
       apiEndPointSingle: "duty",
       apiEndPointBulk: "duty/import",
@@ -144,7 +144,8 @@ const DisplayData = ({ type }) => {
             `Error ${response.status}: Failed to fetch ${type} data`
           );
         const data = await response.json();
-
+          console.log(data);
+          
         setDataList(data);
       } catch (err) {
         setError(err.message);
