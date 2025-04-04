@@ -16,6 +16,7 @@ const SingleUplaod = ({ dataToSend = {}, close, apiEndPointSingle, apiEndPointBu
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     setIsUploading(true);
     try {
       const response = await fetch(`https://gbu-server.vercel.app/api/admin/${apiEndPointSingle}`, {

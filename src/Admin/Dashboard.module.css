@@ -72,6 +72,10 @@
   /* overflow-y: hidden; */
   border-radius: 0.8rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+.contentBox{
+  padding: 2rem;
 }
 .logoutBtnBox {
   flex-grow: 1;

@@ -54,7 +54,7 @@ const Attendance = () => {
         shift: { value: "", placeholder: "Shift" },
         rollNo: { value: "", placeholder: "Roll No." },
         courseCode: { value: "", placeholder: "Course Code" },
-        Date: { value: "", placeholder: "Date" },
+        date: { value: "", placeholder: "Date" },
       },
       tableHeading: [
         "Date",
