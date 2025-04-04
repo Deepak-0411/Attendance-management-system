@@ -104,7 +104,7 @@
 }
 
 /* Style when the error box is shown */
-.errorBoxShow {
+.msgBoxShow {
   top: 30px; 
   opacity: 1;
 }

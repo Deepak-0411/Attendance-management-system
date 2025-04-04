@@ -94,6 +94,10 @@
   font-family: Jaldi;
   text-align: center;
 }
+.loginButton:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
 
 .passwordContainer {
   position: relative;

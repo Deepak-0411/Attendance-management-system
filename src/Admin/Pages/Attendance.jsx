@@ -54,7 +54,7 @@ const Attendance = () => {
         shift: { value: "", placeholder: "Shift" },
         rollNo: { value: "", placeholder: "Roll No." },
         courseCode: { value: "", placeholder: "Course Code" },
-        date: { value: "", placeholder: "Date" },
+        Date: { value: "", placeholder: "Date" },
       },
       tableHeading: [
         "Date",
@@ -144,7 +144,6 @@ const Attendance = () => {
         url.searchParams.append("shift", shift);
         url.searchParams.append("fromdate",fromDate);
         url.searchParams.append("todate", toDate);
-        console.log(url);
         
         const response = await fetch(url, {
           method: "GET",
@@ -156,9 +155,8 @@ const Attendance = () => {
 
         if (!response.ok) throw new Error("Failed to fetch student data");
         const data = await response.json();
-        console.log(data);
         
-        setDataList(data.entries);
+        setDataList(data.formattedEntries);
       } catch (err) {
         setError(err.message);
       } finally {

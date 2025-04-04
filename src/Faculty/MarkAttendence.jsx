@@ -14,34 +14,31 @@ const MarkAttendence = () => {
   const [index, setIndex] = useState(state?.index || 0);
   const [scanning, setScanning] = useState(false);
   const [sheetNo, setSheetNo] = useState("");
-  const [showError, setShowError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
-  const [successMsg, setSuccessMsg] = useState("")
+  const [showMsgBox, setShowMsgBox] = useState(false);
+  const [message, setMessage] = useState({ type: "", text: "" });
   const [loading, setLoading] = useState(false);  
 
   useEffect(() => {
     if (!dataList || dataList.length === 0) {
-      setErrorMsg("Some error occurred: No data found");
-      setShowError(true);
+      setMessage({ type: "error", text: "Some error occurred: No data found" });
+      setShowMsgBox(true);
     }
   }, []);
 
   useEffect(() => {
     let timer;
-    if (showError) {
-      timer = setTimeout(() => setShowError(false), 2500);
+    if (showMsgBox) {
+      timer = setTimeout(() => setShowMsgBox(false), 2500);
     }
     return () => clearTimeout(timer);
-  }, [showError]);
+  }, [showMsgBox]);
 
-  const showErrorBox = (msg) => {
-    msg.includes("Marked") ? setSuccessMsg(msg) : setErrorMsg(msg);
-    setShowError(true);
-  };
+
 
   const handleStatusChange = async (newStatus) => {
     if (newStatus !== "Absent" && !sheetNo) {
-      showErrorBox("Error: No sheet number found!");
+      setMessage({ type: "error", text: "Error: No sheet number found!" });
+      setShowMsgBox(true);
       return;
     }
 
@@ -76,9 +73,12 @@ const MarkAttendence = () => {
       };
       setDataList(updatedList);
       setSheetNo("");
-      showErrorBox(`Marked as ${newStatus}`);
+      //Sucess msg
+      setMessage({ type: "success", text: `Marked as ${newStatus}` });
+      setShowMsgBox(true);
     } catch (err) {
-      showErrorBox(err.message || "API Error");
+      setMessage({ type: "error", text: err.message || "API Error" });
+      setShowMsgBox(true);
     } finally {
       setLoading(false);
     }
@@ -120,9 +120,10 @@ const MarkAttendence = () => {
     <div className={styles.container}>
       {/* Error Message */}
       <div
-        className={`${(successMsg)?styles.successMsgBox : styles.errorBox} ${showError ? styles.errorBoxShow : ""}`}
-      >
-        <p>{errorMsg}</p>
+        className={`${message.type === "success" ?styles.successMsgBox : styles.errorBox} ${showMsgBox ? styles.msgBoxShow : ""}`}>
+        { console.log(message.text)}
+      
+        <p>{message.text}</p>
       </div>
 
       <div className={styles.card}>

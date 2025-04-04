@@ -8,74 +8,62 @@ const QRScanner = ({closeDiv,setSheet}) => {
   const html5QrCodeRef = useRef(null);
 
   useEffect(() => {
-    checkCameraPermissions();
     return () => stopScanning();
   }, []);
 
-  const checkCameraPermissions = async () => {
-    try {
-      const permissions = await navigator.permissions.query({ name: "camera" });
-      if (permissions.state === "denied") {
-        if (
-          window.confirm(
-            "Camera access is blocked. Enable it in browser settings."
-          )
-        ) {
-          window.open("chrome://settings/content/camera", "_blank");
-        }
-        return false;
-      }
-      if (permissions.state === "prompt") {
-        await navigator.mediaDevices.getUserMedia({ video: true });
-      }
-      return true;
-    } catch (error) {
-      console.error("Permission check failed:", error);
-      return false;
-    }
-  };
-
+  
   const startScanning = async (facingMode = cameraFacing) => {
-    if (!(await checkCameraPermissions())) return;
-    stopScanning();
+  
+    // Stop any existing scan before starting a new one
+    await stopScanning();
     setIsScanning(true);
-
+  
     setTimeout(async () => {
-      if (!document.getElementById("reader")) return setIsScanning(false);
-
+      const readerElement = document.getElementById("reader");
+      if (!readerElement) return setIsScanning(false);
+  
       html5QrCodeRef.current = new Html5Qrcode("reader");
       let scannedOnce = false;
-
-      await html5QrCodeRef.current.start(
-        { facingMode },
-        { fps: 25, qrbox: { width: 250, height: 250 } },
-        async (decodedText) => {
-          if (!scannedOnce) {
-            scannedOnce = true;
-            await stopScanning();
-            setSheet(decodedText);
-            closeDiv();
+  
+      try {
+        await html5QrCodeRef.current.start(
+          { facingMode },
+          { fps: 25, qrbox: { width: 250, height: 250 } },
+          async (decodedText) => {
+            if (!scannedOnce) {
+              scannedOnce = true;
+              await stopScanning();
+              setSheet(decodedText);
+              closeDiv();
+            }
           }
-        }
-      );
-    }, 100);
+        );
+      } catch (err) {
+        console.error("Error starting QR scanner:", err);
+        setIsScanning(false);
+      }
+    }, 100); // Small delay to ensure DOM is ready
   };
-
+  
   const stopScanning = async () => {
     if (html5QrCodeRef.current) {
-      await html5QrCodeRef.current.stop();
+      try {
+        await html5QrCodeRef.current.stop();
+      } catch (err) {
+        console.warn("Error stopping QR scanner:", err);
+      }
       html5QrCodeRef.current = null;
       setIsScanning(false);
     }
   };
-
+  
   const toggleCamera = async () => {
     const newCamera = cameraFacing === "environment" ? "user" : "environment";
     setCameraFacing(newCamera);
     await stopScanning();
     startScanning(newCamera);
   };
-
+  
   return (
     <div className={styles.container}>
         <div className={styles.close}>
