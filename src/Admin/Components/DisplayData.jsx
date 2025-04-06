@@ -4,6 +4,8 @@ import Table from "./Table";
 import { useAuth } from "../../Auth/AuthContext";
 import styles from "./DisplayData.module.css";
 import SingleUpload from "./SingleUplaod";
+import FilterBar from "./FilterBar";
+import Downloadfile from "./DownloadFile";
 
 const DisplayData = ({ type }) => {
   const today = new Date();
@@ -16,7 +18,8 @@ const DisplayData = ({ type }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [show, setShow] = useState(false);
+  const [showUpload, setShowUpload] = useState(false);
+  const [showExport, setShowExport] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [fromDate, setFromDate] = useState(formattedDate);
@@ -144,7 +147,6 @@ const DisplayData = ({ type }) => {
             `Error ${response.status}: Failed to fetch ${type} data`
           );
         const data = await response.json();
-          
         setDataList(data);
       } catch (err) {
         setError(err.message);
@@ -204,18 +206,48 @@ const DisplayData = ({ type }) => {
     );
   });
 
-  const handleFromDateChange = (e) => {
-    const value = e.target.value;
+  const addDays = (dateStr, days) => {
+    const date = new Date(dateStr);
+    date.setDate(date.getDate() + days);
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, "0");
+    const dd = String(date.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
+  const handleFromDateChange = (value) => {
     setFromDate(value);
 
-    if (toDate < value) {
+    const maxSelectableToDate = addDays(value, 30);
+    if (toDate < value || toDate > maxSelectableToDate) {
       setToDate(value);
     }
   };
 
-  const handleToDateChange = (e) => {
-    setToDate(e.target.value);
+  const handleToDateChange = (value) => {
+    if (value >= fromDate && value <= addDays(fromDate, 30)) {
+      setToDate(value);
+    }
   };
+
+  const filterInputs = [
+    {
+      type: "date",
+      label: "From",
+      name: "from",
+      value: fromDate,
+      onChange: (val) => handleFromDateChange(val),
+      required: true,
+    },
+    {
+      type: "date",
+      label: "To",
+      name: "to",
+      value: toDate,
+      onChange: (val) => handleToDateChange(val),
+      required: true,
+    },
+  ];
 
   return (
     <div className={`${styles.container}`} id="container">
@@ -224,71 +256,40 @@ const DisplayData = ({ type }) => {
         title={title}
         searchTerm={searchTerm}
         handleSearch={handleSearch}
-        setShow={() => setShow(true)}
+        setShowUpload={() => setShowUpload(true)}
         addText={addText}
       />
 
       {/* Date input from-to only appear if type == examduty */}
-      {type === "ExamDuty" ? (
-        <div className={`${styles.filterContainer} `} id="filterContainer">
-          <div className={styles.containerInside}>
-            <p>From -</p>
-            <input
-              type="date"
-              className={styles.filterInput}
-              value={fromDate}
-              onChange={handleFromDateChange}
-            />
-            <p></p>
-            <p> To -</p>
-            <input
-              type="date"
-              className={styles.filterInput}
-              min={fromDate}
-              value={toDate}
-              onChange={handleToDateChange}
-            />
-            <button
-              className={styles.searchButton}
-              onClick={() => setRefreshTrigger((prev) => !prev)}
-              disabled={!(fromDate && toDate)}
-            >
-              Search
-            </button>
-          </div>
-          <button className={styles.exportBtn}>
-            <span className={styles.exportBtnText}>EXPORT</span>
-            <span className={styles.exportBtnSvg}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 18 18"
-                fill="none"
-              >
-                <path
-                  d="M3.7873 16.7812L2.7373 15.7125L4.9498 13.5H3.2623V12H7.4998V16.2375H5.9998V14.5687L3.7873 16.7812ZM8.9998 16.5V15H13.4998V6.75H9.7498V3H4.4998V10.5H2.9998V3C2.9998 2.5875 3.1468 2.2345 3.4408 1.941C3.7348 1.6475 4.0878 1.5005 4.4998 1.5H10.4998L14.9998 6V15C14.9998 15.4125 14.8531 15.7657 14.5596 16.0597C14.2661 16.3538 13.9128 16.5005 13.4998 16.5H8.9998Z"
-                  fill="black"
-                />
-              </svg>
-            </span>
-          </button>
-        </div>
-      ) : (
-        ""
+      {type === "ExamDuty" && (
+        <FilterBar
+          filters={filterInputs}
+          searchBtnAction={() => setRefreshTrigger((prev) => !prev)}
+          showExportBtn={true}
+          exportBtnAction={setShowExport}
+        />
       )}
 
       {/* file upload */}
-      {show && (
-        <div className={styles.uploadData}>
+      {showUpload && (
+        <div className={styles.showOverlay}>
           <SingleUpload
             dataToSend={formFields}
             close={() => {
-              setShow(false);
+              setShowUpload(false);
               setRefreshTrigger((prev) => !prev);
             }}
             apiEndPointSingle={apiEndPointSingle}
             apiEndPointBulk={apiEndPointBulk}
+          />
+        </div>
+      )}
+
+      {showExport && (
+        <div className={styles.showOverlay}>
+          <Downloadfile
+            close={() => setShowExport(false)}
+            filterInputs={filterInputs}
           />
         </div>
       )}

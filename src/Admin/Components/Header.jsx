@@ -1,6 +1,6 @@
 import styles from "./DisplayData.module.css";
 
-const Header = ({title,searchTerm,handleSearch,setShow , addText}) => {
+const Header = ({title,searchTerm,handleSearch,setShowUpload , addText}) => {
   return (
     <div className={`${styles.header} `} id="header">
       <p className={styles.title}>{title}</p>
@@ -12,7 +12,7 @@ const Header = ({title,searchTerm,handleSearch,setShow , addText}) => {
           onChange={handleSearch}
           className={styles.searchInput}
         />
-        <button className={styles.addButton} onClick={setShow}>
+        <button className={styles.addButton} onClick={setShowUpload}>
           {addText}
         </button>
       </div>

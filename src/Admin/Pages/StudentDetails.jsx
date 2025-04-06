@@ -4,6 +4,7 @@ import Table from "../Components/Table";
 import { useAuth } from "../../Auth/AuthContext";
 import styles from "../Components/DisplayData.module.css";
 import SingleUpload from "../Components/SingleUplaod";
+import FilterBar from "../Components/FilterBar";
 
 const StudentDetails = () => {
   const [dataList, setDataList] = useState([]);
@@ -15,7 +16,6 @@ const StudentDetails = () => {
   const [loadData, setLoadData] = useState(false);
   const [refresh, setRefresh] = useState(true);
 
-
   // Filter states
   const [filters, setFilters] = useState({
     year: "",
@@ -26,9 +26,9 @@ const StudentDetails = () => {
 
   // Filter options from API
   const [filterOptions, setFilterOptions] = useState({
-    year: [],
-    programme: [],
-    branch: [],
+    year: ["Loading..."],
+    programme: ["Loading..."],
+    branch: ["Loading..."],
   });
 
   const { token } = useAuth();
@@ -173,6 +173,41 @@ const StudentDetails = () => {
     return name.includes(searchTerm) || id.includes(searchTerm);
   });
 
+  const handleFilterChange = (value,name) => {
+    if (value !== "Loading...") {
+      setFilters((prev) => ({ ...prev, [name]: value }));
+    }
+  }
+
+  const filterInputs = [
+    {
+      type: "select",
+      label: "Year",
+      name: "year",
+      value: year,
+      options:filterOptions.year ,
+      onChange: (val,name) => handleFilterChange(val, name),
+      required: true,
+    },{
+      type: "select",
+      label: "Programme",
+      name: "programme",
+      value: programme,
+      options:filterOptions.programme ,
+      onChange: (val,name) => handleFilterChange(val, name),
+      required: true,
+    },{
+      type: "select",
+      label: "Branch",
+      name: "branch",
+      value: branch,
+      options:filterOptions.branch ,
+      onChange: (val,name) => handleFilterChange(val, name),
+      required: true,
+    },
+  ];
+  
+
   return (
     <div className={`${styles.container} `} id="container">
       <Header
@@ -183,41 +218,14 @@ const StudentDetails = () => {
         addText={addText}
       />
 
-      {/* Filters */}
-      <div className={`${styles.filterContainer} `} id="filterContainer">
-        <div className={styles.containerInside}>
-        {["year", "programme", "branch"].map((filter) => (
-          <select
-            key={filter}
-            className={styles.filterInput}
-            value={filters[filter]}
-            onChange={(e) =>
-              setFilters((prev) => ({ ...prev, [filter]: e.target.value }))
-            }
-          >
-            <option value="">{`Select ${
-              filter.charAt(0).toUpperCase() + filter.slice(1)
-            }`}</option>
-            {Array.isArray(filterOptions[filter])
-              ? filterOptions[filter].map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))
-              : null}
-          </select>
-        ))}
-
-        <button
-          className={styles.searchButton}
-          onClick={() => {setLoadData(true); setRefresh((prev) => !prev);}}
-          disabled={!(year && programme && branch)}
-        >
-          Search
-        </button>
-        </div>
-      </div>
-
+      <FilterBar
+        filters={filterInputs}
+        searchBtnAction={() => {
+          setLoadData(true);
+          setRefresh((prev) => !prev);
+        }}
+      />
+      
       {show && (
         <div className={styles.uploadData}>
           <SingleUpload
@@ -241,13 +249,13 @@ const StudentDetails = () => {
           <p className={styles.error}>{error}</p>
         ) : (
           <Table
-          tableHeading={tableHeading}
-          filteredData={filteredData}
-          idKey={idKey}
-          tableData={tableData}
-          isDeleting={isDeleting}
-          deleteData={() => handleDelete(item[idKey])}
-        />
+            tableHeading={tableHeading}
+            filteredData={filteredData}
+            idKey={idKey}
+            tableData={tableData}
+            isDeleting={isDeleting}
+            deleteData={() => handleDelete(item[idKey])}
+          />
         ))}
     </div>
   );

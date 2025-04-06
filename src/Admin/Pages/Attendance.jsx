@@ -4,6 +4,8 @@ import styles from "../Components/DisplayData.module.css";
 import SingleUpload from "../Components/SingleUplaod";
 import Header from "../Components/Header";
 import Table from "../Components/Table";
+import DownloadFile from "../Components/DownloadFile";
+import FilterBar from "../Components/FilterBar";
 
 const Attendance = () => {
   const today = new Date();
@@ -16,7 +18,8 @@ const Attendance = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [show, setShow] = useState(false);
+  const [showUpload, setShowUpload] = useState(false);
+  const [showExport, setShowExport] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [loadData, setLoadData] = useState(false);
   const [refresh, setRefresh] = useState(true);
@@ -33,8 +36,8 @@ const Attendance = () => {
 
   // Filter options from API
   const [filterOptions, setFilterOptions] = useState({
-    rooms: [],
-    shifts: [],
+    rooms: ["Loading..."],
+    shifts: ["Loading..."],
   });
 
   const { token } = useAuth();
@@ -113,7 +116,7 @@ const Attendance = () => {
         if (!response.ok) throw new Error("Failed to fetch filter options");
 
         const data = await response.json();
-        
+
         setFilterOptions({
           rooms: data.rooms || [],
           shifts: data.shifts || [],
@@ -142,9 +145,9 @@ const Attendance = () => {
         url.searchParams.append("buildingName", roomSplit[0]);
         url.searchParams.append("roomNo", roomSplit[1]);
         url.searchParams.append("shift", shift);
-        url.searchParams.append("fromdate",fromDate);
+        url.searchParams.append("fromdate", fromDate);
         url.searchParams.append("todate", toDate);
-        
+
         const response = await fetch(url, {
           method: "GET",
           headers: {
@@ -155,7 +158,7 @@ const Attendance = () => {
 
         if (!response.ok) throw new Error("Failed to fetch student data");
         const data = await response.json();
-        
+
         setDataList(data.formattedEntries);
       } catch (err) {
         setError(err.message);
@@ -203,110 +206,112 @@ const Attendance = () => {
     return name.includes(searchTerm) || id.includes(searchTerm);
   });
 
-  const handleFromDateChange = (e) => {
-    const value = e.target.value;
+
+  const addDays = (dateStr, days) => {
+    const date = new Date(dateStr);
+    date.setDate(date.getDate() + days);
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, "0");
+    const dd = String(date.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
+  const handleFromDateChange = (value) => {
     setFromDate(value);
 
-    if (toDate < value) {
+    const maxSelectableToDate = addDays(value, 30);
+    if (toDate < value || toDate > maxSelectableToDate) {
       setToDate(value);
     }
   };
 
-  const handleToDateChange = (e) => {
-    setToDate(e.target.value);
+  const handleToDateChange = (value) => {
+    if (value >= fromDate && value <= addDays(fromDate, 30)) {
+      setToDate(value);
+    }
   };
 
+  const handleFilterChange = (value, name) => {
+    if (value !== "Loading...") {
+      setFilters((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const filterInputs = [
+    {
+      type: "date",
+      label: "From",
+      name: "from",
+      value: fromDate,
+      onChange: (val) => handleFromDateChange(val),
+      required: true,
+    },
+    {
+      type: "date",
+      label: "To",
+      name: "to",
+      value: toDate,
+      onChange: (val) => handleToDateChange(val),
+      required: true,
+    },
+    {
+      type: "select",
+      label: "Room",
+      name: "room",
+      value: room,
+      options: filterOptions.rooms,
+      onChange: (val, name) => handleFilterChange(val, name),
+      required: true,
+    },
+    {
+      type: "select",
+      label: "Shift",
+      name: "shift",
+      value: shift,
+      options: filterOptions.shifts,
+      onChange: (val, name) => handleFilterChange(val, name),
+      required: true,
+    },
+  ];
   return (
-    <div className={`${styles.container} container`}>
+    <div className={`${styles.container} `} id="container">
       <Header
         title={title}
         searchTerm={searchTerm}
         handleSearch={handleSearch}
-        setShow={() => setShow(true)}
+        setShowUpload={() => setShowUpload(true)}
         addText={addText}
       />
 
-      {/* Filters */}
-      <div className={`${styles.filterContainer} filterContainer`}>
-        <div className={styles.containerInside}>
-          <p>From -</p>
-          <input
-            type="date"
-            className={styles.filterInput}
-            value={fromDate}
-            onChange={handleFromDateChange}
-          />
-          <p> To -</p>
-          <input
-            type="date"
-            className={styles.filterInput}
-            min={fromDate}
-            value={toDate}
-            onChange={handleToDateChange}
-          />
+      <FilterBar
+        filters={filterInputs}
+        searchBtnAction={() => {
+          setLoadData(true);
+          setRefresh((prev) => !prev);
+        }}
+        showExportBtn={true}
+        exportBtnAction={setShowExport}
+      />
 
-          {["room", "shift"].map((filter) => (
-            <select
-              key={filter}
-              className={styles.filterInput}
-              value={filters[filter]}
-              onChange={(e) =>
-                setFilters((prev) => ({ ...prev, [filter]: e.target.value }))
-              }
-            >
-              <option value="">{`Select ${
-                filter.charAt(0).toUpperCase() + filter.slice(1)
-              }`}</option>
-              {Array.isArray(filterOptions[filter + "s"])
-                ? filterOptions[filter + "s"].map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))
-                : null}
-            </select>
-          ))}
-
-          <button
-            className={styles.searchButton}
-            onClick={() => {
-              setLoadData(true);
-              setRefresh((prev) => !prev);
-            }}
-            disabled={!(room && shift && fromDate && toDate)}
-          >
-            Search
-          </button>
-        </div>
-        <button className={styles.exportBtn}>
-          EXPORT
-          <span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 18 18"
-              fill="none"
-            >
-              <path
-                d="M3.7873 16.7812L2.7373 15.7125L4.9498 13.5H3.2623V12H7.4998V16.2375H5.9998V14.5687L3.7873 16.7812ZM8.9998 16.5V15H13.4998V6.75H9.7498V3H4.4998V10.5H2.9998V3C2.9998 2.5875 3.1468 2.2345 3.4408 1.941C3.7348 1.6475 4.0878 1.5005 4.4998 1.5H10.4998L14.9998 6V15C14.9998 15.4125 14.8531 15.7657 14.5596 16.0597C14.2661 16.3538 13.9128 16.5005 13.4998 16.5H8.9998Z"
-                fill="black"
-              />
-            </svg>
-          </span>
-        </button>
-      </div>
-
-      {show && (
-        <div className={styles.uploadData}>
+      {showUpload && (
+        <div className={styles.showOverlay}>
           <SingleUpload
             dataToSend={formFields}
             close={() => {
-              setShow(false);
+              setShowUpload(false);
               setRefresh((prev) => !prev);
             }}
             apiEndPointSingle={apiEndPointSingle}
             apiEndPointBulk={apiEndPointBulk}
+          />
+        </div>
+      )}
+      {showExport && (
+        <div className={styles.showOverlay}>
+          <DownloadFile
+            close={() => setShowExport(false)}
+            filterOptions={{"rooms" : filterOptions.rooms , "shifts" : filterOptions.shifts}}
+            type={"Attendance"}
           />
         </div>
       )}
