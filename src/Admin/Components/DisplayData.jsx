@@ -289,7 +289,7 @@ const DisplayData = ({ type }) => {
         <div className={styles.showOverlay}>
           <Downloadfile
             close={() => setShowExport(false)}
-            filterInputs={filterInputs}
+            type={"ExamDuty"}
           />
         </div>
       )}

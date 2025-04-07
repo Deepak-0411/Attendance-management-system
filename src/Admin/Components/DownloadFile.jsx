@@ -42,7 +42,7 @@ const Downloadfile = ({ close, type, filterOptions }) => {
           required: true,
         },
       ],
-      apiEndPoint: `https://gbu-server.vercel.app/api/admin/duty/export?fromdate=${fromDate}&todate=${toDate}`,
+      apiEndPoint: `https://gbu-server.vercel.app/api/admin/duty/export`,
     },
     Attendance: {
       filterInputs: [
