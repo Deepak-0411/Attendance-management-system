@@ -40,7 +40,7 @@ const DisplayDuty = () => {
       setError(null);
       try {
         const response = await fetch(
-          "https://gbu-server.vercel.app/api/faculty/studentList",
+          `https://gbu-server.vercel.app/api/faculty/studentList?shift=${shift}`,
           {
             method: "GET",
             headers: {
@@ -54,11 +54,13 @@ const DisplayDuty = () => {
           throw new Error(`Error ${response.status}: Failed to fetch data`);
         }
 
-        const data = await response.json();
+        const data = (await response.json()).students;
+        
 
         if (!Array.isArray(data)) {
           throw new Error("Unexpected response format");
         }
+        
 
         setDataList(data);
       } catch (err) {
