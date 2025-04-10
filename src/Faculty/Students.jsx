@@ -14,10 +14,9 @@ const DisplayDuty = () => {
   const [dataList, setDataList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [refresh , setRefresh] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
-  const {tableHeight} =  useTableHeight();
-  
+  const { tableHeight } = useTableHeight();
 
   const { token } = useAuth();
   const navigate = useNavigate();
@@ -55,12 +54,10 @@ const DisplayDuty = () => {
         }
 
         const data = (await response.json()).students;
-        
 
         if (!Array.isArray(data)) {
           throw new Error("Unexpected response format");
         }
-        
 
         setDataList(data);
       } catch (err) {
@@ -72,13 +69,11 @@ const DisplayDuty = () => {
     };
 
     fetchData();
-  }, [token,refresh]);
+  }, [token, refresh]);
 
   const filteredStudents = useMemo(() => {
     return dataList
-      .filter(
-        (student) => activeBtn === "All" || student.status === activeBtn
-      )
+      .filter((student) => activeBtn === "All" || student.status === activeBtn)
       .filter((student) => {
         const query = search.toLowerCase();
         return (
@@ -88,9 +83,10 @@ const DisplayDuty = () => {
       });
   }, [dataList, activeBtn, search]);
 
-
-  const handleClick = (index)=>{    
-    navigate("/markAttendance",{state:{dataList,index}})
+  const handleClick = (index) => {
+    const sessionData = { dataList, index };
+    sessionStorage.setItem("markAttendanceState", JSON.stringify(sessionData));
+    navigate("/markAttendance");
   };
 
   return (
@@ -101,11 +97,14 @@ const DisplayDuty = () => {
         </div>
       ) : error ? (
         <div className={errorStyles.errorBox}>
-                <p className={errorStyles.errorp}>{error}</p>
-                <button className={errorStyles.retryBtn} onClick={()=>setRefresh(prev=>!prev)}>
-                  Retry
-                </button>
-              </div>
+          <p className={errorStyles.errorp}>{error}</p>
+          <button
+            className={errorStyles.retryBtn}
+            onClick={() => setRefresh((prev) => !prev)}
+          >
+            Retry
+          </button>
+        </div>
       ) : (
         <>
           <div className={styles.roomInfo} id="header">
@@ -140,7 +139,7 @@ const DisplayDuty = () => {
               })}
             </div>
 
-            <div className={styles.searchBox} id="searchBox" >
+            <div className={styles.searchBox} id="searchBox">
               <input
                 type="text"
                 placeholder="Search student by roll no. or name"
@@ -150,10 +149,17 @@ const DisplayDuty = () => {
               />
             </div>
 
-            <div className={styles.contentBox} style={{maxHeight:tableHeight || "665px"}}>
+            <div
+              className={styles.contentBox}
+              style={{ maxHeight: tableHeight || "665px" }}
+            >
               {filteredStudents.length > 0 ? (
-                filteredStudents.map((student,index) => (
-                  <div key={student.rollNo} className={styles.content} onClick={()=>handleClick(index)}>
+                filteredStudents.map((student, index) => (
+                  <div
+                    key={student.rollNo}
+                    className={styles.content}
+                    onClick={() => handleClick(index)}
+                  >
                     <div className={styles.contentData}>
                       <p className={styles.contentDataP}>
                         {student.rollNo || "N/A"}

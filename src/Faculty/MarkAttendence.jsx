@@ -10,8 +10,10 @@ const MarkAttendence = () => {
   const { token } = useAuth();
   const { state } = useLocation();
   const navigate = useNavigate();
-  const [dataList, setDataList] = useState(state?.dataList || []);
-  const [index, setIndex] = useState(state?.index || 0);
+  const sessionData = JSON.parse(sessionStorage.getItem("markAttendanceState") || "{}");
+
+  const [dataList, setDataList] = useState(sessionData.dataList || []);
+  const [index, setIndex] = useState(sessionData.index || 0);
   const [scanning, setScanning] = useState(false);
   const [sheetNo, setSheetNo] = useState("");
   const [showMsgBox, setShowMsgBox] = useState(false);
@@ -20,10 +22,10 @@ const MarkAttendence = () => {
 
   useEffect(() => {
     if (!dataList || dataList.length === 0) {
-      setMessage({ type: "error", text: "Some error occurred: No data found" });
-      setShowMsgBox(true);
+      navigate("/displayDuty");
     }
   }, []);
+  
 
   useEffect(() => {
     let timer;
@@ -72,6 +74,10 @@ const MarkAttendence = () => {
         bookletNumber: sheetNo,
       };
       setDataList(updatedList);
+      sessionStorage.setItem(
+        "markAttendanceState",
+        JSON.stringify({ dataList: updatedList, index })
+      );
       setSheetNo("");
       //Sucess msg
       setMessage({ type: "success", text: `Marked as ${newStatus}` });
@@ -86,15 +92,25 @@ const MarkAttendence = () => {
 
   const handleBack = () => {
     if (index > 0) {
-      setIndex(index - 1);
-      setSheetNo("");
+      const newIndex = index - 1;
+    setIndex(newIndex);
+    setSheetNo("");
+    sessionStorage.setItem(
+      "markAttendanceState",
+      JSON.stringify({ dataList, index: newIndex })
+    );
     }
   };
 
   const handleNext = () => {
     if (index < dataList.length - 1) {
-      setIndex(index + 1);
-      setSheetNo("");
+      const newIndex = index + 1;
+    setIndex(newIndex);
+    setSheetNo("");
+    sessionStorage.setItem(
+      "markAttendanceState",
+      JSON.stringify({ dataList, index: newIndex })
+    );
     }
   };
 
@@ -121,7 +137,6 @@ const MarkAttendence = () => {
       {/* Error Message */}
       <div
         className={`${message.type === "success" ?styles.successMsgBox : styles.errorBox} ${showMsgBox ? styles.msgBoxShow : ""}`}>
-        { console.log(message.text)}
       
         <p>{message.text}</p>
       </div>
@@ -142,7 +157,10 @@ const MarkAttendence = () => {
           </p>
           <p className={styles.details}>Status: {student.status || "N/A"}</p>
           <p className={styles.details}>
-            Sheet no: {student.bookletNumber || sheetNo || "N/A"}
+            Sheet no: {student.bookletNumber  || "N/A"}
+          </p>
+          <p className={styles.details}>
+            Scanned no: { sheetNo || "N/A"}
           </p>
         </div>
 
