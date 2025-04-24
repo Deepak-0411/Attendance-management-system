@@ -6,13 +6,9 @@ import Header from "../Components/Header";
 import Table from "../Components/Table";
 import DownloadFile from "../Components/DownloadFile";
 import FilterBar from "../Components/FilterBar";
+import date from "../../Utility/GetDate";
 
 const Attendance = () => {
-  const today = new Date();
-  const day = String(today.getDate()).padStart(2, "0");
-  const month = String(today.getMonth() + 1).padStart(2, "0");
-  const year = today.getFullYear();
-  const formattedDate = `${year}-${month}-${day}`;
 
   const [dataList, setDataList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -24,8 +20,8 @@ const Attendance = () => {
   const [loadData, setLoadData] = useState(false);
   const [refresh, setRefresh] = useState(true);
 
-  const [fromDate, setFromDate] = useState(formattedDate);
-  const [toDate, setToDate] = useState(formattedDate);
+  const [fromDate, setFromDate] = useState(date);
+  const [toDate, setToDate] = useState(date);
 
   // Filter states
   const [filters, setFilters] = useState({

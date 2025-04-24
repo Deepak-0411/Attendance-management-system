@@ -6,13 +6,10 @@ import styles from "./CSS/DisplayData.module.css";
 import SingleUpload from "./SingleUplaod";
 import FilterBar from "./FilterBar";
 import Downloadfile from "./DownloadFile";
+import date from "../../Utility/GetDate";
 
 const DisplayData = ({ type }) => {
-  const today = new Date();
-  const day = String(today.getDate()).padStart(2, "0");
-  const month = String(today.getMonth() + 1).padStart(2, "0");
-  const year = today.getFullYear();
-  const formattedDate = `${year}-${month}-${day}`;
+
 
   const [dataList, setDataList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -22,8 +19,8 @@ const DisplayData = ({ type }) => {
   const [showExport, setShowExport] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [fromDate, setFromDate] = useState(formattedDate);
-  const [toDate, setToDate] = useState(formattedDate);
+  const [fromDate, setFromDate] = useState(date);
+  const [toDate, setToDate] = useState(date);
 
   const { token } = useAuth();
 

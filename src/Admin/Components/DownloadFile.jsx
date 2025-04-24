@@ -1,21 +1,18 @@
 import { useState } from "react";
 import { useAuth } from "../../Auth/AuthContext";
 import FilterBar from "./FilterBar";
+import date from "../../Utility/GetDate";
 import styles from "./CSS/DownloadFile.module.css";
 
+
 const Downloadfile = ({ close, type, filterOptions }) => {
-  const today = new Date();
-  const day = String(today.getDate()).padStart(2, "0");
-  const month = String(today.getMonth() + 1).padStart(2, "0");
-  const year = today.getFullYear();
-  const formattedDate = `${year}-${month}-${day}`;
 
   const { token } = useAuth();
   const [loading, setLoading] = useState(false);
 
   const [filters, setFilters] = useState({
-    fromDate: formattedDate,
-    toDate: formattedDate,
+    fromDate: date,
+    toDate: date,
     room: "",
     shift: "",
   });

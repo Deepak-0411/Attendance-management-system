@@ -18,6 +18,7 @@ import StudentDetails from "./Admin/Pages/StudentDetails";
 import ExamDuty from "./Admin/Pages/ExamDuty";
 import Rooms from "./Admin/Pages/Rooms";
 import Attendance from "./Admin/Pages/Attendance";
+import Home from "./Admin/Pages/Home";
 
 function App() {
   const [defaultRoot, setDefaultRoot] = useState("/displayDuty");
@@ -41,7 +42,7 @@ function App() {
           {/* Admin Routes with Dashboard Layout */}
           <Route path="/admin" element={<ProtectedRoute element={<Dashboard />} user="admin"/>}>
             <Route index element={<Navigate to="/admin/dashboard" />} />
-            <Route path="dashboard" element={<Content />} />
+            <Route path="dashboard" element={<Home />} />
             <Route path="attendance" element={<Attendance />} />
             <Route path="examDuty" element={<ExamDuty />} />
             <Route path="rooms" element={<Rooms />} />
