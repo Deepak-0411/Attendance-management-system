@@ -1,6 +1,6 @@
 // import styles from "./Dashboard.module.css"; 
 
-const Content = () => {
+const FallBack = () => {
   return (
     <div style={{padding:"2rem"}}>
       <h1>Welcome to Dashboard</h1>
@@ -9,4 +9,4 @@ const Content = () => {
   );
 };
 
-export default Content;
+export default FallBack;

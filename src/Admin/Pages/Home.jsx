@@ -5,9 +5,9 @@ import Date from "../../Utility/GetDate";
 import FilterBar from "../Components/FilterBar";
 
 const colorMap = {
-  Present: "#4CAF50",
+  Present: "#5ca904",
   Absent: "#F44336",
-  UFM: "#FF9800",
+  UFM: "#14bce1",
   "Not Marked": "#9E9E9E",
 };
 
@@ -16,7 +16,7 @@ const Home = () => {
     { name: "Present", value: 50 },
     { name: "Absent", value: 20 },
     { name: "UFM", value: 5 },
-    { name: "Not Marked", value: 25 },
+    { name: "Not Marked", value: 10 },
   ]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

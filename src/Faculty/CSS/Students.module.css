@@ -60,7 +60,7 @@
   /* opacity: 1; */
 }
 .filterBtnAbsent {
-  background-color: #ef0107;
+  background-color: #F44336;
   color: white;
   /* opacity: 1; */
 }
@@ -136,8 +136,8 @@
   padding: 0.2rem 0.3rem;
   margin-right: 0.8rem;
   border-radius: 0.3rem;
-  background-color: rgb(255 255 255 / 26%);
-  color: rgb(255, 255, 255);
+  background-color: #ffffff42;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -149,8 +149,8 @@
   background-color: #00cf0042;
 }
 .contentStatusabsent {
-  color: #c40202;
-  background-color: #cd01014e;
+  color: #F44336;
+  background-color: #cd010154;
 }
 .contentStatusufm {
   color: #14bce1;

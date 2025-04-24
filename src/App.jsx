@@ -9,7 +9,7 @@ import MarkAttendence from "./Faculty/Pages/MarkAttendence";
 import ScanSheet from "./Faculty/Pages/ScanSheet";
 import AdminLogin from "./Admin/Pages/AdminLogin";
 import Dashboard from "./Admin/Dashboard/Dashboard";
-import Content from "./Admin/Dashboard/Content";
+import FallBack from "./Admin/Dashboard/FallBack";
 import { AuthProvider } from "./Auth/AuthContext";
 import ProtectedRoute from "./Auth/ProtectedRoute";
 import Faculty from "./Admin/Pages/Faculty";
@@ -49,7 +49,7 @@ function App() {
             <Route path="faculty" element={<Faculty />} />
             <Route path="students" element={<StudentDetails/>} />
             <Route path="course-details" element={<CourseDetails />} />
-            <Route path="search" element={<Content />} />
+            <Route path="search" element={<FallBack />} />
           </Route>
 
           <Route path="/admin/login" element={<AdminLogin />} />
