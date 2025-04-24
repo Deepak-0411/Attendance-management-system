@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "./Header";
 import Table from "./Table";
 import { useAuth } from "../../Auth/AuthContext";
-import styles from "./DisplayData.module.css";
+import styles from "./CSS/DisplayData.module.css";
 import SingleUpload from "./SingleUplaod";
 import FilterBar from "./FilterBar";
 import Downloadfile from "./DownloadFile";

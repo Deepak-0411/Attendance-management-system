@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../../Auth/AuthContext";
 import FilterBar from "./FilterBar";
-import styles from "./DownloadFile.module.css";
+import styles from "./CSS/DownloadFile.module.css";
 
 const Downloadfile = ({ close, type, filterOptions }) => {
   const today = new Date();

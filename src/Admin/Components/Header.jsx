@@ -1,4 +1,4 @@
-import styles from "./DisplayData.module.css";
+import styles from "./CSS/DisplayData.module.css";
 
 const Header = ({title,searchTerm,handleSearch,setShowUpload , addText}) => {
   return (

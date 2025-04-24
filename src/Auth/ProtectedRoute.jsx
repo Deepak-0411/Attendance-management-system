@@ -30,7 +30,7 @@ const ProtectedRoute = ({ element, user }) => {
             },
           }
         );
-        const data = await response.json();
+        await response.json();
 
         setIsAuthorized(response.ok);
       } catch (error) {

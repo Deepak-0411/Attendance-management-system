@@ -1,5 +1,5 @@
-import styles from "./DisplayData.module.css";
-import setHeight from "../../SetHeight";
+import styles from "./CSS/DisplayData.module.css";
+import useTableHeight from "../../Utility/SetHeight";
 
 const Table = ({
   tableHeading,
@@ -9,7 +9,7 @@ const Table = ({
   isDeleting,
   deleteData,
 }) => {
-  const { tableHeight } = setHeight();
+  const { tableHeight } = useTableHeight();
 
   return (
     <div className={styles.tableBox} style={{ maxHeight: tableHeight }}>

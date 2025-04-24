@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../../Auth/AuthContext";
-import styles from "./SingleUpload.module.css";
+import styles from "./CSS/SingleUpload.module.css";
 import UploadExcel from "./UploadExcel";
 
 const SingleUplaod = ({ dataToSend = {}, close, apiEndPointSingle, apiEndPointBulk }) => {

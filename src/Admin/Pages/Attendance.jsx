@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useAuth } from "../../Auth/AuthContext";
-import styles from "../Components/DisplayData.module.css";
+import styles from "../Components/CSS/DisplayData.module.css";
 import SingleUpload from "../Components/SingleUplaod";
 import Header from "../Components/Header";
 import Table from "../Components/Table";

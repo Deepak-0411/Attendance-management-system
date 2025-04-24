@@ -1,10 +1,10 @@
 import { useEffect, useState, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../Auth/AuthContext";
-import spinnerStyles from "./CSS/Spinner.module.css";
-import errorStyles from "./CSS/Error.module.css";
-import useTableHeight from "../SetHeight";
-import styles from "./CSS/Students.module.css";
+import { useAuth } from "../../Auth/AuthContext";
+import spinnerStyles from "../CSS/Spinner.module.css";
+import errorStyles from "../CSS/Error.module.css";
+import useTableHeight from "../../Utility/SetHeight";
+import styles from "../CSS/Students.module.css";
 
 const statuses = ["Present", "Absent", "UFM", "All"];
 

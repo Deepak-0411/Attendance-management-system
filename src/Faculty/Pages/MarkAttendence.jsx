@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../Auth/AuthContext";
-import errorStyles from "./CSS/Error.module.css";
-import styles from "./CSS/MarkAttendence.module.css";
-import spinnerStyles from "./CSS/Spinner.module.css";
+import { useAuth } from "../../Auth/AuthContext";
+import errorStyles from "../CSS/Error.module.css";
+import styles from "../CSS/MarkAttendence.module.css";
+import spinnerStyles from "../CSS/Spinner.module.css";
 import ScanSheet from "./ScanSheet";
 
 const MarkAttendence = () => {

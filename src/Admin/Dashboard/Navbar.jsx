@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../Auth/AuthContext";
+import { useAuth } from "../../Auth/AuthContext";
 import styles from "./Dashboard.module.css";
 
 const Navbar = () => {

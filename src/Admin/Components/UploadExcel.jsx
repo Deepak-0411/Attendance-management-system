@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../../Auth/AuthContext";
-import styles from "./UploadExcel.module.css";
+import styles from "./CSS/UploadExcel.module.css";
 
 const UploadExcel = ({ closebulk ,apiEndPoint}) => {
   const [file, setFile] = useState(null);

@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../Auth/AuthContext";
-import styles from "./CSS/DisplayDuty.module.css";
-import errorStyles from "./CSS/Error.module.css";
-import spinnerStyles from "./CSS/Spinner.module.css";
-import profileMale from "../assets/profileMale.jpg";
-import useTableHeight from "../SetHeight";
+import { useAuth } from "../../Auth/AuthContext";
+import styles from "../CSS/DisplayDuty.module.css";
+import errorStyles from "../CSS/Error.module.css";
+import spinnerStyles from "../CSS/Spinner.module.css";
+import useTableHeight from "../../Utility/SetHeight";
 
 const DisplayDuty = () => {
   const [dataList, setDataList] = useState([]);

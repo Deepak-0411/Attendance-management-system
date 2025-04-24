@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Html5Qrcode } from "html5-qrcode";
-import styles from "./CSS/ScanSheet.module.css";
+import styles from "../CSS/ScanSheet.module.css";
 
 const QRScanner = ({closeDiv,setSheet}) => {
   const [isScanning, setIsScanning] = useState(false);
