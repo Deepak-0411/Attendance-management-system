@@ -173,7 +173,7 @@ const MarkAttendence = () => {
             Scan Sheet
           </button>
           {scanning && (
-            <div className={styles.ScanSheetOverlay}>
+            <div className={styles.overlay}>
               <ScanSheet
                 closeDiv={() => setScanning(false)}
                 setSheet={(scannedSheetNo) => setSheetNo(scannedSheetNo)}
@@ -183,7 +183,9 @@ const MarkAttendence = () => {
         </div>
 
         {loading && (
-          <LoadingScrn/>
+          <div className={styles.overlay}>
+            <LoadingScrn/>
+          </div>
         )}
 
         {/* Status Buttons */}
