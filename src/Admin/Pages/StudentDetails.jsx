@@ -5,6 +5,7 @@ import { useAuth } from "../../Auth/AuthContext";
 import styles from "../Components/CSS/DisplayData.module.css";
 import SingleUpload from "../Components/SingleUplaod";
 import FilterBar from "../Components/FilterBar";
+import LoadingScrn from "../../Components/LoadingScrn";
 
 const StudentDetails = () => {
   const [dataList, setDataList] = useState([]);
@@ -242,9 +243,7 @@ const StudentDetails = () => {
 
       {loadData &&
         (loading ? (
-          <div className={styles.spinnerContainer}>
-            <div className={styles.spinner}></div>
-          </div>
+          <LoadingScrn/>
         ) : error ? (
           <p className={styles.error}>{error}</p>
         ) : (

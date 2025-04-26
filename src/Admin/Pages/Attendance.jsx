@@ -7,6 +7,7 @@ import Table from "../Components/Table";
 import DownloadFile from "../Components/DownloadFile";
 import FilterBar from "../Components/FilterBar";
 import date from "../../Utility/GetDate";
+import LoadingScrn from "../../Components/LoadingScrn";
 
 const Attendance = () => {
 
@@ -314,9 +315,7 @@ const Attendance = () => {
 
       {loadData &&
         (loading ? (
-          <div className={styles.spinnerContainer}>
-            <div className={styles.spinner}></div>
-          </div>
+          <LoadingScrn/>
         ) : error ? (
           <p className={styles.error}>{error}</p>
         ) : (

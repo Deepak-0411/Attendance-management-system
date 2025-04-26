@@ -3,8 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Auth/AuthContext";
 import errorStyles from "../CSS/Error.module.css";
 import styles from "../CSS/MarkAttendence.module.css";
-import spinnerStyles from "../CSS/Spinner.module.css";
 import ScanSheet from "./ScanSheet";
+import LoadingScrn from "../../Components/LoadingScrn";
 
 const MarkAttendence = () => {
   const { token } = useAuth();
@@ -183,11 +183,7 @@ const MarkAttendence = () => {
         </div>
 
         {loading && (
-          <div
-            className={`${spinnerStyles.spinnerContainer} ${styles.spinner}`}
-          >
-            <div className={spinnerStyles.spinner}></div>
-          </div>
+          <LoadingScrn/>
         )}
 
         {/* Status Buttons */}

@@ -7,6 +7,7 @@ import SingleUpload from "./SingleUplaod";
 import FilterBar from "./FilterBar";
 import Downloadfile from "./DownloadFile";
 import date from "../../Utility/GetDate";
+import LoadingScrn from "../../Components/LoadingScrn";
 
 const DisplayData = ({ type }) => {
 
@@ -293,9 +294,7 @@ const DisplayData = ({ type }) => {
 
       {/* loading spinner  and table*/}
       {loading ? (
-        <div className={styles.spinnerContainer}>
-          <div className={styles.spinner}></div>
-        </div>
+        <LoadingScrn/>
       ) : error ? (
         <p className={styles.error}>{error}</p>
       ) : (

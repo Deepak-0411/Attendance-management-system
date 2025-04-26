@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Auth/AuthContext";
 import styles from "../CSS/DisplayDuty.module.css";
 import errorStyles from "../CSS/Error.module.css";
-import spinnerStyles from "../CSS/Spinner.module.css";
 import useTableHeight from "../../Utility/SetHeight";
+import LoadingScrn from "../../Components/LoadingScrn";
 
 const DisplayDuty = () => {
   const [dataList, setDataList] = useState([]);
@@ -58,9 +58,7 @@ const DisplayDuty = () => {
   return (
     <div className={styles.parent}>
       {loading ? (
-        <div className={`${spinnerStyles.spinnerContainer} ${styles.spinner}`}>
-          <div className={spinnerStyles.spinner}></div>
-        </div>
+        <LoadingScrn/>
       ) : error ? (
         <div className={errorStyles.errorBox}>
           <p className={errorStyles.errorp}>{error}</p>

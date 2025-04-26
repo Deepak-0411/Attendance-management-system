@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { useEffect, useState, useMemo } from "react";
+import Logo from "../assets/FAVICON.png";
 import styles from "./ProtectedRoute.module.css";
 
 const ProtectedRoute = ({ element, user }) => {
@@ -50,8 +51,7 @@ const ProtectedRoute = ({ element, user }) => {
   if (isAuthorized === null) {
     return (
       <div className={styles.loaderContainer}>
-        <div className={styles.spinner}></div>
-        <p>Checking Authorization...</p>
+        <img className={styles.logo} src={Logo} alt="logo" />
       </div>
     );
   }

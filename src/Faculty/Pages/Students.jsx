@@ -1,10 +1,10 @@
 import { useEffect, useState, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Auth/AuthContext";
-import spinnerStyles from "../CSS/Spinner.module.css";
 import errorStyles from "../CSS/Error.module.css";
 import useTableHeight from "../../Utility/SetHeight";
 import styles from "../CSS/Students.module.css";
+import LoadingScrn from "../../Components/LoadingScrn";
 
 const statuses = ["Present", "Absent", "UFM", "All"];
 
@@ -92,9 +92,7 @@ const DisplayDuty = () => {
   return (
     <div className={styles.parent}>
       {loading ? (
-        <div className={`${spinnerStyles.spinnerContainer} ${styles.spinner}`}>
-          <div className={spinnerStyles.spinner}></div>
-        </div>
+        <LoadingScrn/>
       ) : error ? (
         <div className={errorStyles.errorBox}>
           <p className={errorStyles.errorp}>{error}</p>

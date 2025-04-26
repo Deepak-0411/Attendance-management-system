@@ -1,28 +1,12 @@
 .loaderContainer {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    font-size: 1.4rem;
-    color: #555;
+    /* font-size: 1.4rem;
+    color: #555; */
+}
+.logo{
+    width: clamp(8rem,15vw , 15rem);
 }
 
-.spinner {
-    width: 3rem;
-    height: 3rem;
-    border: 0.2rem solid rgba(255, 255, 255, 0.5);
-    border-top: 5px solid #ffffff;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin-bottom: 1.2rem;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
