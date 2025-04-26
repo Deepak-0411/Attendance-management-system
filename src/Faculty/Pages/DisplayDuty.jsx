@@ -37,7 +37,6 @@ const DisplayDuty = () => {
           throw new Error(`Error ${response.status}: Failed to fetch data`);
 
         const data = await response.json();
-
         setDataList(data);
       } catch (err) {
         setError(err.message);
@@ -76,7 +75,7 @@ const DisplayDuty = () => {
               {/* <img className={styles.img} src={profileMale} alt="User Profile" /> */}
               <p className={styles.userNameP}>
                 Hey{" "}
-                {dataList.length > 0 ? dataList[0].fName.split(" ")[0] : "User"}
+                {dataList.faculty?.fName.split(" ")[0] || "User"}
               </p>
             </div>
 
@@ -88,8 +87,8 @@ const DisplayDuty = () => {
           {/* Duty List Section */}
           <div className={styles.work} style={{ maxHeight: tableHeight }}>
             <div className={styles.contentBox}>
-              {dataList.length > 0 ? (
-                dataList.map((duty, index) => (
+              {dataList.viewDuty.length > 0 ? (
+                dataList.viewDuty.map((duty, index) => (
                   <div
                     key={index}
                     className={styles.content}
@@ -98,7 +97,7 @@ const DisplayDuty = () => {
                         duty.shift,
                         duty.buildingName,
                         duty.roomNo,
-                        duty.fName,
+                        dataList.faculty?.fName,
                         duty.secondTeacher
                       )
                     }

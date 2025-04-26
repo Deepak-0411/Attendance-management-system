@@ -88,109 +88,101 @@ const DisplayDuty = () => {
     sessionStorage.setItem("markAttendanceState", JSON.stringify(sessionData));
     navigate("/markAttendance");
   };
+  if (error) {
+    return (
+      <div className={errorStyles.errorBox}>
+        <p className={errorStyles.errorp}>{error}</p>
+        <button
+          className={errorStyles.retryBtn}
+          onClick={() => setRefresh((prev) => !prev)}
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.parent}>
-      {loading ? (
-        <LoadingScrn/>
-      ) : error ? (
-        <div className={errorStyles.errorBox}>
-          <p className={errorStyles.errorp}>{error}</p>
-          <button
-            className={errorStyles.retryBtn}
-            onClick={() => setRefresh((prev) => !prev)}
-          >
-            Retry
-          </button>
+      <div className={styles.roomInfo} id="header">
+        <p className={styles.roomInfoP}>Room no: {roomNo || "N/A"}</p>
+        <p className={styles.roomInfoP}>
+          Duty: {fName} , {secondTeacher}
+        </p>
+        <p className={styles.roomInfoP}>Shift: {shift || "N/A"}</p>
+      </div>
+
+      <div className={styles.Studentlist} id="container">
+        <div className={styles.filterBtns} id="filterContainer">
+          {statuses.map((status) => {
+            const count =
+              status === "All"
+                ? dataList.length
+                : dataList.filter((s) => s.status === status).length;
+
+            return (
+              <div key={status}>
+                <button
+                  onClick={() => setActiveBtn(status)}
+                  className={`${styles.filterBtn} ${
+                    activeBtn === status ? styles[`filterBtn${status}`] : ""
+                  }`}
+                >
+                  {count}
+                </button>
+                <p className={styles.filterBtnP}>{status}</p>
+              </div>
+            );
+          })}
         </div>
-      ) : (
-        <>
-          <div className={styles.roomInfo} id="header">
-            <p className={styles.roomInfoP}>Room no: {roomNo || "N/A"}</p>
-            <p className={styles.roomInfoP}>
-              Duty: {fName} , {secondTeacher}
-            </p>
-            <p className={styles.roomInfoP}>Shift: {shift || "N/A"}</p>
-          </div>
 
-          <div className={styles.Studentlist} id="container">
-            <div className={styles.filterBtns} id="filterContainer">
-              {statuses.map((status) => {
-                const count =
-                  status === "All"
-                    ? dataList.length
-                    : dataList.filter((s) => s.status === status).length;
+        <div className={styles.searchBox} id="searchBox">
+          <input
+            type="text"
+            placeholder="Search student by roll no. or name"
+            className={styles.searchInputBox}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
 
-                return (
-                  <div key={status}>
-                    <button
-                      onClick={() => setActiveBtn(status)}
-                      className={`${styles.filterBtn} ${
-                        activeBtn === status ? styles[`filterBtn${status}`] : ""
-                      }`}
-                    >
-                      {count}
-                    </button>
-                    <p className={styles.filterBtnP}>{status}</p>
-                  </div>
-                );
-              })}
-            </div>
+        <div className={styles.contentBox} style={{ height: tableHeight }}>
+          {loading ? (
+            <LoadingScrn />
+          ) : filteredStudents.length > 0 ? (
+            filteredStudents.map((student, index) => (
+              <div
+                key={student.rollNo}
+                className={styles.content}
+                onClick={() => handleClick(index)}
+              >
+                <div className={styles.contentData}>
+                  <p className={styles.contentDataP}>
+                    {student.rollNo || "N/A"}
+                  </p>
+                  <p className={styles.contentDataP}>{student.name || "N/A"}</p>
+                </div>
 
-            <div className={styles.searchBox} id="searchBox">
-              <input
-                type="text"
-                placeholder="Search student by roll no. or name"
-                className={styles.searchInputBox}
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </div>
-
-            <div
-              className={styles.contentBox}
-              style={{ maxHeight: tableHeight || "665px" }}
-            >
-              {filteredStudents.length > 0 ? (
-                filteredStudents.map((student, index) => (
-                  <div
-                    key={student.rollNo}
-                    className={styles.content}
-                    onClick={() => handleClick(index)}
+                <div className={styles.contentStatusBox}>
+                  <p
+                    className={`${styles.contentStatus} ${
+                      student.status && student.status !== "N/A"
+                        ? styles[`contentStatus${student.status.toLowerCase()}`]
+                        : ""
+                    }`}
                   >
-                    <div className={styles.contentData}>
-                      <p className={styles.contentDataP}>
-                        {student.rollNo || "N/A"}
-                      </p>
-                      <p className={styles.contentDataP}>
-                        {student.name || "N/A"}
-                      </p>
-                    </div>
-
-                    <div className={styles.contentStatusBox}>
-                      <p
-                        className={`${styles.contentStatus} ${
-                          student.status && student.status !== "N/A"
-                            ? styles[
-                                `contentStatus${student.status.toLowerCase()}`
-                              ]
-                            : ""
-                        }`}
-                      >
-                        {student.status && student.status !== "N/A"
-                          ? student.status.toLowerCase()
-                          : "not yet marked"}
-                      </p>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p className={styles.noResults}>No student found</p>
-              )}
-            </div>
-          </div>
-        </>
-      )}
+                    {student.status && student.status !== "N/A"
+                      ? student.status.toLowerCase()
+                      : "not yet marked"}
+                  </p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className={styles.noResults}>No student found</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

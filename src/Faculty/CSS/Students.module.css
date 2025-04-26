@@ -145,12 +145,12 @@
   opacity: .9;
 }
 .contentStatuspresent {
-  color: #00ff00b0;
-  background-color: #00cf0042;
+  color: #c7ffc7;
+  background-color: #00cf00ab;
 }
 .contentStatusabsent {
-  color: #F44336;
-  background-color: #cd010154;
+  color: #ffb3ae;
+  background-color: #cd0101ab;
 }
 .contentStatusufm {
   color: #14bce1;
