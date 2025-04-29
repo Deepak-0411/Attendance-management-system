@@ -44,3 +44,17 @@
   font-size: 4rem;
   font-weight: 500;
 }
+.statusBox {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.errorText {
+  color: #e53935;
+  font-weight: 500;
+}
+

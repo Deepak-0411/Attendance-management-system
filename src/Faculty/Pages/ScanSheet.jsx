@@ -28,7 +28,7 @@ const QRScanner = ({closeDiv,setSheet}) => {
       try {
         await html5QrCodeRef.current.start(
           { facingMode },
-          { fps: 25, qrbox: { width: 250, height: 250 } },
+          { fps: 25, qrbox: { width: 320, height: 240 } },
           async (decodedText) => {
             if (!scannedOnce) {
               scannedOnce = true;

@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../../Auth/AuthContext";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import styles from "./CSS/Home.module.css";
 import Date from "../../Utility/GetDate";
 import FilterBar from "../Components/FilterBar";
+import LoadingScrn from "../../Components/LoadingScrn";
 
 const colorMap = {
   Present: "#5ca904",
@@ -10,21 +12,66 @@ const colorMap = {
   UFM: "#14bce1",
   "Not Marked": "#9E9E9E",
 };
+const responseKeyToLabel = {
+  Present: "Present",
+  Absent: "Absent",
+  UFM: "UFM",
+  Null: "Not Marked", // 'Null' from response is shown as 'Not Marked'
+};
 
 const Home = () => {
+  const { token } = useAuth();
   const [data, setData] = useState([
-    { name: "Present", value: 50 },
-    { name: "Absent", value: 20 },
-    { name: "UFM", value: 5 },
-    { name: "Not Marked", value: 10 },
+    { name: "Present", value: 0 },
+    { name: "Absent", value: 0 },
+    { name: "UFM", value: 0 },
+    { name: "Not Marked", value: 0 },
   ]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [refreshTrigger, setRefreshTrigger] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const [fromDate, setFromDate] = useState(Date);
   const [toDate, setToDate] = useState(Date);
   const hasData = data.length > 0;
   const total = hasData ? data.reduce((sum, entry) => sum + entry.value, 0) : 0;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const response = await fetch(
+          `https://gbu-server.vercel.app/api/admin/homestatus?fromdate=${fromDate}&todate=${toDate}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!response.ok) throw new Error("Failed to fetch student data");
+        const responsedata = await response.json();
+        const rawData = responsedata.data || {};
+
+        const formattedData = Object.entries(responseKeyToLabel).map(
+          ([responseKey, displayLabel]) => ({
+            name: displayLabel,
+            value: rawData[responseKey] || 0,
+          })
+        );
+        setData(formattedData);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [refresh]);
 
   const filterInputs = [
     {
@@ -63,9 +110,20 @@ const Home = () => {
     <div className={styles.container}>
       <FilterBar
         filters={filterInputs}
-        searchBtnAction={() => setRefreshTrigger((prev) => !prev)}
+        searchBtnAction={() => setRefresh((prev) => !prev)}
       />
-      {hasData ? (
+
+      {loading ? (
+        <LoadingScrn />
+      ) : error ? (
+        <div className={styles.statusBox}>
+          <p className={styles.errorText}>Error: {error}</p>
+        </div>
+      ) : total === 0 ? (
+        <div className={styles.noData}>
+          <h2>No data available</h2>
+        </div>
+      ) : (
         <div className={styles.content}>
           <ResponsiveContainer width="100%" height={450}>
             <PieChart>
@@ -107,10 +165,6 @@ const Home = () => {
               ))}
             </ul>
           </div>
-        </div>
-      ) : (
-        <div className={styles.noData}>
-          <h2>No data available</h2>
         </div>
       )}
     </div>
