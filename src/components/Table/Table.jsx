@@ -1,5 +1,5 @@
 import styles from "./Table.module.css";
-import useTableHeight from "../../utility/SetHeight";
+import useTableHeight from "../../utility/setHeight";
 
 const Table = ({
   tableHeadings,
