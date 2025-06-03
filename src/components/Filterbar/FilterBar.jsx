@@ -10,8 +10,8 @@ const FilterBar = ({
   maxDate = 30,
   showExportBtn = false,
   showSearchBtn = true,
-  searchBtnAction,
-  exportBtnAction,
+  searchBtnAction = () => {},
+  exportBtnAction = () => {},
 }) => {
   const { fromDate, toDate, setFromDate, setToDate } = useData();
 
