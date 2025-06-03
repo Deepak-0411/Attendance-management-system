@@ -1,0 +1,90 @@
+.input1 {
+  border-radius: 2rem;
+  border: 0.1rem solid #000;
+  background: #fff;
+  max-width: 22rem;
+  max-height: 2.6rem;
+  padding: 0.35rem 0.8rem;
+  font-size: 1rem;
+  color: #000000;
+  outline: none;
+  transition: background 0.3s ease;
+  font-family: Barlow;
+}
+
+.input1::placeholder {
+  color: #7a7878;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.input2 {
+  border-radius: 0.3125rem;
+  border: 0.1rem solid #000;
+  background: #fff;
+  width: 100%;
+  /* padding: 0.8rem; */
+  padding: 0.34375rem 6.5rem 0.34375rem 0.375rem;
+  font-size: 1rem;
+  color: #000000;
+  outline: none;
+  transition: background 0.3s ease;
+  font-family: Barlow;
+}
+
+.input2::placeholder {
+  color: #878787;
+  font-family: Barlow;
+  /* font-size: 0.75rem; */
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.input2:focus {
+  background: rgb(255, 255, 255);
+}
+
+.input3 {
+  width: 100%;
+  padding: 0.8rem;
+  border: 0.1rem solid #ddd;
+  border-radius: 0.2rem;
+  font-size: 1rem;
+  transition: 0.3s ease-in-out;
+}
+
+.input3:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.passwordContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.passwordToggle {
+  background: transparent;
+  position: absolute;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.filterInput,
+.filterInput option {
+  border: none;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  outline: none;
+  background: #d7d7d7;
+  height: 2rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05rem;
+  cursor: pointer;
+}
+

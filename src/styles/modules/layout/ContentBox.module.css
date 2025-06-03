@@ -1,0 +1,9 @@
+.container {
+  padding: 1rem;
+  background: rgb(255, 255, 255);
+  border-radius: 0.8rem;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+

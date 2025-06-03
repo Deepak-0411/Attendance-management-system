@@ -1,0 +1,35 @@
+.spinnerContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: clamp(1.3rem, 5vw, 3rem);
+  height: clamp(1.3rem, 5vw, 3rem);
+  border: 0.2rem solid rgba(255, 255, 255, 0.5);
+  border-top: 0.3rem solid #ffffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.spinner.blue {
+  border: 0.2rem solid rgba(0, 123, 255, 0.3);
+  border-top: 0.3em solid #007bff;
+}
+
+.spinner.small {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

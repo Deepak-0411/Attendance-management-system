@@ -1,0 +1,64 @@
+.tableBox {
+  overflow: auto;
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.tableBox::-webkit-scrollbar {
+  width: 0.6rem;
+}
+
+.tableBox::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 0.6rem;
+}
+
+.tableBox::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 0.6rem;
+}
+
+.tableBox::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 0.9rem;
+  border-bottom: 0.1rem solid #ddd;
+  text-align: left;
+  width: auto;
+}
+
+.table tr:hover {
+  background-color: #f6f6f6;
+}
+
+.tableHeading {
+  background: #9a93e9;
+  color: #fff;
+  font-family: Roboto;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+ .tableHeading:first-child{
+  border-top-left-radius: 0.8rem;
+ }
+ .tableHeading:last-child{
+  border-top-right-radius: 0.8rem;
+ }
+
+.noData {
+  text-align: center;
+  font-style: italic;
+  color: #777;
+  padding: 1.5rem;
+}
+

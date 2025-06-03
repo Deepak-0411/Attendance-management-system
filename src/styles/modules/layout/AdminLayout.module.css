@@ -1,0 +1,14 @@
+.dashboard {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  height: 100vh;
+  background-color: #e9f3ff;
+  overflow: auto;
+}
+.content {
+  margin: 1.5rem 1rem 2rem 1rem;
+  /* overflow-y: hidden; */
+  border-radius: 0.8rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
