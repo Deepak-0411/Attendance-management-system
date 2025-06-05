@@ -31,3 +31,22 @@
 .addButton:hover {
   background-color: #0056b3;
 }
+
+.exportBtn {
+  display: flex;
+  padding: .2rem 0.7rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  border-radius: 0.3125rem;
+  background: #d7d7d7;
+  border: none;
+  height: 2rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: .05rem;
+  cursor: pointer;
+}
+.exportBtn:hover{
+  background-color: #a9a9a9;
+}

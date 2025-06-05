@@ -20,7 +20,6 @@ const UploadExcel = ({ closebulk, apiEndPoint }) => {
     }
     const formData = new FormData();
     formData.append("file", file);
-    console.log(formData);
 
     const response = await apiRequest({
       url: `/admin/${apiEndPoint}`,

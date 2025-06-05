@@ -1,16 +1,30 @@
 import { useData } from "../../context/DataContext";
 import ContentBox from "../../layout/ContentBox";
+import { useFilter } from "../../context/FilterContext";
 
 const Faculty = () => {
-  const {facultyData, setFacultyData} = useData();
+  const { facultyData, setFacultyData } = useData();
+  const { facultyFilter, setFacultyFilter, getSchoolList } = useFilter();
+
+  const filterInputs = [
+    {
+      label: "School",
+      name: "school",
+      value: facultyFilter.school,
+      options: getSchoolList(),
+      required: true,
+      onChange: (val) => setFacultyFilter((prev) => ({ ...prev, school: val })),
+    },
+  ];
 
   const config = {
     title: "Faculty Available",
     apiGet: "/admin/faculty",
     apiFilter: "",
     filterBox: true,
-    filterInputs: [],
-    searchBoxPlaceholder:"Search by name or ID",
+    dateFilter : false,
+    filterInputs: filterInputs,
+    searchBoxPlaceholder: "Search by name or ID",
     idKey: "teacherId",
     nameKey: "fName",
     addText: "+ Add Faculty",

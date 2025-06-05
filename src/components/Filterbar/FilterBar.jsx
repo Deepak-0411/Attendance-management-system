@@ -8,10 +8,8 @@ const FilterBar = ({
   dateFilter = true,
   optionsFilter = true,
   maxDate = 30,
-  showExportBtn = false,
   showSearchBtn = true,
   searchBtnAction = () => {},
-  exportBtnAction = () => {},
 }) => {
   const { fromDate, toDate, setFromDate, setToDate } = useData();
 
@@ -49,96 +47,75 @@ const FilterBar = ({
   };
 
   return (
-    <div className={styles.filterContainer} id="filterContainer">
-      <div className={styles.containerInside}>
-        {/* Date filters */}
-        {dateFilter && (
-          <>
-            <label htmlFor="fromDate"> From </label>
-            <Input
-              id="fromDate"
-              role="date"
-              value={fromDate}
-              setValue={handleFromDateChange}
-              required={true}
-            />
+    <div className={styles.filterBarContainer} id="filterContainer">
+      <div className={styles.filtersContainer}>
+      {/* Date filters */}
+      {dateFilter && (
+        <div className={styles.filterBlock}>
+          <label htmlFor="fromDate"> From </label>
+          <Input
+            id="fromDate"
+            role="date"
+            value={fromDate}
+            setValue={handleFromDateChange}
+            required={true}
+          />
 
-            <label htmlFor="toDate"> To </label>
-            <Input
-              id="toDate"
-              role="date"
-              value={toDate}
-              setValue={handleToDateChange}
-              required={true}
-              min={fromDate}
-              {...(maxDate && { max: maxToDate })}
-            />
-          </>
-        )}
+          <label htmlFor="toDate"> To </label>
+          <Input
+            id="toDate"
+            role="date"
+            value={toDate}
+            setValue={handleToDateChange}
+            required={true}
+            min={fromDate}
+            {...(maxDate && { max: maxToDate })}
+          />
+        </div>
+      )}
 
-        {/* Dynamic filters */}
+      {/* Dynamic filters */}
 
-        {optionsFilter &&
-          filters.map(
-            (
-              {
-                label,
-                name,
-                value,
-                onChange,
-                options,
-                placeholder,
-                required,
-                type = 1,
-              },
-              idx
-            ) => (
-              <div key={name || idx}>
-                <label htmlFor={label}>{label}</label>
-                <Input
-                  id={label}
-                  role="select"
-                  value={value || ""}
-                  setValue={(val) => handleChange(val, name, onChange)}
-                  options={options}
-                  placeholder={placeholder}
-                  type={type}
-                  required={required}
-                />
-              </div>
-            )
-          )}
-
-        {/* Search button */}
-        {showSearchBtn && (
-          <button
-            className={styles.searchButton}
-            onClick={searchBtnAction}
-            disabled={isSearchDisabled}
-          >
-            Search
-          </button>
-        )}
-      </div>
-
-      {/* Export button */}
-      {showExportBtn && (
-        <button className={styles.exportBtn} onClick={exportBtnAction}>
-          EXPORT
-          <span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 18 18"
-              fill="none"
-            >
-              <path
-                d="M3.7873 16.7812L2.7373 15.7125L4.9498 13.5H3.2623V12H7.4998V16.2375H5.9998V14.5687L3.7873 16.7812ZM8.9998 16.5V15H13.4998V6.75H9.7498V3H4.4998V10.5H2.9998V3C2.9998 2.5875 3.1468 2.2345 3.4408 1.941C3.7348 1.6475 4.0878 1.5005 4.4998 1.5H10.4998L14.9998 6V15C14.9998 15.4125 14.8531 15.7657 14.5596 16.0597C14.2661 16.3538 13.9128 16.5005 13.4998 16.5H8.9998Z"
-                fill="black"
+      {optionsFilter &&
+        filters.map(
+          (
+            {
+              label,
+              name,
+              value,
+              onChange,
+              options,
+              placeholder,
+              required,
+              type = 1,
+            },
+            idx
+          ) => (
+            <div key={name || idx} className={styles.filterBlock}>
+              <label htmlFor={label}>{label}</label>
+              <Input
+                id={label}
+                role="select"
+                value={value || ""}
+                setValue={(val) => handleChange(val, name, onChange)}
+                options={options}
+                placeholder={placeholder}
+                type={type}
+                required={required}
               />
-            </svg>
-          </span>
+            </div>
+          )
+        )}
+        </div>
+
+      {/* Search button */}
+      {showSearchBtn && (
+        <button
+          className={styles.searchButton}
+          onClick={searchBtnAction}
+          disabled={isSearchDisabled}
+        >
+          Search
         </button>
       )}
     </div>

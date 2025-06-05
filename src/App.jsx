@@ -9,16 +9,16 @@ function App() {
   return (
     <>
       <Router>
-        <AuthProvider>
-          <DataProvider>
+        <DataProvider>
+          <AuthProvider>
             <AppRoutes />
             <ToastContainer
               position="top-right"
               autoClose={3000}
               theme="colored"
             />
-          </DataProvider>
-        </AuthProvider>
+          </AuthProvider>
+        </DataProvider>
       </Router>
     </>
   );

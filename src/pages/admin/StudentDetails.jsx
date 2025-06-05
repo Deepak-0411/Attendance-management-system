@@ -1,17 +1,55 @@
 import { useData } from "../../context/DataContext";
+import { useFilter } from "../../context/FilterContext";
 import ContentBox from "../../layout/ContentBox";
 
 const StudentDetails = () => {
+  const { studentDetailsData, setStudentDetailsData } = useData();
 
-  const {studentDetailsData, setStudentDetailsData} = useData();
+  const {
+    studentDetailsFilter,
+    setStudentDetailsFilter,
+    getSchoolList,
+    getBranchList,
+  } = useFilter();
+
+  const filterInputs = [
+    {
+      label: "School",
+      name: "school",
+      value: studentDetailsFilter.school,
+      options: getSchoolList(),
+      required: true,
+      onChange: (val) =>
+        setStudentDetailsFilter((prev) => ({ ...prev, school: val })),
+    },
+    {
+      label: "Branch",
+      name: "branch",
+      value: studentDetailsFilter.branch,
+      options: getBranchList(studentDetailsFilter.school),
+      required: true,
+      onChange: (val) =>
+        setStudentDetailsFilter((prev) => ({ ...prev, branch: val })),
+    },
+    {
+      label: "Year",
+      name: "year",
+      value: studentDetailsFilter.year,
+      options: ["1st", "2nd", "3rd", "4th", "5th"],
+      required: true,
+      onChange: (val) =>
+        setStudentDetailsFilter((prev) => ({ ...prev, year: val })),
+    },
+  ];
 
   const config = {
     title: "Students",
     apiGet: "/admin/students",
     apiFilter: "/admin/fillterStudents",
     filterBox: true,
-    filterInputs: [],
-    searchBoxPlaceholder:"Search by name or ID",
+    dateFilter: false,
+    filterInputs: filterInputs,
+    searchBoxPlaceholder: "Search by name or ID",
     idKey: "rollNo",
     nameKey: "name",
     addText: "+ Add Student",

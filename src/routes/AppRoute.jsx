@@ -5,7 +5,7 @@ import FacultyLayout from "../layout/FacultyLayout";
 import PageNotFound from "../pages/PageNotFound";
 
 // Guard
-import ProtectedRoute from "../routes/guard/ProtectedRoute"
+import ProtectedRoute from "../routes/guard/ProtectedRoute";
 
 // Auth Pages
 import Login from "../auth/Login";
@@ -24,7 +24,7 @@ import CourseDetails from "../pages/admin/CourseDetails";
 import DisplayDuty from "../pages/user/DisplayDuty";
 import Students from "../pages/user/Students";
 import MarkAttendence from "../pages/user/MarkAttendence";
-
+import { FilterProvider } from "../context/FilterContext";
 
 function App() {
   const [defaultRoot, setDefaultRoot] = useState("/faculty/displayDuty");
@@ -54,7 +54,16 @@ function App() {
       {/* Admin Routes with Dashboard Layout */}
       <Route
         path="/admin"
-        element={<ProtectedRoute element={<AdminLayout />} user="admin" />}
+        element={
+          <ProtectedRoute
+            element={
+              <FilterProvider>
+                <AdminLayout />
+              </FilterProvider>
+            }
+            user="admin"
+          />
+        }
       >
         <Route index element={<Navigate to="/admin/home" />} />
         <Route path="home" element={<Home />} />
@@ -66,7 +75,6 @@ function App() {
         <Route path="course-details" element={<CourseDetails />} />
         {/* <Route path="search" element={<FallBack />} /> */}
       </Route>
-
 
       {/* Catch-all route */}
       <Route path="/*" element={<PageNotFound />} />

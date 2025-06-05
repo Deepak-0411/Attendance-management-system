@@ -20,6 +20,21 @@ export const DataProvider = ({ children }) => {
   const [fromDate, setFromDate] = useState(date);
   const [toDate, setToDate] = useState(date);
 
+  const dataReset = (naam) => {
+    if (naam === "all") {
+      setHomeData([]);
+      setAttendanceData([]);
+      setCourceDetailsData([]);
+      setExamDutyData([]);
+      setFacultyData([]);
+      setStudentDetailsData([]);
+      setRoomsData([]);
+      setStudentList([]);
+    } else {
+      naam([]);
+    }
+  };
+
   return (
     <DataContext.Provider
       value={{
@@ -43,6 +58,7 @@ export const DataProvider = ({ children }) => {
         setStudentList,
         setFromDate,
         setToDate,
+        dataReset,
       }}
     >
       {children}

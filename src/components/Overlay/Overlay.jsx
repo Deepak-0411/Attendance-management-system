@@ -18,7 +18,6 @@ const Overlay = ({ children, onClose }) => {
         type="button"
         onClick={(e) => {
           e.stopPropagation();
-          console.log("i am clicked " + onClose);
 
           onClose();
         }}

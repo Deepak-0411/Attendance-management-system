@@ -1,19 +1,19 @@
-.filterContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.filterBarContainer {
   margin: 0rem 1.5rem 1rem 1.5rem;
-  gap :1rem;
+  display: flex;
+  align-items: start;
+  gap: 1.5rem;
 }
-.containerInside {
-  width: 100%;
+.filtersContainer{
   display: flex;
   align-items: center;
-  gap: 1.2rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+
 }
 .filterBlock{
     display: flex;
-    gap: 1rem;
+    gap: 0.8rem;
     align-items: center;
 }
 .searchButton {
@@ -31,21 +31,3 @@
   cursor: not-allowed;
 }
 
-.exportBtn {
-  display: flex;
-  padding: .2rem 0.7rem;
-  justify-content: center;
-  align-items: center;
-  gap: 0.625rem;
-  border-radius: 0.3125rem;
-  background: #d7d7d7;
-  border: none;
-  height: 2rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: .05rem;
-  cursor: pointer;
-}
-.exportBtn:hover{
-  background-color: #a9a9a9;
-}

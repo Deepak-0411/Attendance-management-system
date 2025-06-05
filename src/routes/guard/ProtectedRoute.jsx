@@ -7,10 +7,9 @@ import styles from "./ProtectedRoute.module.css";
 import { toast } from "react-toastify";
 
 const ProtectedRoute = ({ element, user }) => {
-  const { token, logout } = useAuth();
+  const { token } = useAuth();
   const [isAuthorized, setIsAuthorized] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [defaultRoot, setDefaultRoot] = useState("/login");
+  const [defaultRoot, setDefaultRoot] = useState("/faculty/login");
 
   // Memoized token to prevent unnecessary re-renders
   const authToken = useMemo(() => token, [token]);
@@ -25,7 +24,6 @@ const ProtectedRoute = ({ element, user }) => {
         url: user === "faculty" ? "/user/dashboard" : "/admin/dash",
         method: "POST",
         token: authToken,
-        setLoading,
       });
 
       if (response.status === "success") {

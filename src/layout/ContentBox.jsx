@@ -16,6 +16,7 @@ const ContentBox = ({
   apiGet,
   apiFilter,
   filterBox,
+  dateFilter,
   filterInputs,
   searchBoxPlaceholder,
   idKey,
@@ -79,15 +80,16 @@ const ContentBox = ({
         setValue={(val) => setSearchTerm(val)}
         showUploadOverlay={() => setShowUpload(true)}
         addBtnText={addText}
+        showExportBtn={true}
+        exportBtnAction={setShowExport}
       />
 
       {/* Filters */}
       {filterBox && (
         <FilterBar
           filters={filterInputs}
+          dateFilter={dateFilter}
           searchBtnAction={fetchData}
-          showExportBtn={true}
-          exportBtnAction={setShowExport}
         />
       )}
 

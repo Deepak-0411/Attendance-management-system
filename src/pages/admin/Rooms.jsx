@@ -1,17 +1,30 @@
 import { useData } from "../../context/DataContext";
 import ContentBox from "../../layout/ContentBox";
+import { useFilter } from "../../context/FilterContext";
 
 const CourseDetails = () => {
+  const { roomsFilter, setRoomsFilter, getSchoolList } = useFilter();
+  const { roomsData, setRoomsData } = useData();
 
-    const {roomsData, setRoomsData} = useData();
-  
+  const filterInputs = [
+    {
+      label: "School",
+      name: "school",
+      value: roomsFilter.school,
+      options: getSchoolList(),
+      required: true,
+      onChange: (val) => setRoomsFilter((prev) => ({ ...prev, school: val })),
+    },
+  ];
+
   const config = {
     title: "Rooms Available",
     apiGet: "/admin/examRooms",
     apiFilter: "",
     filterBox: true,
-    filterInputs: [],
-    searchBoxPlaceholder:"Search by name or ID",
+    dateFilter : false,
+    filterInputs: filterInputs,
+    searchBoxPlaceholder: "Search by name or ID",
     idKey: "roomNo",
     nameKey: "buildingName",
     addText: "+ Add Room",
