@@ -1,63 +1,48 @@
 import ContentBox from "../../layout/ContentBox";
 import { useData } from "../../context/DataContext";
 import { useFilter } from "../../context/FilterContext";
+import { useEffect, useState } from "react";
+import { generateFilterInputs } from "../../utility/generateFilterInputs";
 
 const Attendance = () => {
   const { attendanceData, setAttendanceData } = useData();
-  const {
-    attendanceFilter,
-    setAttendanceFilter,
-    getSchoolList,
-    getBuildingName,
-    getRoomNo,
-  } = useFilter();
+  const { attendanceFilter, setAttendanceFilter } = useFilter();
+  const [exportFilter, setExportFilters] = useState({
+    school: "",
+    building: "",
+    roomNo: "",
+    shift: "",
+  });
 
-  const filterInputs = [
-  {
-    label: "School",
-    name: "school",
-    value: attendanceFilter.school,
-    options: getSchoolList(),
-    required: true,
-    onChange: (val) =>
-      setAttendanceFilter((prev) => ({ ...prev, school: val })),
-  },
-  {
-    label: "Building",
-    name: "building",
-    value: attendanceFilter.building,
-    options: getBuildingName(attendanceFilter.school),
-    required: true,
-    onChange: (val) =>
-      setAttendanceFilter((prev) => ({ ...prev, building: val })),
-  },
-  {
-    label: "Room No.",
-    name: "roomNo",
-    value: attendanceFilter.roomNo,
-    options: getRoomNo(attendanceFilter.school, attendanceFilter.building),
-    required: true,
-    onChange: (val) =>
-      setAttendanceFilter((prev) => ({ ...prev, roomNo: val })),
-  },
-  {
-    label: "Shift",
-    name: "shift",
-    value: attendanceFilter.shift,
-    options: ["Morning", "Evening"],
-    required: true,
-    onChange: (val) =>
-      setAttendanceFilter((prev) => ({ ...prev, shift: val })),
-  },
-];
+  useEffect(() => {
+    setExportFilters((prev) => ({
+      ...prev,
+      school: attendanceFilter.school || "",
+      building: attendanceFilter.building || "",
+      roomNo: attendanceFilter.roomNo || "",
+      shift: attendanceFilter.shift || "",
+    }));
+  }, [attendanceFilter]);
 
+  const filterInputs = generateFilterInputs({
+    fields: ["school", "building", "roomNo", "shift"],
+    filterState: attendanceFilter,
+    setFilterState: setAttendanceFilter,
+    required: ["school", "building", "roomNo", "shift"],
+  });
+  const exportInputs = generateFilterInputs({
+    fields: ["school", "building", "roomNo", "shift"],
+    filterState: exportFilter,
+    setFilterState: setExportFilters,
+  });
 
   const config = {
     title: "Attendance",
     apiGet: "/admin/viewEntries",
-    apiFilter: "/admin/formFilterData",
+    apiExport: "",
     filterBox: true,
-    dateFilter : true,
+    dateFilter: true,
+    exportInputs: exportInputs,
     filterInputs: filterInputs,
     searchBoxPlaceholder: "Search by name or ID",
     idKey: "rollNo",

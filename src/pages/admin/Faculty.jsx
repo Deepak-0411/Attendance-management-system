@@ -1,28 +1,46 @@
 import { useData } from "../../context/DataContext";
 import ContentBox from "../../layout/ContentBox";
 import { useFilter } from "../../context/FilterContext";
+import { generateFilterInputs } from "../../utility/generateFilterInputs";
+import { useEffect, useState } from "react";
 
 const Faculty = () => {
   const { facultyData, setFacultyData } = useData();
-  const { facultyFilter, setFacultyFilter, getSchoolList } = useFilter();
+  const { facultyFilter, setFacultyFilter } = useFilter();
 
-  const filterInputs = [
-    {
-      label: "School",
-      name: "school",
-      value: facultyFilter.school,
-      options: getSchoolList(),
-      required: true,
-      onChange: (val) => setFacultyFilter((prev) => ({ ...prev, school: val })),
-    },
-  ];
+  const [exportFilter, setExportFilters] = useState({
+    school: "",
+    branch: "",
+  });
+
+  useEffect(() => {
+    setExportFilters((prev) => ({
+      ...prev,
+      school: facultyFilter.school || "",
+      branch: facultyFilter.branch || "",
+    }));
+  }, [facultyFilter]);
+
+  const filterInputs = generateFilterInputs({
+    fields: ["school", "branch"],
+    filterState: facultyFilter,
+    setFilterState: setFacultyFilter,
+    required: ["school", "branch"],
+  });
+
+  const exportInputs = generateFilterInputs({
+    fields: ["school", "branch"],
+    filterState: exportFilter,
+    setFilterState: setExportFilters,
+  });
 
   const config = {
     title: "Faculty Available",
     apiGet: "/admin/faculty",
-    apiFilter: "",
+    apiExport: "",
     filterBox: true,
-    dateFilter : false,
+    dateFilter: false,
+    exportInputs: exportInputs,
     filterInputs: filterInputs,
     searchBoxPlaceholder: "Search by name or ID",
     idKey: "teacherId",

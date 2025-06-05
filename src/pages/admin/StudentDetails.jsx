@@ -1,53 +1,49 @@
+import { useEffect, useState } from "react";
 import { useData } from "../../context/DataContext";
 import { useFilter } from "../../context/FilterContext";
 import ContentBox from "../../layout/ContentBox";
+import { generateFilterInputs } from "../../utility/generateFilterInputs";
 
 const StudentDetails = () => {
   const { studentDetailsData, setStudentDetailsData } = useData();
 
-  const {
-    studentDetailsFilter,
-    setStudentDetailsFilter,
-    getSchoolList,
-    getBranchList,
-  } = useFilter();
+  const { studentDetailsFilter, setStudentDetailsFilter } = useFilter();
 
-  const filterInputs = [
-    {
-      label: "School",
-      name: "school",
-      value: studentDetailsFilter.school,
-      options: getSchoolList(),
-      required: true,
-      onChange: (val) =>
-        setStudentDetailsFilter((prev) => ({ ...prev, school: val })),
-    },
-    {
-      label: "Branch",
-      name: "branch",
-      value: studentDetailsFilter.branch,
-      options: getBranchList(studentDetailsFilter.school),
-      required: true,
-      onChange: (val) =>
-        setStudentDetailsFilter((prev) => ({ ...prev, branch: val })),
-    },
-    {
-      label: "Year",
-      name: "year",
-      value: studentDetailsFilter.year,
-      options: ["1st", "2nd", "3rd", "4th", "5th"],
-      required: true,
-      onChange: (val) =>
-        setStudentDetailsFilter((prev) => ({ ...prev, year: val })),
-    },
-  ];
+  const [exportFilter, setExportFilters] = useState({
+    school: "",
+    branch: "",
+    year: "",
+  });
+
+  useEffect(() => {
+    setExportFilters((prev) => ({
+      ...prev,
+      school: studentDetailsFilter.school || "",
+      branch: studentDetailsFilter.branch || "",
+      year: studentDetailsFilter.year || "",
+    }));
+  }, [studentDetailsFilter]);
+
+  const filterInputs = generateFilterInputs({
+    fields: ["school", "branch", "year"],
+    filterState: studentDetailsFilter,
+    setFilterState: setStudentDetailsFilter,
+    required: ["school", "branch", "year"],
+  });
+
+  const exportInputs = generateFilterInputs({
+    fields: ["school", "branch", "year"],
+    filterState: exportFilter,
+    setFilterState: setExportFilters,
+  });
 
   const config = {
     title: "Students",
     apiGet: "/admin/students",
-    apiFilter: "/admin/fillterStudents",
+    apiExport: "",
     filterBox: true,
     dateFilter: false,
+    exportInputs: exportInputs,
     filterInputs: filterInputs,
     searchBoxPlaceholder: "Search by name or ID",
     idKey: "rollNo",

@@ -9,7 +9,6 @@ import Overlay from "../Overlay/Overlay";
 
 const SingleUpload = ({
   dataToSend = {},
-  onClose,
   apiEndPointSingle,
   apiEndPointBulk,
 }) => {

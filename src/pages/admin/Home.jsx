@@ -8,6 +8,7 @@ import { useFilter } from "../../context/FilterContext";
 import { useData } from "../../context/DataContext";
 import { toast } from "react-toastify";
 import apiRequest from "../../utility/apiRequest";
+import { generateFilterInputs } from "../../utility/generateFilterInputs";
 
 const colorMap = {
   Present: "#5ca904",
@@ -25,8 +26,7 @@ const responseKeyToLabel = {
 const Home = () => {
   const { token } = useAuth();
   const { fromDate, toDate, homeData, setHomeData } = useData();
-  const { homeFilter, setHomeFilter, getSchoolList, getBranchList } =
-    useFilter();
+  const { homeFilter, setHomeFilter } = useFilter();
 
   const [loading, setLoading] = useState(false);
 
@@ -65,32 +65,12 @@ const Home = () => {
     }
   }, []);
 
-  const filterInputs = [
-    {
-      label: "School",
-      name: "school",
-      value: homeFilter.school,
-      options: getSchoolList(),
-      required: true,
-      onChange: (val) => setHomeFilter((prev) => ({ ...prev, school: val })),
-    },
-    {
-      label: "Branch",
-      name: "branch",
-      value: homeFilter.branch,
-      options: getBranchList(homeFilter.school),
-      required: true,
-      onChange: (val) => setHomeFilter((prev) => ({ ...prev, branch: val })),
-    },
-    {
-      label: "Shift",
-      name: "shift",
-      value: homeFilter.shift,
-      options: ["Morning", "Evening"],
-      required: true,
-      onChange: (val) => setHomeFilter((prev) => ({ ...prev, shift: val })),
-    },
-  ];
+  const filterInputs = generateFilterInputs({
+    fields: ["school", "branch", "shift"],
+    filterState: homeFilter,
+    setFilterState: setHomeFilter,
+    required: ["school", "branch", "shift"],
+  });
 
   return (
     <div className={styles.container}>

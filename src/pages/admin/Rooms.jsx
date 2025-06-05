@@ -1,28 +1,43 @@
 import { useData } from "../../context/DataContext";
 import ContentBox from "../../layout/ContentBox";
 import { useFilter } from "../../context/FilterContext";
+import { useEffect, useState } from "react";
+import { generateFilterInputs } from "../../utility/generateFilterInputs";
 
-const CourseDetails = () => {
-  const { roomsFilter, setRoomsFilter, getSchoolList } = useFilter();
+const Rooms = () => {
+  const { roomsFilter, setRoomsFilter } = useFilter();
   const { roomsData, setRoomsData } = useData();
+  const [exportFilter, setExportFilters] = useState({
+    school: "",
+  });
 
-  const filterInputs = [
-    {
-      label: "School",
-      name: "school",
-      value: roomsFilter.school,
-      options: getSchoolList(),
-      required: true,
-      onChange: (val) => setRoomsFilter((prev) => ({ ...prev, school: val })),
-    },
-  ];
+  useEffect(() => {
+    setExportFilters((prev) => ({
+      ...prev,
+      school: roomsFilter.school || "",
+    }));
+  }, [roomsFilter]);
+
+  const filterInputs = generateFilterInputs({
+    fields: ["school"],
+    filterState: roomsFilter,
+    setFilterState: setRoomsFilter,
+    required: ["school"],
+  });
+  const exportInputs = generateFilterInputs({
+    fields: ["school"],
+    filterState: exportFilter,
+    setFilterState: setExportFilters,
+    required: ["school"],
+  });
 
   const config = {
     title: "Rooms Available",
     apiGet: "/admin/examRooms",
-    apiFilter: "",
+    apiExport: "",
     filterBox: true,
-    dateFilter : false,
+    dateFilter: false,
+    exportInputs: exportInputs,
     filterInputs: filterInputs,
     searchBoxPlaceholder: "Search by name or ID",
     idKey: "roomNo",
@@ -42,4 +57,4 @@ const CourseDetails = () => {
   };
   return <ContentBox {...config} />;
 };
-export default CourseDetails;
+export default Rooms;

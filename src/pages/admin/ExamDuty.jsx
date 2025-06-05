@@ -1,61 +1,48 @@
+import { useEffect, useState } from "react";
 import { useData } from "../../context/DataContext";
 import { useFilter } from "../../context/FilterContext";
 import ContentBox from "../../layout/ContentBox";
+import { generateFilterInputs } from "../../utility/generateFilterInputs";
 
 const ExamDuty = () => {
   const { examDutyData, setExamDutyData } = useData();
-  const {
-    examDutyFilter,
-    setExamDutyFilter,
-    getSchoolList,
-    getBuildingName,
-    getRoomNo,
-  } = useFilter();
+  const { examDutyFilter, setExamDutyFilter } = useFilter();
+  const [exportFilter, setExportFilters] = useState({
+    school: "",
+    building: "",
+    roomNo: "",
+    shift: "",
+  });
 
-  const filterInputs = [
-    {
-      label: "School",
-      name: "school",
-      value: examDutyFilter.school,
-      options: getSchoolList(),
-      required: true,
-      onChange: (val) =>
-        setExamDutyFilter((prev) => ({ ...prev, school: val })),
-    },
-    {
-      label: "Building",
-      name: "building",
-      value: examDutyFilter.building,
-      options: getBuildingName(examDutyFilter.school),
-      required: true,
-      onChange: (val) =>
-        setExamDutyFilter((prev) => ({ ...prev, building: val })),
-    },
-    {
-      label: "Room No.",
-      name: "roomNo",
-      value: examDutyFilter.roomNo,
-      options: getRoomNo(examDutyFilter.school, examDutyFilter.building),
-      required: true,
-      onChange: (val) =>
-        setExamDutyFilter((prev) => ({ ...prev, roomNo: val })),
-    },
-    {
-      label: "Shift",
-      name: "shift",
-      value: examDutyFilter.shift,
-      options: ["Morning", "Evening"],
-      required: true,
-      onChange: (val) => setExamDutyFilter((prev) => ({ ...prev, shift: val })),
-    },
-  ];
+  useEffect(() => {
+    setExportFilters((prev) => ({
+      ...prev,
+      school: examDutyFilter.school || "",
+      building: examDutyFilter.building || "",
+      roomNo: examDutyFilter.rollNo || "",
+      shift: examDutyFilter.shift || "",
+    }));
+  }, [examDutyFilter]);
+
+  const filterInputs = generateFilterInputs({
+    fields: ["school", "building", "roomNo", "shift"],
+    filterState: examDutyFilter,
+    setFilterState: setExamDutyFilter,
+    required: ["school", "building", "roomNo", "shift"],
+  });
+  const exportInputs = generateFilterInputs({
+    fields: ["school", "building", "roomNo", "shift"],
+    filterState: exportFilter,
+    setFilterState: setExportFilters,
+  });
 
   const config = {
     title: "Exam Duty",
     apiGet: `/admin/duty`,
-    apiFilter: "",
+    apiExport: "",
     filterBox: true,
-    dateFilter : true,
+    dateFilter: true,
+    exportInputs: exportInputs,
     filterInputs: filterInputs,
     searchBoxPlaceholder: "Search by name or ID",
     idKey: "teacherId",

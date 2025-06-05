@@ -22,7 +22,10 @@ export const FilterProvider = ({ children }) => {
     shift: "",
   });
   const [roomsFilter, setRoomsFilter] = useState({ school: "" });
-  const [facultyFilter, setFacultyFilter] = useState({ school: "" });
+  const [facultyFilter, setFacultyFilter] = useState({
+    school: "",
+    branch: "",
+  });
   const [studentDetailsFilter, setStudentDetailsFilter] = useState({
     school: "",
     branch: "",
@@ -66,9 +69,7 @@ export const FilterProvider = ({ children }) => {
   const getBranchList = (schoolName) => {
     // console.log("GetBranch is called");
 
-    return schoolFilterData[schoolName]
-      ? schoolFilterData[schoolName]
-      : [];
+    return schoolFilterData[schoolName] ? schoolFilterData[schoolName] : [];
   };
 
   const getBuildingName = (schoolName) => {

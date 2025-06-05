@@ -14,10 +14,11 @@ import Overlay from "../components/Overlay/Overlay";
 const ContentBox = ({
   title,
   apiGet,
-  apiFilter,
+  apiExport,
   filterBox,
   dateFilter,
   filterInputs,
+  exportInputs,
   searchBoxPlaceholder,
   idKey,
   nameKey,
@@ -106,7 +107,7 @@ const ContentBox = ({
 
       {showExport && (
         <Overlay onClose={() => setShowExport(false)}>
-          <DownloadFile close={() => setShowExport(false)} type={"ExamDuty"} />
+          <DownloadFile dateFilter={dateFilter} exportFilters={exportInputs} apiEndPoint={apiExport} />
         </Overlay>
       )}
 

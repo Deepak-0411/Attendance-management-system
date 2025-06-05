@@ -1,35 +1,24 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import FilterBar from "../Filterbar/FilterBar";
-import {date} from "../../utility/GetDate";
+import { date } from "../../utility/GetDate";
 import styles from "./DownloadFile.module.css";
 
-
-const Downloadfile = ({ close, type, filterOptions }) => {
-
+const Downloadfile = ({
+  exportFilters = [],
+  apiEndPoint,
+  dateFilter = true,
+}) => {
   const { token } = useAuth();
   const [loading, setLoading] = useState(false);
-
 
   // apiEndPoint: `https://gbu-server.vercel.app/api/admin/duty/export`,
   // apiEndPoint: `https://gbu-server.vercel.app/api/admin/attandance/export`,
 
-  
   const handleDownload = async () => {
     setLoading(true);
     try {
-      const roomSplit = room.split("-");
-
-      const apiURL = new URL(apiEndPoint);
-      apiURL.searchParams.append("fromdate", fromDate);
-      apiURL.searchParams.append("todate", toDate);
-      {
-        type === "Attendance" &&
-          apiURL.searchParams.append("buildingName", roomSplit[0]);
-        apiURL.searchParams.append("roomNo", roomSplit[1]);
-        apiURL.searchParams.append("shift", shift);
-      }
-      const response = await fetch(apiURL, {
+      const response = await fetch(apiEndPoint, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -52,7 +41,6 @@ const Downloadfile = ({ close, type, filterOptions }) => {
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
-
     } catch (error) {
       console.error("Error downloading file:", error);
       alert("Error downloading Excel file");
@@ -63,7 +51,12 @@ const Downloadfile = ({ close, type, filterOptions }) => {
 
   return (
     <div className={styles.container}>
-      <FilterBar filters={[]} maxDate={0} showSearchBtn={false} />
+      <FilterBar
+        dateFilter={dateFilter}
+        filters={exportFilters}
+        maxDate={0}
+        showSearchBtn={false}
+      />
       <button
         onClick={handleDownload}
         disabled={loading}

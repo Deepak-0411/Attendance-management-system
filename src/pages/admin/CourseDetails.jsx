@@ -1,44 +1,47 @@
+import { useEffect, useState } from "react";
 import { useData } from "../../context/DataContext";
 import { useFilter } from "../../context/FilterContext";
 import ContentBox from "../../layout/ContentBox";
+import { generateFilterInputs } from "../../utility/generateFilterInputs";
 
 const CourseDetails = () => {
   const { courceDetailsData, setCourceDetailsData } = useData();
 
-  const {
-    courseDetailsFilter,
-    setCourseDetailsFilter,
-    getSchoolList,
-    getBranchList,
-  } = useFilter();
+  const { courseDetailsFilter, setCourseDetailsFilter } = useFilter();
 
-  const filterInputs = [
-    {
-      label: "School",
-      name: "school",
-      value: courseDetailsFilter.school,
-      options: getSchoolList(),
-      required: true,
-      onChange: (val) =>
-        setCourseDetailsFilter((prev) => ({ ...prev, school: val })),
-    },
-    {
-      label: "Branch",
-      name: "branch",
-      value: courseDetailsFilter.branch,
-      options: getBranchList(courseDetailsFilter.school),
-      required: true,
-      onChange: (val) =>
-        setCourseDetailsFilter((prev) => ({ ...prev, branch: val })),
-    },
-  ];
+  const [exportFilter, setExportFilters] = useState({
+    school: "",
+    branch: "",
+  });
+
+  useEffect(() => {
+    setExportFilters((prev) => ({
+      ...prev,
+      school: courseDetailsFilter.school || "",
+      branch: courseDetailsFilter.branch || "",
+    }));
+  }, [courseDetailsFilter]);
+
+  const filterInputs = generateFilterInputs({
+    fields: ["school", "branch"],
+    filterState: courseDetailsFilter,
+    setFilterState: setCourseDetailsFilter,
+    required: ["school", "branch"],
+  });
+
+  const exportInputs = generateFilterInputs({
+    fields: ["school", "branch"],
+    filterState: exportFilter,
+    setFilterState: setExportFilters,
+  });
 
   const config = {
     title: "Courses",
     apiGet: "/admin/courses",
-    apiFilter: "",
+    apiExport: "",
     filterBox: true,
-    dateFilter : false,
+    dateFilter: false,
+    exportInputs: exportInputs,
     filterInputs: filterInputs,
     searchBoxPlaceholder: "Search by name or ID",
     idKey: "courseCode",
