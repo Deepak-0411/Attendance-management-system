@@ -6,7 +6,7 @@ const apiRequest = async ({
   method = "GET",
   body = null,
   bodyStringify = true,
-  token = true,
+  token = "",
   headers = {},
   setLoading = () => {},
   setError = () => {},

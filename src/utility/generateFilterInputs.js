@@ -1,14 +1,13 @@
-import { useFilter } from "../context/FilterContext";
-
 export const generateFilterInputs = ({
   fields = [],
   filterState,
   setFilterState,
+  getSchoolList,
+  getBuildingName,
+  getBranchList,
+  getRoomNo,
   requiredFields = [], // new addition
 }) => {
-  const { getSchoolList, getBuildingName, getBranchList, getRoomNo } =
-    useFilter();
-
   return fields.map((field) => {
     let options = [];
     switch (field) {

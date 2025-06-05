@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 
 const Faculty = () => {
   const { facultyData, setFacultyData } = useData();
-  const { facultyFilter, setFacultyFilter } = useFilter();
+  const { facultyFilter, setFacultyFilter, getSchoolList, getBranchList } =
+    useFilter();
 
   const [exportFilter, setExportFilters] = useState({
     school: "",
@@ -25,13 +26,17 @@ const Faculty = () => {
     fields: ["school", "branch"],
     filterState: facultyFilter,
     setFilterState: setFacultyFilter,
-    required: ["school", "branch"],
+    requiredFields: ["school", "branch"],
+    getSchoolList,
+    getBranchList,
   });
 
   const exportInputs = generateFilterInputs({
     fields: ["school", "branch"],
     filterState: exportFilter,
     setFilterState: setExportFilters,
+    getSchoolList,
+    getBranchList,
   });
 
   const config = {

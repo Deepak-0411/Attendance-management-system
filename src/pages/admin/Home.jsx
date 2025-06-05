@@ -26,7 +26,8 @@ const responseKeyToLabel = {
 const Home = () => {
   const { token } = useAuth();
   const { fromDate, toDate, homeData, setHomeData } = useData();
-  const { homeFilter, setHomeFilter } = useFilter();
+  const { homeFilter, setHomeFilter, getSchoolList, getBranchList } =
+    useFilter();
 
   const [loading, setLoading] = useState(false);
 
@@ -69,7 +70,8 @@ const Home = () => {
     fields: ["school", "branch", "shift"],
     filterState: homeFilter,
     setFilterState: setHomeFilter,
-    required: ["school", "branch", "shift"],
+    getSchoolList,
+    getBranchList,
   });
 
   return (

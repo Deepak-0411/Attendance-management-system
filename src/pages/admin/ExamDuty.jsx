@@ -6,7 +6,13 @@ import { generateFilterInputs } from "../../utility/generateFilterInputs";
 
 const ExamDuty = () => {
   const { examDutyData, setExamDutyData } = useData();
-  const { examDutyFilter, setExamDutyFilter } = useFilter();
+  const {
+    examDutyFilter,
+    setExamDutyFilter,
+    getSchoolList,
+    getBuildingName,
+    getRoomNo,
+  } = useFilter();
   const [exportFilter, setExportFilters] = useState({
     school: "",
     building: "",
@@ -28,12 +34,18 @@ const ExamDuty = () => {
     fields: ["school", "building", "roomNo", "shift"],
     filterState: examDutyFilter,
     setFilterState: setExamDutyFilter,
-    required: ["school", "building", "roomNo", "shift"],
+    requiredFields: ["school", "building", "roomNo", "shift"],
+    getSchoolList,
+    getBuildingName,
+    getRoomNo,
   });
   const exportInputs = generateFilterInputs({
     fields: ["school", "building", "roomNo", "shift"],
     filterState: exportFilter,
     setFilterState: setExportFilters,
+    getSchoolList,
+    getBuildingName,
+    getRoomNo,
   });
 
   const config = {

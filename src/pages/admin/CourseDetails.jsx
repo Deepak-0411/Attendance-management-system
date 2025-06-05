@@ -7,7 +7,12 @@ import { generateFilterInputs } from "../../utility/generateFilterInputs";
 const CourseDetails = () => {
   const { courceDetailsData, setCourceDetailsData } = useData();
 
-  const { courseDetailsFilter, setCourseDetailsFilter } = useFilter();
+  const {
+    courseDetailsFilter,
+    setCourseDetailsFilter,
+    getSchoolList,
+    getBranchList,
+  } = useFilter();
 
   const [exportFilter, setExportFilters] = useState({
     school: "",
@@ -26,13 +31,17 @@ const CourseDetails = () => {
     fields: ["school", "branch"],
     filterState: courseDetailsFilter,
     setFilterState: setCourseDetailsFilter,
-    required: ["school", "branch"],
+    requiredFields: ["school", "branch"],
+    getSchoolList,
+    getBranchList,
   });
 
   const exportInputs = generateFilterInputs({
     fields: ["school", "branch"],
     filterState: exportFilter,
     setFilterState: setExportFilters,
+    getSchoolList,
+    getBranchList,
   });
 
   const config = {

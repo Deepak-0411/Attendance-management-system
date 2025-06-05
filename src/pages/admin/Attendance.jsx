@@ -6,7 +6,13 @@ import { generateFilterInputs } from "../../utility/generateFilterInputs";
 
 const Attendance = () => {
   const { attendanceData, setAttendanceData } = useData();
-  const { attendanceFilter, setAttendanceFilter } = useFilter();
+  const {
+    attendanceFilter,
+    setAttendanceFilter,
+    getSchoolList,
+    getBuildingName,
+    getRoomNo,
+  } = useFilter();
   const [exportFilter, setExportFilters] = useState({
     school: "",
     building: "",
@@ -28,12 +34,18 @@ const Attendance = () => {
     fields: ["school", "building", "roomNo", "shift"],
     filterState: attendanceFilter,
     setFilterState: setAttendanceFilter,
-    required: ["school", "building", "roomNo", "shift"],
+    requiredFields: ["school", "building", "roomNo", "shift"],
+    getSchoolList,
+    getBuildingName,
+    getRoomNo,
   });
   const exportInputs = generateFilterInputs({
     fields: ["school", "building", "roomNo", "shift"],
     filterState: exportFilter,
     setFilterState: setExportFilters,
+    getSchoolList,
+    getBuildingName,
+    getRoomNo,
   });
 
   const config = {

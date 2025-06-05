@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { generateFilterInputs } from "../../utility/generateFilterInputs";
 
 const Rooms = () => {
-  const { roomsFilter, setRoomsFilter } = useFilter();
+  const { roomsFilter, setRoomsFilter, getSchoolList } = useFilter();
   const { roomsData, setRoomsData } = useData();
   const [exportFilter, setExportFilters] = useState({
     school: "",
@@ -22,13 +22,15 @@ const Rooms = () => {
     fields: ["school"],
     filterState: roomsFilter,
     setFilterState: setRoomsFilter,
-    required: ["school"],
+    requiredFields: ["school"],
+    getSchoolList,
   });
   const exportInputs = generateFilterInputs({
     fields: ["school"],
     filterState: exportFilter,
     setFilterState: setExportFilters,
-    required: ["school"],
+    requiredFields: ["school"],
+    getSchoolList,
   });
 
   const config = {
