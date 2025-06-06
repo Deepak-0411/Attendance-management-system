@@ -6,23 +6,45 @@
   justify-content: center;
 }
 
+.fullPage {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
 .spinner {
-  width: clamp(1.3rem, 5vw, 3rem);
-  height: clamp(1.3rem, 5vw, 3rem);
   border: 0.2rem solid rgba(255, 255, 255, 0.5);
   border-top: 0.3rem solid #ffffff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
 
-.spinner.blue {
+.blue {
   border: 0.2rem solid rgba(0, 123, 255, 0.3);
   border-top: 0.3em solid #007bff;
 }
 
-.spinner.small {
+.white {
+  border: 0.2rem solid rgba(255, 255, 255, 0.3);
+  border-top: 0.3em solid #fff;
+}
+
+.small {
   width: 1.5rem;
   height: 1.5rem;
+}
+
+.medium {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.large {
+  width: 3.5rem;
+  height: 3.5rem;
 }
 
 @keyframes spin {

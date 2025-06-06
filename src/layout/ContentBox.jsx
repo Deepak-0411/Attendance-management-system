@@ -10,6 +10,7 @@ import apiRequest from "../utility/apiRequest";
 import { toast } from "react-toastify";
 import styles from "../styles/modules/layout/ContentBox.module.css";
 import Overlay from "../components/Overlay/Overlay";
+import { useFilter } from "../context/FilterContext";
 
 const ContentBox = ({
   title,
@@ -37,6 +38,7 @@ const ContentBox = ({
   const [showExport, setShowExport] = useState(false);
 
   const { token } = useAuth();
+  const { isFiltersEmpty, loadFilterOptions } = useFilter();
 
   const fetchData = async () => {
     const response = await apiRequest({
@@ -59,6 +61,9 @@ const ContentBox = ({
       // console.log("datalist",dataList);
 
       fetchData();
+    }
+    if (isFiltersEmpty) {
+      loadFilterOptions(token);
     }
   }, []);
 
@@ -107,7 +112,11 @@ const ContentBox = ({
 
       {showExport && (
         <Overlay onClose={() => setShowExport(false)}>
-          <DownloadFile dateFilter={dateFilter} exportFilters={exportInputs} apiEndPoint={apiExport} />
+          <DownloadFile
+            dateFilter={dateFilter}
+            exportFilters={exportInputs}
+            apiEndPoint={apiExport}
+          />
         </Overlay>
       )}
 

@@ -1,5 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { date } from "../utility/GetDate";
+import apiRequest from "../utility/apiRequest";
+import { toast } from "react-toastify";
 
 const DataContext = createContext();
 
@@ -14,12 +16,15 @@ export const DataProvider = ({ children }) => {
   const [roomsData, setRoomsData] = useState([]);
 
   //   for Faculty
+  const [facultyName, setFacultyName] = useState([]);
+  const [facultyDuty, setFacultyDuty] = useState([]);
   const [studentlist, setStudentList] = useState([]);
 
   //   Date
   const [fromDate, setFromDate] = useState(date);
   const [toDate, setToDate] = useState(date);
 
+  // utility functions
   const dataReset = (naam) => {
     if (naam === "all") {
       setHomeData([]);
@@ -30,8 +35,26 @@ export const DataProvider = ({ children }) => {
       setStudentDetailsData([]);
       setRoomsData([]);
       setStudentList([]);
+      setFacultyDuty([]);
+      setFacultyName([]);
     } else {
       naam([]);
+    }
+  };
+  const getFacultyInfo = async (authtoken, setLoading = () => {}) => {
+    const response = await apiRequest({
+      url: "/faculty/preview",
+      method: "GET",
+      token: authtoken,
+      setLoading,
+    });
+
+    if (response.status === "success") {
+      setFacultyName(response.data.faculty || []);
+      setFacultyDuty(response.data.viewDuty || []);
+    } else {
+      console.error("Error:", response.message);
+      toast.error(`Failed to load faculty info.`);
     }
   };
 
@@ -48,6 +71,10 @@ export const DataProvider = ({ children }) => {
         studentlist,
         fromDate,
         toDate,
+        facultyName,
+        facultyDuty,
+        setFacultyDuty,
+        setFacultyName,
         setHomeData,
         setAttendanceData,
         setCourceDetailsData,
@@ -59,6 +86,7 @@ export const DataProvider = ({ children }) => {
         setFromDate,
         setToDate,
         dataReset,
+        getFacultyInfo,
       }}
     >
       {children}

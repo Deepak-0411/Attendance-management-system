@@ -55,18 +55,18 @@
   /* opacity: .7; */
 }
 .filterBtnPresent {
-  background-color: #5ca904;
-  color: white;
+  background-color: #153921;
+  color: #36dd87;
   /* opacity: 1; */
 }
 .filterBtnAbsent {
-  background-color: #F44336;
-  color: white;
+  background-color: #441320;
+  color: #d85577;
   /* opacity: 1; */
 }
 .filterBtnUFM {
-  background-color: #14bce1;
-  color: white;
+  background-color: #432e15;
+  color: #edb348;
   /* opacity: 1; */
 }
 .filterBtnAll {

@@ -2,12 +2,15 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useEffect, useState, useMemo } from "react";
 import apiRequest from "../../utility/apiRequest";
-import Logo from "../../assets/FAVICON.png";
-import styles from "./ProtectedRoute.module.css";
 import { toast } from "react-toastify";
+import LogoSpinner from "../../components/Spinner/LogoSpinner";
+import { useFilter } from "../../context/FilterContext";
+import { useData } from "../../context/DataContext";
 
 const ProtectedRoute = ({ element, user }) => {
   const { token } = useAuth();
+  const { loadFilterOptions, isFiltersEmpty } = useFilter();
+  const { getFacultyInfo } = useData();
   const [isAuthorized, setIsAuthorized] = useState(null);
   const [defaultRoot, setDefaultRoot] = useState("/faculty/login");
 
@@ -27,6 +30,11 @@ const ProtectedRoute = ({ element, user }) => {
       });
 
       if (response.status === "success") {
+        if (user === "faculty") {
+          await getFacultyInfo(authToken);
+        } else if (user === "admin" && isFiltersEmpty) {
+          await loadFilterOptions(authToken);
+        }
         setIsAuthorized(true);
       } else {
         console.error("Authorization Error:", response.message);
@@ -44,11 +52,7 @@ const ProtectedRoute = ({ element, user }) => {
 
   // Handle loading state
   if (isAuthorized === null) {
-    return (
-      <div className={styles.loaderContainer}>
-        <img className={styles.logo} src={Logo} alt="logo" />
-      </div>
-    );
+    return <LogoSpinner />;
   }
 
   // Redirect unauthorized users immediately

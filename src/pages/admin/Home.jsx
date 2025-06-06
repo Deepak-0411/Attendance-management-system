@@ -13,7 +13,7 @@ import { generateFilterInputs } from "../../utility/generateFilterInputs";
 const colorMap = {
   Present: "#5ca904",
   Absent: "#F44336",
-  UFM: "#14bce1",
+  UFM: "#edb348",
   "Not Marked": "#9E9E9E",
 };
 const responseKeyToLabel = {

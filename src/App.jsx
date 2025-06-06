@@ -1,15 +1,15 @@
-import { BrowserRouter as Router } from "react-router-dom";
 import AppRoutes from "./routes/AppRoute";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { AuthProvider } from "./context/AuthContext";
 import { DataProvider } from "./context/DataContext";
+import { FilterProvider } from "./context/FilterContext";
 
 function App() {
   return (
     <>
-      <Router>
-        <DataProvider>
+      <DataProvider>
+        <FilterProvider>
           <AuthProvider>
             <AppRoutes />
             <ToastContainer
@@ -18,10 +18,9 @@ function App() {
               theme="colored"
             />
           </AuthProvider>
-        </DataProvider>
-      </Router>
+        </FilterProvider>
+      </DataProvider>
     </>
   );
 }
-
 export default App;

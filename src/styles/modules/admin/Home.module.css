@@ -44,7 +44,7 @@
   font-size: 4rem;
   font-weight: 500;
 }
-.statusBox {
+/* .statusBox {
   height: 300px;
   display: flex;
   align-items: center;
@@ -56,5 +56,5 @@
 .errorText {
   color: #e53935;
   font-weight: 500;
-}
+} */
 

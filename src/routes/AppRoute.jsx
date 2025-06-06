@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import AdminLayout from "../layout/AdminLayout";
 import FacultyLayout from "../layout/FacultyLayout";
 import PageNotFound from "../pages/PageNotFound";
+import { FilterProvider } from "../context/FilterContext";
 
 // Guard
 import ProtectedRoute from "../routes/guard/ProtectedRoute";
@@ -24,14 +25,11 @@ import CourseDetails from "../pages/admin/CourseDetails";
 import DisplayDuty from "../pages/user/DisplayDuty";
 import Students from "../pages/user/Students";
 import MarkAttendence from "../pages/user/MarkAttendence";
-import { FilterProvider } from "../context/FilterContext";
 
-function App() {
-  const [defaultRoot, setDefaultRoot] = useState("/faculty/displayDuty");
-
-  useEffect(() => {
-    if (window.innerWidth > 600) setDefaultRoot("/admin/home");
-  }, []);
+function AppRoute() {
+  const initialRoot =
+    window.innerWidth > 600 ? "/admin/home" : "/faculty/displayDuty";
+  const [defaultRoot, setDefaultRoot] = useState(initialRoot);
 
   return (
     <Routes>
@@ -54,16 +52,7 @@ function App() {
       {/* Admin Routes with Dashboard Layout */}
       <Route
         path="/admin"
-        element={
-          <ProtectedRoute
-            element={
-              <FilterProvider>
-                <AdminLayout />
-              </FilterProvider>
-            }
-            user="admin"
-          />
-        }
+        element={<ProtectedRoute element={<AdminLayout />} user="admin" />}
       >
         <Route index element={<Navigate to="/admin/home" />} />
         <Route path="home" element={<Home />} />
@@ -82,4 +71,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppRoute;
