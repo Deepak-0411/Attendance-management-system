@@ -96,7 +96,7 @@ const MarkAttendence = () => {
                   className={styles.inputField}
                   value={sheetNo}
                   onChange={(e) => setSheetNo(e.target.value)}
-                  // onBlur={() => setIsEditingSheet(false)}
+                  onBlur={() => setIsEditingSheet(false)}
                   autoFocus
                 />
               ) : (

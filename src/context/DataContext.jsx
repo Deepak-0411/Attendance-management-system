@@ -22,13 +22,13 @@ export const DataProvider = ({ children }) => {
   const [selectedBuilding, setSelectedBuilding] = useState("");
   const [selectedRoomNo, setSelectedRoomNo] = useState("");
   const [studentlist, setStudentList] = useState([
-    { id: 1, name: "Alice Johnson", present: false },
-    { id: 2, name: "Bob Smith", present: false },
-    { id: 3, name: "Charlie Kim", present: false },
-    { id: 4, name: "Dana Lee", present: false },
-    { id: 5, name: "Eli Martinez", present: false },
+    // { id: 1, name: "Alice Johnson", present: false },
+    // { id: 2, name: "Bob Smith", present: false },
+    // { id: 3, name: "Charlie Kim", present: false },
+    // { id: 4, name: "Dana Lee", present: false },
+    // { id: 5, name: "Eli Martinez", present: false },
   ]);
-  const [currentIdx, setCurrentIdx] = useState(1);
+  const [currentIdx, setCurrentIdx] = useState();
 
   // Date states
   const [fromDate, setFromDate] = useState(date);
