@@ -13,7 +13,7 @@ const apiRequest = async ({
 }) => {
   try {
     setLoading(true);
-    setError(null);
+    if (setError) setError(null);
 
     const isFormData = body instanceof FormData;
 
@@ -34,13 +34,20 @@ const apiRequest = async ({
     }
 
     const response = await fetch(baseURl + url, options);
-    const data = await response.json();
+    const rawText = await response.text();
+
+    let data;
+    try {
+      data = rawText ? JSON.parse(rawText) : {};
+    } catch {
+      data = { message: rawText }; // fallback if not valid JSON
+    }
 
     if (!response.ok) {
       return {
         status: "error",
-        message: data.message || `Error ${response.status}`,
-        data: data || null,
+        message: data?.message || `Error ${response.status}`,
+        data,
       };
     }
 

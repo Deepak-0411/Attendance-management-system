@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
-  // for Admim
+  // Admin states
   const [homeData, setHomeData] = useState([]);
   const [attendanceData, setAttendanceData] = useState([]);
   const [courceDetailsData, setCourceDetailsData] = useState([]);
@@ -15,16 +15,26 @@ export const DataProvider = ({ children }) => {
   const [studentDetailsData, setStudentDetailsData] = useState([]);
   const [roomsData, setRoomsData] = useState([]);
 
-  //   for Faculty
+  // Faculty states
   const [facultyName, setFacultyName] = useState([]);
   const [facultyDuty, setFacultyDuty] = useState([]);
-  const [studentlist, setStudentList] = useState([]);
+  const [selectedShift, setSelectedShift] = useState("");
+  const [selectedBuilding, setSelectedBuilding] = useState("");
+  const [selectedRoomNo, setSelectedRoomNo] = useState("");
+  const [studentlist, setStudentList] = useState([
+    { id: 1, name: "Alice Johnson", present: false },
+    { id: 2, name: "Bob Smith", present: false },
+    { id: 3, name: "Charlie Kim", present: false },
+    { id: 4, name: "Dana Lee", present: false },
+    { id: 5, name: "Eli Martinez", present: false },
+  ]);
+  const [currentIdx, setCurrentIdx] = useState(1);
 
-  //   Date
+  // Date states
   const [fromDate, setFromDate] = useState(date);
   const [toDate, setToDate] = useState(date);
 
-  // utility functions
+  // Utility functions
   const dataReset = (naam) => {
     if (naam === "all") {
       setHomeData([]);
@@ -37,16 +47,26 @@ export const DataProvider = ({ children }) => {
       setStudentList([]);
       setFacultyDuty([]);
       setFacultyName([]);
+      setSelectedShift("");
+      setSelectedBuilding("");
+      setSelectedRoomNo("");
+      setCurrentIdx("");
     } else {
       naam([]);
     }
   };
-  const getFacultyInfo = async (authtoken, setLoading = () => {}) => {
+
+  const getFacultyInfo = async (
+    authtoken,
+    setLoading = () => {},
+    setError = () => {}
+  ) => {
     const response = await apiRequest({
       url: "/faculty/preview",
       method: "GET",
       token: authtoken,
       setLoading,
+      setError,
     });
 
     if (response.status === "success") {
@@ -61,6 +81,7 @@ export const DataProvider = ({ children }) => {
   return (
     <DataContext.Provider
       value={{
+        // Admin data
         homeData,
         attendanceData,
         courceDetailsData,
@@ -68,13 +89,22 @@ export const DataProvider = ({ children }) => {
         facultyData,
         studentDetailsData,
         roomsData,
-        studentlist,
-        fromDate,
-        toDate,
+
+        // Faculty data
         facultyName,
         facultyDuty,
-        setFacultyDuty,
-        setFacultyName,
+        selectedShift,
+        selectedBuilding,
+        selectedRoomNo,
+        studentlist,
+        currentIdx,
+
+        // Dates
+        fromDate,
+        toDate,
+
+        // Setters
+        // admin
         setHomeData,
         setAttendanceData,
         setCourceDetailsData,
@@ -82,9 +112,19 @@ export const DataProvider = ({ children }) => {
         setFacultyData,
         setStudentDetailsData,
         setRoomsData,
+        // faculty
+        setFacultyName,
+        setFacultyDuty,
+        setSelectedShift,
+        setSelectedBuilding,
+        setSelectedRoomNo,
         setStudentList,
+        setCurrentIdx,
+
         setFromDate,
         setToDate,
+
+        // Utilities
         dataReset,
         getFacultyInfo,
       }}

@@ -2,14 +2,21 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import styles from "../../styles/modules/public/DisplayDuty.module.css";
-import errorStyles from "../../styles/modules/public/Error.module.css";
+import ErrorBox from "../../components/ErrorBox/ErrorBox";
 import useTableHeight from "../../utility/setHeight";
 import { useData } from "../../context/DataContext";
 import Spinner from "../../components/Spinner/Spinner";
 
 const DisplayDuty = () => {
   const { token, logout } = useAuth();
-  const { facultyName, facultyDuty, getFacultyInfo } = useData();
+  const {
+    facultyName,
+    facultyDuty,
+    getFacultyInfo,
+    setSelectedShift,
+    setSelectedBuilding,
+    setSelectedRoomNo,
+  } = useData();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -20,36 +27,34 @@ const DisplayDuty = () => {
   useEffect(() => {
     const needsData = facultyName.length === 0 && facultyDuty.length === 0;
 
-    if (needsData) {      
-      getFacultyInfo(token, setLoading);
+    if (needsData) {
+      getFacultyInfo(token, setLoading, setError);
     } else {
       setLoading(false);
     }
   }, []);
 
-  const handleClick = (shift, buildingName, roomNo, fName, secondTeacher) => {
+  const handleClick = (shift, buildingName, roomNo, secondTeacher) => {
+    setSelectedShift(shift);
+    setSelectedBuilding(buildingName);
+    setSelectedRoomNo(roomNo);
     navigate("faculty/students", {
-      state: { shift, buildingName, roomNo, fName, secondTeacher },
+      state: { secondTeacher },
     });
   };
 
   if (loading) return <Spinner color="white" fullPage size="large" />;
 
-  if (error) return "";
+  if (error)
+    return (
+      <ErrorBox
+        error={error}
+        onClick={getFacultyInfo(token, setLoading, setError)}
+      />
+    );
 
   return (
     <div className={styles.parent}>
-      {/* <div className={errorStyles.errorBox}>
-          <p className={errorStyles.errorp}>{error}</p>
-          <button
-            className={errorStyles.retryBtn}
-            onClick={() => setRefresh((prev) => !prev)}
-          >
-            Retry
-          </button>
-        </div> 
-        */}
-
       <div className={styles.userInfo} id="header">
         <div className={styles.userName}>
           <p className={styles.userNameP}>
@@ -75,7 +80,6 @@ const DisplayDuty = () => {
                     duty.shift,
                     duty.buildingName,
                     duty.roomNo,
-                    facultyName?.fName,
                     duty.secondTeacher
                   )
                 }

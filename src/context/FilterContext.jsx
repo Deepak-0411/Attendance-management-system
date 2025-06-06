@@ -109,7 +109,7 @@ export const FilterProvider = ({ children }) => {
         setDataList(response.data);
       } else {
         console.error("Error:", response.message);
-        toast.error(`Error: Failed to ${api.key}`);
+        toast.error(`Error: Failed to get ${api.key}`);
       }
     }
   };

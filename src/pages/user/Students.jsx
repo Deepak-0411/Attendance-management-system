@@ -1,78 +1,77 @@
 import { useEffect, useState, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import errorStyles from "../../styles/modules/public/Error.module.css";
+import ErrorBox from "../../components/ErrorBox/ErrorBox";
 import useTableHeight from "../../utility/setHeight";
 import styles from "../../styles/modules/public/Students.module.css";
 import Spinner from "../../components/Spinner/Spinner";
+import { useData } from "../../context/DataContext";
+import Input from "../../components/Input/Input";
+import apiRequest from "../../utility/apiRequest";
+import { toast } from "react-toastify";
 
 const statuses = ["Present", "Absent", "UFM", "All"];
 
 const DisplayDuty = () => {
   const [search, setSearch] = useState("");
   const [activeBtn, setActiveBtn] = useState("All");
-  const [dataList, setDataList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [refresh, setRefresh] = useState(false);
 
   const { tableHeight } = useTableHeight();
 
   const { token } = useAuth();
+  const {
+    studentlist,
+    setStudentList,
+    facultyData,
+    selectedShift,
+    selectedBuilding,
+    selectedRoomNo,
+    setCurrentIdx,
+  } = useData();
   const navigate = useNavigate();
   const { state } = useLocation();
 
-  const shift = state?.shift;
-  const buildingName = state?.buildingName;
-  const roomNo = state?.roomNo;
-  const fName = state?.fName || "N/A";
   const secondTeacher = state?.secondTeacher || "N/A";
 
+  const fetchData = async () => {
+    const response = await apiRequest({
+      url: `/faculty/studentList?shift=${selectedShift}`,
+      method: "GET",
+      token,
+      setLoading,
+      setError,
+    });
+
+    if (response.status === "success") {
+      const students = response.data?.students;
+
+      if (Array.isArray(students)) {
+        setStudentList(students);
+      } else {
+        setError("Unexpected response format: students list not found.");
+        console.error("Invalid data format:", response.data);
+      }
+    } else {
+      setError("Failed to load students data.");
+      toast.error("Failed to load students data.");
+    }
+  };
+
   useEffect(() => {
-    if (!(shift && buildingName && roomNo)) {
-      navigate("/displayDuty");
+    if (!(selectedShift && selectedBuilding && selectedRoomNo)) {
+      toast.info("Please select a room and shift");
+      navigate("/faculty/displayDuty");
       return;
     }
-
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await fetch(
-          `https://gbu-server.vercel.app/api/faculty/studentList?shift=${shift}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(`Error ${response.status}: Failed to fetch data`);
-        }
-
-        const data = (await response.json()).students;
-
-        if (!Array.isArray(data)) {
-          throw new Error("Unexpected response format");
-        }
-
-        setDataList(data);
-      } catch (err) {
-        console.error("Fetch Error:", err);
-        setError(err.message || "An unexpected error occurred");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [token, refresh]);
+    if (!Array.isArray(studentlist) || studentlist.length === 0) {
+      fetchData();
+    }
+  }, []);
 
   const filteredStudents = useMemo(() => {
-    return dataList
+    return studentlist
       .filter((student) => activeBtn === "All" || student.status === activeBtn)
       .filter((student) => {
         const query = search.toLowerCase();
@@ -81,45 +80,38 @@ const DisplayDuty = () => {
           student.rollNo.toLowerCase().includes(query)
         );
       });
-  }, [dataList, activeBtn, search]);
+  }, [studentlist, activeBtn, search]);
+
+  const getNoOfStudent = (status) => {
+    if (status === "All") return studentlist.length;
+    return studentlist.filter((s) => s.status === status).length;
+  };
 
   const handleClick = (index) => {
-    const sessionData = { dataList, index };
-    sessionStorage.setItem("markAttendanceState", JSON.stringify(sessionData));
-    navigate("/markAttendance");
+    setCurrentIdx(index);
+    navigate("/faculty/markAttendance");
   };
+
   if (error) {
-    return (
-      <div className={errorStyles.errorBox}>
-        <p className={errorStyles.errorp}>{error}</p>
-        <button
-          className={errorStyles.retryBtn}
-          onClick={() => setRefresh((prev) => !prev)}
-        >
-          Retry
-        </button>
-      </div>
-    );
+    return <ErrorBox error={error} onclick={fetchData} />;
   }
 
   return (
     <div className={styles.parent}>
+      {/* headder container  */}
       <div className={styles.roomInfo} id="header">
-        <p className={styles.roomInfoP}>Room no: {roomNo || "N/A"}</p>
+        <p className={styles.roomInfoP}>Room no: {selectedRoomNo || "N/A"}</p>
         <p className={styles.roomInfoP}>
-          Duty: {fName} , {secondTeacher}
+          Duty: {facultyData.fName} , {secondTeacher}
         </p>
-        <p className={styles.roomInfoP}>Shift: {shift || "N/A"}</p>
+        <p className={styles.roomInfoP}>Shift: {selectedShift || "N/A"}</p>
       </div>
 
+      {/* second container */}
       <div className={styles.Studentlist} id="container">
+        {/* filter bar */}
         <div className={styles.filterBtns} id="filterContainer">
           {statuses.map((status) => {
-            const count =
-              status === "All"
-                ? dataList.length
-                : dataList.filter((s) => s.status === status).length;
-
             return (
               <div key={status}>
                 <button
@@ -128,7 +120,7 @@ const DisplayDuty = () => {
                     activeBtn === status ? styles[`filterBtn${status}`] : ""
                   }`}
                 >
-                  {count}
+                  {getNoOfStudent(status)}
                 </button>
                 <p className={styles.filterBtnP}>{status}</p>
               </div>
@@ -136,19 +128,21 @@ const DisplayDuty = () => {
           })}
         </div>
 
+        {/* search box */}
         <div className={styles.searchBox} id="searchBox">
-          <input
-            type="text"
-            placeholder="Search student by roll no. or name"
-            className={styles.searchInputBox}
+          <Input
+            type={4}
+            role={"text"}
+            placeholder={"Search student by roll no. or name"}
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            setValue={(val) => setSearch(val)}
           />
         </div>
 
+        {/* student list */}
         <div className={styles.contentBox} style={{ height: tableHeight }}>
           {loading ? (
-            <Spinner color="white"/>
+            <Spinner color="white" fullPage size="large" />
           ) : filteredStudents.length > 0 ? (
             filteredStudents.map((student, index) => (
               <div

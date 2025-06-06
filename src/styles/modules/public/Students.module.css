@@ -10,9 +10,9 @@
 .roomInfo {
   background-color: #212121;
   padding: 1.5rem 2rem 1rem 2rem;
-  display: flex; 
-  width: 100%; 
-  flex-direction: column; 
+  display: flex;
+  width: 100%;
+  flex-direction: column;
   /* height: clamp(15vh, 17vh, 17vh); */
 }
 .roomInfoP {
@@ -55,50 +55,28 @@
   /* opacity: .7; */
 }
 .filterBtnPresent {
-  background-color: #153921;
-  color: #36dd87;
+  background-color: #5ca904;
+  color: white;
   /* opacity: 1; */
 }
 .filterBtnAbsent {
-  background-color: #441320;
-  color: #d85577;
+  background-color: #f44336;
+  color: white;
   /* opacity: 1; */
 }
 .filterBtnUFM {
-  background-color: #432e15;
-  color: #edb348;
+  background-color: #14bce1;
+  color: white;
   /* opacity: 1; */
 }
 .filterBtnAll {
   background-color: #555555;
   color: white;
-  /* opacity: 1; */
 }
 
 .searchBox {
   margin-bottom: 1.5rem;
   width: 100%;
-}
-.searchInputBox {
-  border-radius: 0.6rem;
-  border: 0.1rem solid #000;
-  background: #ffffff;
-  width: 100%;
-  padding: 0.34375rem 1rem 0.3em 1rem;
-  font-size: 1.2rem;
-  color: #000000;
-  outline: none;
-  transition: background 0.3s ease;
-  font-family: Barlow;
-  font-weight: 500;
-}
-.searchInputBox::placeholder {
-  color: #878787;
-  font-family: Barlow;
-  /* font-size: 0.75rem; */
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
 }
 
 .contentBox {
@@ -142,19 +120,25 @@
   align-items: center;
   justify-content: center;
   font-weight: 500;
-  opacity: .9;
+  opacity: 0.9;
 }
 .contentStatuspresent {
-  color: #c7ffc7;
-  background-color: #00cf00ab;
+  /* color: #c7ffc7;
+  background-color: #00cf00ab; */
+  background-color: #153921;
+  color: #36dd87;
 }
 .contentStatusabsent {
-  color: #ffb3ae;
-  background-color: #cd0101ab;
+  /* color: #ffb3ae;
+  background-color: #cd0101ab; */
+  background-color: #441320;
+  color: #d85577;
 }
 .contentStatusufm {
-  color: #14bce1;
-  background-color: #14bce15c;
+  /* color: #14bce1;
+  background-color: #14bce15c; */
+  background-color: #432e15;
+  color: #edb348;
 }
 .noResults {
   text-align: center;

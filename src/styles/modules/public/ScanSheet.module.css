@@ -57,28 +57,15 @@
 .toggleCameraBtn {
   background-color: #333;
   color: white;
-  padding: .4rem;
+  padding: 0.4rem;
   border: none;
   border-radius: 50%;
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
 }
-.close{
-  width: 20rem;
-  text-align: right;
-  margin-bottom: 1.5rem;
-}
-.closeBtn{
-  background-color: #333;
-  color: white;
-  padding: .4rem;
-  border: none;
-  border-radius: 50%;
-  
-}
-.toggleCameraBtn:disabled{
-  opacity: .4;
+.toggleCameraBtn:disabled {
+  opacity: 0.4;
 }
 
 .verificationMessage {

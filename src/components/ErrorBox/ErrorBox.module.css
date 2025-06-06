@@ -1,0 +1,27 @@
+.errorBox {
+    height: 100dvh;
+    width: 100dvw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1.5rem;
+    font-size: 1.5rem;
+  }
+
+.errorp{
+    color: white;
+    background: rgb(216, 0, 0);
+    border-radius: .5rem;
+    padding: .5rem;
+}
+
+.retryBtn{
+    border: none;
+    border-radius: .5rem;
+    color: white;
+    background: green;
+    padding: .5rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
