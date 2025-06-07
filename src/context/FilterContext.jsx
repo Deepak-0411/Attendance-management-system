@@ -114,8 +114,11 @@ export const FilterProvider = ({ children }) => {
     }
   };
 
-  const isFiltersEmpty = () => {
-    return schoolFilterData.lenght === 0 || roomFilterData.lenght === 0;
+  const isFiltersEmpty = () => {    
+    return (
+      Object.keys(schoolFilterData).length === 0 ||
+      Object.keys(roomFilterData).length === 0
+    );
   };
 
   return (

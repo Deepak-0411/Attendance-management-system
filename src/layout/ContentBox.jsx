@@ -62,7 +62,7 @@ const ContentBox = ({
 
       fetchData();
     }
-    if (isFiltersEmpty) {
+    if (isFiltersEmpty()) {
       loadFilterOptions(token);
     }
   }, []);

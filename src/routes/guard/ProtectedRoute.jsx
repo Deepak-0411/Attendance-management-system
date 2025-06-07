@@ -32,7 +32,7 @@ const ProtectedRoute = ({ element, user }) => {
       if (response.status === "success") {
         if (user === "faculty") {
           await getFacultyInfo(authToken);
-        } else if (user === "admin" && isFiltersEmpty) {
+        } else if (user === "admin" && isFiltersEmpty()) {
           await loadFilterOptions(authToken);
         }
         setIsAuthorized(true);
