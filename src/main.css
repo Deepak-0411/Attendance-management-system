@@ -35,9 +35,11 @@ body {
   background-color: #212121;
 }
 .Toastify__toast {
-  max-width: 90vw; /* Prevent overflow */
+  max-width: 90vw;
   margin: 1rem;
+  border-radius: .5rem !important;
 }
+
 button:disabled {
   cursor: not-allowed;
 }
