@@ -18,15 +18,17 @@ export const DataProvider = ({ children }) => {
   // Faculty states
   const [facultyName, setFacultyName] = useState([]);
   const [facultyDuty, setFacultyDuty] = useState([]);
-  const [selectedShift, setSelectedShift] = useState("");
-  const [selectedBuilding, setSelectedBuilding] = useState("");
-  const [selectedRoomNo, setSelectedRoomNo] = useState("");
+  const [selectedShift, setSelectedShift] = useState("1");
+  const [selectedBuilding, setSelectedBuilding] = useState("IL");
+  const [selectedRoomNo, setSelectedRoomNo] = useState("101");
   const [studentlist, setStudentList] = useState([
-    { id: 1, name: "Alice Johnson", present: false },
-    { id: 2, name: "Bob Smith", present: false },
-    { id: 3, name: "Charlie Kim", present: false },
-    { id: 4, name: "Dana Lee", present: false },
-    { id: 5, name: "Eli Martinez", present: false },
+    {rollNo : "235UCS050", name:"Deepak",status:"Present"},
+    {rollNo : "235UCS060", name:"Jai",status:""},
+    {rollNo : "235UCS058", name:"Harsh",status:"Absent"},
+    {rollNo : "235UCS024", name:"Ankit",status:"absent"},
+    {rollNo : "235UCS026", name:"Ansh",status:"present"},
+    {rollNo : "235UCS015", name:"Aman",status:"UFM"},
+    {rollNo : "235UCS016", name:"Solanki",status:"ufm"},
   ]);
   const [currentIdx, setCurrentIdx] = useState(1);
 
@@ -70,6 +72,7 @@ export const DataProvider = ({ children }) => {
     });
 
     if (response.status === "success") {
+      // facultyname [0] id[1]
       setFacultyName(response.data.faculty || []);
       setFacultyDuty(response.data.viewDuty || []);
     } else {

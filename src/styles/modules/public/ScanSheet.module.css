@@ -34,7 +34,9 @@
   border-radius: 2rem;
   cursor: pointer;
   font-size: 1.02rem;
+  font-weight: 700;
   margin: 0.94rem 0.32rem;
+  border: 0.1rem solid white;
   transition: background 0.3sease, transform 0.2sease;
 }
 
@@ -47,11 +49,13 @@
 }
 
 .startBtn {
-  background-color: #00a80f;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 .stopBtn {
-  background-color: #ff4444;
+  background-color: #000000;
+  color: #ffffff;
 }
 
 .toggleCameraBtn {

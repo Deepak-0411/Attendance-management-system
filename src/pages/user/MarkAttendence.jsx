@@ -93,9 +93,10 @@ const MarkAttendence = () => {
               isEditingSheet ? (
                 <input
                   type="number"
+                  min={0}
                   className={styles.inputField}
                   value={sheetNo}
-                  onChange={(e) => setSheetNo(e.target.value)}
+                  onChange={(e) => setSheetNo(Math.max(0, e.target.value))}
                   onBlur={() => setIsEditingSheet(false)}
                   autoFocus
                 />
@@ -158,7 +159,7 @@ const MarkAttendence = () => {
             onClick={() => setCurrentIdx((prev) => Math.max(0, prev - 1))}
             disabled={currentIdx === 0 || loading}
           >
-            &lt;- Back
+            {icon("back", currentIdx === 0 || loading)} Back
           </button>
           <button
             className={styles.next}
@@ -169,7 +170,8 @@ const MarkAttendence = () => {
             }
             disabled={currentIdx === studentlist.length - 1 || loading}
           >
-            Next {forwardIcon}
+            Next{" "}
+            {icon("frwd", currentIdx === studentlist.length - 1 || loading)}
           </button>
         </div>
       </div>
@@ -178,17 +180,34 @@ const MarkAttendence = () => {
 };
 
 export default MarkAttendence;
-const forwardIcon = (
-<svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="24"
-  height="24"
-  viewBox="0 0 960 960"
-  fill="#FFFFFF"
-  style={{"display": "block"}}
->
-  <path d="M400 680V280l200 200-200 200Z" />
-</svg>
-
-
+const icon = (type, isDisabled) => (
+  <svg
+    width="18px"
+    height="18px"
+    viewBox="0 0 24.00 24.00"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    transform={
+      type === "frwd" ? "matrix(1, 0, 0, 1, 0, 0)" : "matrix(-1, 0, 0, 1, 0, 0)"
+    }
+    stroke={isDisabled ? "#ffffff24" : "#fff"}
+    strokeWidth="0.336"
+  >
+    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+    <g
+      id="SVGRepo_tracerCarrier"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      stroke="#fff"
+      strokeWidth="0.096"
+    ></g>
+    <g id="SVGRepo_iconCarrier">
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M12.2929 4.29289C12.6834 3.90237 13.3166 3.90237 13.7071 4.29289L20.7071 11.2929C21.0976 11.6834 21.0976 12.3166 20.7071 12.7071L13.7071 19.7071C13.3166 20.0976 12.6834 20.0976 12.2929 19.7071C11.9024 19.3166 11.9024 18.6834 12.2929 18.2929L17.5858 13H4C3.44772 13 3 12.5523 3 12C3 11.4477 3.44772 11 4 11H17.5858L12.2929 5.70711C11.9024 5.31658 11.9024 4.68342 12.2929 4.29289Z"
+        fill={isDisabled ? "#ffffff24" : "#fff"}
+      ></path>
+    </g>
+  </svg>
 );

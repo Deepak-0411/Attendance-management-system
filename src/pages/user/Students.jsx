@@ -72,7 +72,11 @@ const DisplayDuty = () => {
 
   const filteredStudents = useMemo(() => {
     return studentlist
-      .filter((student) => activeBtn === "All" || student.status === activeBtn)
+      .filter(
+        (student) =>
+          activeBtn === "All" ||
+          student.status.toLowerCase() === activeBtn.toLowerCase()
+      )
       .filter((student) => {
         const query = search.toLowerCase();
         return (
@@ -84,7 +88,9 @@ const DisplayDuty = () => {
 
   const getNoOfStudent = (status) => {
     if (status === "All") return studentlist.length;
-    return studentlist.filter((s) => s.status === status).length;
+    return studentlist.filter(
+      (s) => s.status.toLowerCase() === status.toLowerCase()
+    ).length;
   };
 
   const handleClick = (index) => {
@@ -100,7 +106,9 @@ const DisplayDuty = () => {
     <div className={styles.parent}>
       {/* headder container  */}
       <div className={styles.roomInfo} id="header">
-        <p className={styles.roomInfoP}>Room no: {selectedRoomNo || "N/A"}</p>
+        <p className={styles.roomInfoP}>
+          Room no: {selectedBuilding + " " + selectedRoomNo || "N/A"}
+        </p>
         <p className={styles.roomInfoP}>
           Duty: {facultyData.fName} , {secondTeacher}
         </p>

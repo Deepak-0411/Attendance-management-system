@@ -52,7 +52,6 @@
   overflow-x: hidden;
 }
 
-/* Hide Scrollbar for Clean Look */
 .work::-webkit-scrollbar {
   display: none;
 }

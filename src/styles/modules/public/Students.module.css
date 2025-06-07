@@ -84,6 +84,7 @@
   display: flex;
   flex-direction: column;
   overflow: auto;
+  gap: 1rem;
   width: 100%;
   overflow: auto;
 }
@@ -94,8 +95,7 @@
   width: 100%;
   background-color: #323232;
   border-radius: 0.6rem;
-  padding: 1rem 1rem;
-  margin-bottom: 1rem;
+  padding: 1rem;
   display: flex;
   justify-content: space-between;
 }
@@ -111,16 +111,15 @@
 }
 .contentStatus {
   font-family: Barlow;
-  padding: 0.2rem 0.3rem;
+  padding: 0.3rem .8rem;
   margin-right: 0.8rem;
-  border-radius: 0.3rem;
+  border-radius: 2rem;
   background-color: #ffffff42;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 500;
-  opacity: 0.9;
 }
 .contentStatuspresent {
   /* color: #c7ffc7;
