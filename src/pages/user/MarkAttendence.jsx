@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useData } from "../../context/DataContext";
 import styles from "../../styles/modules/public/MarkAttendence.module.css";
@@ -12,28 +12,32 @@ import Overlay from "../../components/Overlay/Overlay";
 
 const MarkAttendence = () => {
   const { token } = useAuth();
-  const { studentlist, setStudentList, currentIdx, setCurrentIdx } = useData();
+  const selectedShift = sessionStorage.getItem("shift");
+  const { studentlist, setStudentList, fetchStudents } = useData();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const [scanning, setScanning] = useState(false);
-  const [sheetNo, setSheetNo] = useState();
+  const [sheetNo, setSheetNo] = useState("");
   const [loading, setLoading] = useState(false);
+  const [scanning, setScanning] = useState(false);
   const [isEditingSheet, setIsEditingSheet] = useState(false);
+  const [error, setError] = useState(null);
 
-  const student = studentlist?.[currentIdx];
+  const query = new URLSearchParams(location.search);
+  const currentIdx = parseInt(query.get("idx")) || 0;
 
   useEffect(() => {
     if (!studentlist?.length) {
-      toast.info("Failed to get student data.");
-      navigate("/faculty/displayDuty");
+      fetchStudents(selectedShift, token, setLoading, setError);
     }
   }, [studentlist, navigate]);
+
+  const student = studentlist?.[currentIdx];
 
   const handleStatusChange = async (newStatus) => {
     if (!student) return;
 
     const validSheet = newStatus === "Absent" || sheetNo;
-
     if (!validSheet) {
       toast.warn("Error: No valid sheet number found!");
       return;
@@ -66,6 +70,20 @@ const MarkAttendence = () => {
     }
   };
 
+  const updateIndex = (newIdx) => {
+    navigate(`?idx=${newIdx}`, { replace: true });
+  };
+
+  if (error)
+    return (
+      <ErrorBox
+        error={error}
+        onClick={() =>
+          fetchStudents(selectedShift, token, setLoading, setError)
+        }
+      />
+    );
+
   if (!student) {
     return (
       <ErrorBox
@@ -78,7 +96,7 @@ const MarkAttendence = () => {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        {/* Student Details Grid */}
+        {/* Student Details */}
         <div className={styles.detailsContainer}>
           {[
             ["Name", student.name],
@@ -114,7 +132,7 @@ const MarkAttendence = () => {
           ))}
         </div>
 
-        {/* QR Scanner */}
+        {/* Scanner */}
         <div className={styles.scanSheet}>
           <button
             className={styles.scanButton}
@@ -124,9 +142,7 @@ const MarkAttendence = () => {
           </button>
           {scanning && (
             <Overlay onClose={() => setScanning(false)}>
-              <ScanSheet
-                setSheet={(scannedSheetNo) => setSheetNo(scannedSheetNo)}
-              />
+              <ScanSheet setSheet={(scanned) => setSheetNo(scanned)} />
             </Overlay>
           )}
         </div>
@@ -152,11 +168,11 @@ const MarkAttendence = () => {
           ))}
         </div>
 
-        {/* Navigation Buttons */}
+        {/* Navigation */}
         <div className={styles.navButtons}>
           <button
             className={styles.back}
-            onClick={() => setCurrentIdx((prev) => Math.max(0, prev - 1))}
+            onClick={() => updateIndex(Math.max(0, currentIdx - 1))}
             disabled={currentIdx === 0 || loading}
           >
             {icon("back", currentIdx === 0 || loading)} Back
@@ -164,9 +180,7 @@ const MarkAttendence = () => {
           <button
             className={styles.next}
             onClick={() =>
-              setCurrentIdx((prev) =>
-                Math.min(studentlist.length - 1, prev + 1)
-              )
+              updateIndex(Math.min(studentlist.length - 1, currentIdx + 1))
             }
             disabled={currentIdx === studentlist.length - 1 || loading}
           >
@@ -180,6 +194,8 @@ const MarkAttendence = () => {
 };
 
 export default MarkAttendence;
+
+// SVG Icon
 const icon = (type, isDisabled) => (
   <svg
     width="18px"
@@ -193,21 +209,11 @@ const icon = (type, isDisabled) => (
     stroke={isDisabled ? "#ffffff24" : "#fff"}
     strokeWidth="0.336"
   >
-    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-    <g
-      id="SVGRepo_tracerCarrier"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      stroke="#fff"
-      strokeWidth="0.096"
-    ></g>
-    <g id="SVGRepo_iconCarrier">
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M12.2929 4.29289C12.6834 3.90237 13.3166 3.90237 13.7071 4.29289L20.7071 11.2929C21.0976 11.6834 21.0976 12.3166 20.7071 12.7071L13.7071 19.7071C13.3166 20.0976 12.6834 20.0976 12.2929 19.7071C11.9024 19.3166 11.9024 18.6834 12.2929 18.2929L17.5858 13H4C3.44772 13 3 12.5523 3 12C3 11.4477 3.44772 11 4 11H17.5858L12.2929 5.70711C11.9024 5.31658 11.9024 4.68342 12.2929 4.29289Z"
-        fill={isDisabled ? "#ffffff24" : "#fff"}
-      ></path>
-    </g>
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M12.2929 4.29289C12.6834 3.90237 13.3166 3.90237 13.7071 4.29289L20.7071 11.2929C21.0976 11.6834 21.0976 12.3166 20.7071 12.7071L13.7071 19.7071C13.3166 20.0976 12.6834 20.0976 12.2929 19.7071C11.9024 19.3166 11.9024 18.6834 12.2929 18.2929L17.5858 13H4C3.44772 13 3 12.5523 3 12C3 11.4477 3.44772 11 4 11H17.5858L12.2929 5.70711C11.9024 5.31658 11.9024 4.68342 12.2929 4.29289Z"
+      fill={isDisabled ? "#ffffff24" : "#fff"}
+    />
   </svg>
 );

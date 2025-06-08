@@ -18,9 +18,9 @@ export const DataProvider = ({ children }) => {
   // Faculty states
   const [facultyName, setFacultyName] = useState([]);
   const [facultyDuty, setFacultyDuty] = useState([]);
-  const [selectedShift, setSelectedShift] = useState("1");
-  const [selectedBuilding, setSelectedBuilding] = useState("IL");
-  const [selectedRoomNo, setSelectedRoomNo] = useState("101");
+  // const [selectedShift, setSelectedShift] = useState("1");
+  // const [selectedBuilding, setSelectedBuilding] = useState("IL");
+  // const [selectedRoomNo, setSelectedRoomNo] = useState("101");
   const [studentlist, setStudentList] = useState([
     {rollNo : "235UCS050", name:"Deepak",status:"Present"},
     {rollNo : "235UCS060", name:"Jai",status:""},
@@ -81,6 +81,26 @@ export const DataProvider = ({ children }) => {
     }
   };
 
+    const fetchStudents = async (selectedShift,token,setLoading,setError) => {
+    const response = await apiRequest({
+      url: `/faculty/studentList?shift=${selectedShift}`,
+      method: "GET",
+      token,
+      setLoading,
+      setError,
+    });
+
+    if (
+      response?.status === "success" &&
+      Array.isArray(response.data?.students)
+    ) {
+      setStudentList(response.data.students);
+    } else {
+      setError("Failed to load students data.");
+      toast.error("Failed to load students data.");
+    }
+  };
+
   return (
     <DataContext.Provider
       value={{
@@ -96,9 +116,9 @@ export const DataProvider = ({ children }) => {
         // Faculty data
         facultyName,
         facultyDuty,
-        selectedShift,
-        selectedBuilding,
-        selectedRoomNo,
+        // selectedShift,
+        // selectedBuilding,
+        // selectedRoomNo,
         studentlist,
         currentIdx,
 
@@ -118,9 +138,9 @@ export const DataProvider = ({ children }) => {
         // faculty
         setFacultyName,
         setFacultyDuty,
-        setSelectedShift,
-        setSelectedBuilding,
-        setSelectedRoomNo,
+        // setSelectedShift,
+        // setSelectedBuilding,
+        // setSelectedRoomNo,
         setStudentList,
         setCurrentIdx,
 
@@ -130,6 +150,7 @@ export const DataProvider = ({ children }) => {
         // Utilities
         dataReset,
         getFacultyInfo,
+        fetchStudents,
       }}
     >
       {children}

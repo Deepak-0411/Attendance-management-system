@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import styles from "../../styles/modules/public/DisplayDuty.module.css";
 import ErrorBox from "../../components/ErrorBox/ErrorBox";
@@ -9,14 +9,7 @@ import Spinner from "../../components/Spinner/Spinner";
 
 const DisplayDuty = () => {
   const { token, logout } = useAuth();
-  const {
-    facultyName,
-    facultyDuty,
-    getFacultyInfo,
-    setSelectedShift,
-    setSelectedBuilding,
-    setSelectedRoomNo,
-  } = useData();
+  const { facultyName, facultyDuty, getFacultyInfo } = useData();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -35,12 +28,10 @@ const DisplayDuty = () => {
   }, []);
 
   const handleClick = (shift, buildingName, roomNo, secondTeacher) => {
-    setSelectedShift(shift);
-    setSelectedBuilding(buildingName);
-    setSelectedRoomNo(roomNo);
-    navigate("faculty/students", {
-      state: { secondTeacher },
-    });
+    sessionStorage.setItem("shift", shift);
+    sessionStorage.setItem("building", buildingName);
+    sessionStorage.setItem("room", roomNo);
+    navigate("/faculty/students", { state: { secondTeacher } });
   };
 
   if (loading) return <Spinner color="white" fullPage size="large" />;
@@ -49,7 +40,7 @@ const DisplayDuty = () => {
     return (
       <ErrorBox
         error={error}
-        onClick={getFacultyInfo(token, setLoading, setError)}
+        onClick={() => getFacultyInfo(token, setLoading, setError)}
       />
     );
 

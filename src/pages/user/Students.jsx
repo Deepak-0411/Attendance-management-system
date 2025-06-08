@@ -12,52 +12,22 @@ import { toast } from "react-toastify";
 
 const statuses = ["Present", "Absent", "UFM", "All"];
 
-const DisplayDuty = () => {
+const Students = () => {
   const [search, setSearch] = useState("");
-  const [activeBtn, setActiveBtn] = useState("All");
+  const [activeStatus, setActiveStatus] = useState("All");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const { tableHeight } = useTableHeight();
-
+  const tableHeight = useTableHeight();
   const { token } = useAuth();
-  const {
-    studentlist,
-    setStudentList,
-    facultyData,
-    selectedShift,
-    selectedBuilding,
-    selectedRoomNo,
-    setCurrentIdx,
-  } = useData();
+  const { studentlist, fetchStudents, facultyData } = useData();
   const navigate = useNavigate();
   const { state } = useLocation();
 
+  const selectedShift = sessionStorage.getItem("shift");
+  const selectedBuilding = sessionStorage.getItem("building");
+  const selectedRoomNo = sessionStorage.getItem("room");
   const secondTeacher = state?.secondTeacher || "N/A";
-
-  const fetchData = async () => {
-    const response = await apiRequest({
-      url: `/faculty/studentList?shift=${selectedShift}`,
-      method: "GET",
-      token,
-      setLoading,
-      setError,
-    });
-
-    if (response.status === "success") {
-      const students = response.data?.students;
-
-      if (Array.isArray(students)) {
-        setStudentList(students);
-      } else {
-        setError("Unexpected response format: students list not found.");
-        console.error("Invalid data format:", response.data);
-      }
-    } else {
-      setError("Failed to load students data.");
-      toast.error("Failed to load students data.");
-    }
-  };
 
   useEffect(() => {
     if (!(selectedShift && selectedBuilding && selectedRoomNo)) {
@@ -65,46 +35,49 @@ const DisplayDuty = () => {
       navigate("/faculty/displayDuty");
       return;
     }
+
     if (!Array.isArray(studentlist) || studentlist.length === 0) {
-      fetchData();
+      fetchStudents(selectedShift, token, setLoading, setError);
     }
   }, []);
 
-  const filteredStudents = useMemo(() => {
-    return studentlist
-      .filter(
-        (student) =>
-          activeBtn === "All" ||
-          student.status.toLowerCase() === activeBtn.toLowerCase()
-      )
-      .filter((student) => {
-        const query = search.toLowerCase();
-        return (
-          student.name.toLowerCase().includes(query) ||
-          student.rollNo.toLowerCase().includes(query)
-        );
-      });
-  }, [studentlist, activeBtn, search]);
-
-  const getNoOfStudent = (status) => {
-    if (status === "All") return studentlist.length;
-    return studentlist.filter(
-      (s) => s.status.toLowerCase() === status.toLowerCase()
-    ).length;
-  };
-
   const handleClick = (index) => {
-    setCurrentIdx(index);
-    navigate("/faculty/markAttendance");
+    navigate(`/faculty/markAttendance?idx=${index}`);
   };
 
-  if (error) {
-    return <ErrorBox error={error} onclick={fetchData} />;
-  }
+  const filteredStudents = studentlist.filter((student) => {
+    const statusMatch =
+      activeStatus === "All" ||
+      student.status?.toLowerCase() === activeStatus.toLowerCase();
+
+    const query = search.toLowerCase();
+    const searchMatch =
+      student.name?.toLowerCase().includes(query) ||
+      student.rollNo?.toLowerCase().includes(query);
+
+    return statusMatch && searchMatch;
+  });
+
+  const getStudentCount = (status) =>
+    status === "All"
+      ? studentlist.length
+      : studentlist.filter(
+          (s) => s.status?.toLowerCase() === status.toLowerCase()
+        ).length;
+
+  if (error)
+    return (
+      <ErrorBox
+        error={error}
+        onClick={() =>
+          fetchStudents(selectedShift, token, setLoading, setError)
+        }
+      />
+    );
 
   return (
     <div className={styles.parent}>
-      {/* headder container  */}
+      {/* Header */}
       <div className={styles.roomInfo} id="header">
         <p className={styles.roomInfoP}>
           Room no: {selectedBuilding + " " + selectedRoomNo || "N/A"}
@@ -115,43 +88,41 @@ const DisplayDuty = () => {
         <p className={styles.roomInfoP}>Shift: {selectedShift || "N/A"}</p>
       </div>
 
-      {/* second container */}
+      {/* Container */}
       <div className={styles.Studentlist} id="container">
-        {/* filter bar */}
+        {/* Filter Buttons */}
         <div className={styles.filterBtns} id="filterContainer">
-          {statuses.map((status) => {
-            return (
-              <div key={status}>
-                <button
-                  onClick={() => setActiveBtn(status)}
-                  className={`${styles.filterBtn} ${
-                    activeBtn === status ? styles[`filterBtn${status}`] : ""
-                  }`}
-                >
-                  {getNoOfStudent(status)}
-                </button>
-                <p className={styles.filterBtnP}>{status}</p>
-              </div>
-            );
-          })}
+          {statuses.map((status) => (
+            <div key={status}>
+              <button
+                onClick={() => setActiveStatus(status)}
+                className={`${styles.filterBtn} ${
+                  activeStatus === status ? styles[`filterBtn${status}`] : ""
+                }`}
+              >
+                {getStudentCount(status)}
+              </button>
+              <p className={styles.filterBtnP}>{status}</p>
+            </div>
+          ))}
         </div>
 
-        {/* search box */}
+        {/* Search Input */}
         <div className={styles.searchBox} id="searchBox">
           <Input
             type={4}
-            role={"text"}
-            placeholder={"Search student by roll no. or name"}
+            role="text"
+            placeholder="Search student by roll no. or name"
             value={search}
-            setValue={(val) => setSearch(val)}
+            setValue={setSearch}
           />
         </div>
 
-        {/* student list */}
+        {/* Student List */}
         <div className={styles.contentBox} style={{ height: tableHeight }}>
           {loading ? (
             <Spinner color="white" fullPage size="large" />
-          ) : filteredStudents.length > 0 ? (
+          ) : filteredStudents.length ? (
             filteredStudents.map((student, index) => (
               <div
                 key={student.rollNo}
@@ -164,7 +135,6 @@ const DisplayDuty = () => {
                   </p>
                   <p className={styles.contentDataP}>{student.name || "N/A"}</p>
                 </div>
-
                 <div className={styles.contentStatusBox}>
                   <p
                     className={`${styles.contentStatus} ${
@@ -173,9 +143,7 @@ const DisplayDuty = () => {
                         : ""
                     }`}
                   >
-                    {student.status && student.status !== "N/A"
-                      ? student.status.toLowerCase()
-                      : "not yet marked"}
+                    {student.status?.toLowerCase() || "not yet marked"}
                   </p>
                 </div>
               </div>
@@ -189,4 +157,4 @@ const DisplayDuty = () => {
   );
 };
 
-export default DisplayDuty;
+export default Students;
