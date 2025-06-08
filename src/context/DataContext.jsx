@@ -17,18 +17,30 @@ export const DataProvider = ({ children }) => {
 
   // Faculty states
   const [facultyName, setFacultyName] = useState([]);
-  const [facultyDuty, setFacultyDuty] = useState([]);
+  const [facultyDuty, setFacultyDuty] = useState([
+    {
+      shift: 1,
+      buildingName: "IL",
+      roomNo: 102,
+      secondTeacher: "Deepak Kumar",
+    },
+    {
+      shift: 2,
+      buildingName: "IL",
+      roomNo: 103,
+    },
+  ]);
   // const [selectedShift, setSelectedShift] = useState("1");
   // const [selectedBuilding, setSelectedBuilding] = useState("IL");
   // const [selectedRoomNo, setSelectedRoomNo] = useState("101");
   const [studentlist, setStudentList] = useState([
-    {rollNo : "235UCS050", name:"Deepak",status:"Present"},
-    {rollNo : "235UCS060", name:"Jai",status:""},
-    {rollNo : "235UCS058", name:"Harsh",status:"Absent"},
-    {rollNo : "235UCS024", name:"Ankit",status:"absent"},
-    {rollNo : "235UCS026", name:"Ansh",status:"present"},
-    {rollNo : "235UCS015", name:"Aman",status:"UFM"},
-    {rollNo : "235UCS016", name:"Solanki",status:"ufm"},
+    { rollNo: "235UCS050", name: "Deepak", status: "Present" },
+    { rollNo: "235UCS060", name: "Jai", status: "" },
+    { rollNo: "235UCS058", name: "Harsh", status: "Absent" },
+    { rollNo: "235UCS024", name: "Ankit", status: "absent" },
+    { rollNo: "235UCS026", name: "Ansh", status: "present" },
+    { rollNo: "235UCS015", name: "Aman", status: "UFM" },
+    { rollNo: "235UCS016", name: "Solanki", status: "ufm" },
   ]);
   const [currentIdx, setCurrentIdx] = useState(1);
 
@@ -74,14 +86,14 @@ export const DataProvider = ({ children }) => {
     if (response.status === "success") {
       // facultyname [0] id[1]
       setFacultyName(response.data.faculty || []);
-      setFacultyDuty(response.data.viewDuty || []);
+      // setFacultyDuty(response.data.viewDuty || []);
     } else {
       console.error("Error:", response.message);
       toast.error(`Failed to load faculty info.`);
     }
   };
 
-    const fetchStudents = async (selectedShift,token,setLoading,setError) => {
+  const fetchStudents = async (selectedShift, token, setLoading, setError) => {
     const response = await apiRequest({
       url: `/faculty/studentList?shift=${selectedShift}`,
       method: "GET",

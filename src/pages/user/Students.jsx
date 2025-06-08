@@ -36,9 +36,7 @@ const Students = () => {
       return;
     }
 
-    if (!Array.isArray(studentlist) || studentlist.length === 0) {
-      fetchStudents(selectedShift, token, setLoading, setError);
-    }
+      // fetchStudents(selectedShift, token, setLoading, setError);
   }, []);
 
   const handleClick = (index) => {
