@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useData } from "../../context/DataContext";
 import styles from "../../styles/modules/public/MarkAttendence.module.css";
@@ -13,24 +13,38 @@ import Overlay from "../../components/Overlay/Overlay";
 const MarkAttendence = () => {
   const { token } = useAuth();
   const selectedShift = sessionStorage.getItem("shift");
+  const selectedIdx = Number(sessionStorage.getItem("index")) || 0;
   const { studentlist, setStudentList, fetchStudents } = useData();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const [sheetNo, setSheetNo] = useState("");
+  const [currentIdx, setCurrentIdx] = useState(selectedIdx);
   const [loading, setLoading] = useState(false);
   const [scanning, setScanning] = useState(false);
   const [isEditingSheet, setIsEditingSheet] = useState(false);
   const [error, setError] = useState(null);
 
-  const query = new URLSearchParams(location.search);
-  const currentIdx = parseInt(query.get("idx")) || 0;
-
   useEffect(() => {
     if (!studentlist?.length) {
       fetchStudents(selectedShift, token, setLoading, setError);
     }
-  }, [studentlist, navigate]);
+    if (studentlist?.length && currentIdx >= studentlist.length) {
+      setCurrentIdx(0);
+    }
+  }, [studentlist]);
+
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (studentlist?.length) {
+        sessionStorage.setItem("index", currentIdx);
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [currentIdx, studentlist]);
 
   const student = studentlist?.[currentIdx];
 
@@ -63,15 +77,11 @@ const MarkAttendence = () => {
         bookletNumber: sheetNo,
       };
       setStudentList(updatedList);
-      setSheetNo("No sheet scanned yet");
+      setSheetNo("");
       toast.success(`Marked as ${newStatus}`);
     } else {
       toast.error(`Failed to update status: ${response.message}`);
     }
-  };
-
-  const updateIndex = (newIdx) => {
-    navigate(`?idx=${newIdx}`);
   };
 
   if (error)
@@ -88,7 +98,7 @@ const MarkAttendence = () => {
     return (
       <ErrorBox
         error="No student data found"
-        onclick={() => navigate("/faculty/displayDuty")}
+        onClick={() => navigate("/faculty/displayDuty")}
       />
     );
   }
@@ -189,7 +199,7 @@ const MarkAttendence = () => {
         <div className={styles.navButtons}>
           <button
             className={styles.back}
-            onClick={() => updateIndex(Math.max(0, currentIdx - 1))}
+            onClick={() => setCurrentIdx(Math.max(0, currentIdx - 1))}
             disabled={currentIdx === 0 || loading}
           >
             {icon("back", currentIdx === 0 || loading)} Back
@@ -197,7 +207,7 @@ const MarkAttendence = () => {
           <button
             className={styles.next}
             onClick={() =>
-              updateIndex(Math.min(studentlist.length - 1, currentIdx + 1))
+              setCurrentIdx(Math.min(studentlist.length - 1, currentIdx + 1))
             }
             disabled={currentIdx === studentlist.length - 1 || loading}
           >

@@ -36,11 +36,12 @@ const Students = () => {
       return;
     }
 
-      // fetchStudents(selectedShift, token, setLoading, setError);
+    // fetchStudents(selectedShift, token, setLoading, setError);
   }, []);
 
   const handleClick = (index) => {
-    navigate(`/faculty/markAttendance?idx=${index}`);
+    sessionStorage.setItem("index", index);
+    navigate(`/faculty/markAttendance`);
   };
 
   const filteredStudents = studentlist.filter((student) => {
