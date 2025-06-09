@@ -7,7 +7,6 @@ import styles from "../../styles/modules/public/Students.module.css";
 import Spinner from "../../components/Spinner/Spinner";
 import { useData } from "../../context/DataContext";
 import Input from "../../components/Input/Input";
-import apiRequest from "../../utility/apiRequest";
 import { toast } from "react-toastify";
 
 const statuses = ["Present", "Absent", "UFM", "All"];
@@ -18,9 +17,9 @@ const Students = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const tableHeight = useTableHeight();
+  const {tableHeight} = useTableHeight();  
   const { token } = useAuth();
-  const { studentlist, fetchStudents, facultyData } = useData();
+  const { studentlist, fetchStudents, facultyName } = useData();
   const navigate = useNavigate();
   const { state } = useLocation();
 
@@ -82,7 +81,7 @@ const Students = () => {
           Room no: {selectedBuilding + " " + selectedRoomNo || "N/A"}
         </p>
         <p className={styles.roomInfoP}>
-          Duty: {facultyData.fName} , {secondTeacher}
+          Duty: {facultyName.fName} , {secondTeacher}
         </p>
         <p className={styles.roomInfoP}>Shift: {selectedShift || "N/A"}</p>
       </div>
