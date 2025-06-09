@@ -7,20 +7,6 @@
   position: relative;
   user-select: none;
 }
-.closeBtn {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  background-color: #4b4b4b;
-  color: white;
-  padding: 0.4rem;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 .overlay {
   position: fixed;
   top: 0;

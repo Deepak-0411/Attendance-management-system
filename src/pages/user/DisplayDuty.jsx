@@ -13,7 +13,7 @@ const DisplayDuty = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const tableHeight = useTableHeight();
+  const {tableHeight} = useTableHeight();
 
   const navigate = useNavigate();
   console.log(facultyDuty);
