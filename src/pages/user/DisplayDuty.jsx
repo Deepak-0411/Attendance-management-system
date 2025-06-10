@@ -16,7 +16,6 @@ const DisplayDuty = () => {
   const {tableHeight} = useTableHeight();
 
   const navigate = useNavigate();
-  console.log(facultyDuty);
   
   useEffect(() => {
     const needsData = facultyName.length === 0 && facultyDuty.length === 0;

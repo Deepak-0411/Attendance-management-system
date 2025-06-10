@@ -46,9 +46,9 @@ const Rooms = () => {
     nameKey: "buildingName",
     addText: "+ Add Room",
     formFields: {
-      buildingName: { value: "", placeholder: "Building Name" },
-      roomNo: { value: "", placeholder: "Room No." },
-      capacity: { value: "", placeholder: "Capacity" },
+      buildingName: { value: "", placeholder: "Building Name", role: "text" },
+      roomNo: { value: "", placeholder: "Room No.", role: "text" },
+      capacity: { value: "", placeholder: "Capacity", role: "text" },
     },
     tableHeading: ["Building Name", "Room No", "Capacity"],
     tableColumn: ["buildingName", "roomNo", "capacity"],

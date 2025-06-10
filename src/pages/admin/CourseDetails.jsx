@@ -57,8 +57,8 @@ const CourseDetails = () => {
     nameKey: "courseName",
     addText: "+ Add Course",
     formFields: {
-      courseName: { value: "", placeholder: "Course Name" },
-      courseCode: { value: "", placeholder: "Course Code" },
+      courseName: { value: "", placeholder: "Course Name", role: "text" },
+      courseCode: { value: "", placeholder: "Course Code", role: "text" },
     },
     tableHeading: ["Course Name", "Course Code"],
     tableColumn: ["courseName", "courseCode"],

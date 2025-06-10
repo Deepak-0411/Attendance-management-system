@@ -61,11 +61,11 @@ const ExamDuty = () => {
     nameKey: "fName",
     addText: "+ Assign Duty",
     formFields: {
-      teacherId: { value: "", placeholder: "Faculty-ID" },
-      buildingName: { value: "", placeholder: "Building Name" },
-      roomNo: { value: "", placeholder: "Room no." },
-      shift: { value: "", placeholder: "Shift" },
-      date: { value: "", placeholder: "Date" },
+      teacherId: { value: "", placeholder: "Faculty-ID", role: "text" },
+      buildingName: { value: "", placeholder: "Building Name", role: "text" },
+      roomNo: { value: "", placeholder: "Room no.", role: "text" },
+      shift: { value: "", placeholder: "Shift", role: "text" },
+      date: { value: "", placeholder: "Date", role: "date" },
     },
     tableHeading: [
       "Faculty Name",

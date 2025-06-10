@@ -60,17 +60,11 @@ const SingleUpload = ({
 
       <form onSubmit={handleSubmit} className={styles.form}>
         {Object.keys(dataToSend).map((key) => {
-          const roleType =
-            key === "password"
-              ? "password"
-              : key === "date" || key === "Date"
-              ? "date"
-              : "text";
           return (
             <div key={key}>
               <Input
                 type={3}
-                role={roleType}
+                role={dataToSend[key].role}
                 name={key}
                 placeholder={dataToSend[key].placeholder}
                 required={true}

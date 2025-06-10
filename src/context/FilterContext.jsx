@@ -40,8 +40,8 @@ export const FilterProvider = ({ children }) => {
 
   // Metadata
   const [schoolFilterData, setSchoolFilterData] = useState({
-    Engineering: ["Computer Science", "Electronics", "Mechanical"],
-    Pharmacy: ["Bachelor of Pharmacy", "Diploma in Pharmacy"],
+    SOICT: ["Computer Science", "Electronics", "Mechanical"],
+    SOM: ["Bachelor of Pharmacy", "Diploma in Pharmacy"],
     Management: [
       "Masters of Business Administration",
       "Bachelor of Business Administration",
@@ -49,16 +49,16 @@ export const FilterProvider = ({ children }) => {
   });
 
   const [roomFilterData, setRoomFilterData] = useState({
-    Engineering: {
-      "Block A": ["101", "102", "103"],
-      "Block B": ["201", "202"],
-    },
-    Pharmacy: {
-      "Pharma Block": ["P1", "P2"],
-    },
-    Management: {
-      "MG Block": ["M101", "M102"],
-    },
+    // Engineering: {
+    //   "Block A": ["101", "102", "103"],
+    //   "Block B": ["201", "202"],
+    // },
+    // Pharmacy: {
+    //   "Pharma Block": ["P1", "P2"],
+    // },
+    // Management: {
+    //   "MG Block": ["M101", "M102"],
+    // },
   });
 
   // Utilities (Fixed logic here)
@@ -93,7 +93,7 @@ export const FilterProvider = ({ children }) => {
     {
       setDataList: setRoomFilterData,
       key: "Rooms data",
-      url: "",
+      url: "/admin/rooms",
     },
   ];
 
@@ -106,7 +106,7 @@ export const FilterProvider = ({ children }) => {
       });
 
       if (response.status === "success") {
-        setDataList(response.data);
+        api.setDataList(response.data);
       } else {
         console.error("Error:", response.message);
         toast.error(`Error: Failed to get ${api.key}`);
