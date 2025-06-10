@@ -38,12 +38,14 @@ const ProtectedRoute = ({ element, user }) => {
         setIsAuthorized(true);
       } else {
         console.error("Authorization Error:", response.message);
-        toast.error(`Authorization Failed`);
+        toast.info(`Session Expired. Please re-login`);
         setIsAuthorized(false);
       }
     };
 
-    checkAuth();
+    if (authToken) {
+      checkAuth();
+    }
   }, [authToken]);
 
   if (!authToken) {

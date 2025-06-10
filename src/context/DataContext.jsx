@@ -33,6 +33,7 @@ export const DataProvider = ({ children }) => {
   // const [selectedShift, setSelectedShift] = useState("1");
   // const [selectedBuilding, setSelectedBuilding] = useState("IL");
   // const [selectedRoomNo, setSelectedRoomNo] = useState("101");
+  // const [currentIdx, setCurrentIdx] = useState(1);
   const [studentlist, setStudentList] = useState([
     { rollNo: "235UCS050", name: "Deepak", status: "Present" },
     { rollNo: "235UCS060", name: "Jai", status: "" },
@@ -42,7 +43,6 @@ export const DataProvider = ({ children }) => {
     { rollNo: "235UCS015", name: "Aman", status: "UFM" },
     { rollNo: "235UCS016", name: "Solanki", status: "ufm" },
   ]);
-  const [currentIdx, setCurrentIdx] = useState(1);
 
   // Date states
   const [fromDate, setFromDate] = useState(date);
@@ -61,10 +61,10 @@ export const DataProvider = ({ children }) => {
       setStudentList([]);
       setFacultyDuty([]);
       setFacultyName([]);
-      setSelectedShift("");
-      setSelectedBuilding("");
-      setSelectedRoomNo("");
-      setCurrentIdx("");
+      // setSelectedShift("");
+      // setSelectedBuilding("");
+      // setSelectedRoomNo("");
+      // setCurrentIdx("");
     } else {
       naam([]);
     }
@@ -131,8 +131,8 @@ export const DataProvider = ({ children }) => {
         // selectedShift,
         // selectedBuilding,
         // selectedRoomNo,
+        // currentIdx,
         studentlist,
-        currentIdx,
 
         // Dates
         fromDate,
@@ -153,8 +153,8 @@ export const DataProvider = ({ children }) => {
         // setSelectedShift,
         // setSelectedBuilding,
         // setSelectedRoomNo,
+        // setCurrentIdx,
         setStudentList,
-        setCurrentIdx,
 
         setFromDate,
         setToDate,
