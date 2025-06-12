@@ -40,12 +40,12 @@ export const FilterProvider = ({ children }) => {
 
   // Metadata
   const [schoolFilterData, setSchoolFilterData] = useState({
-    SOICT: ["Computer Science", "Electronics", "Mechanical"],
-    SOM: ["Bachelor of Pharmacy", "Diploma in Pharmacy"],
-    Management: [
-      "Masters of Business Administration",
-      "Bachelor of Business Administration",
-    ],
+    // SOICT: ["Computer Science", "Electronics", "Mechanical"],
+    // SOM: ["Bachelor of Pharmacy", "Diploma in Pharmacy"],
+    // Management: [
+    //   "Masters of Business Administration",
+    //   "Bachelor of Business Administration",
+    // ],
   });
 
   const [roomFilterData, setRoomFilterData] = useState({
@@ -88,7 +88,7 @@ export const FilterProvider = ({ children }) => {
     {
       setDataList: setSchoolFilterData,
       key: "Schools data",
-      url: "",
+      url: "/admin/filterdata",
     },
     {
       setDataList: setRoomFilterData,

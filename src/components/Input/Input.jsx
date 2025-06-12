@@ -27,7 +27,7 @@ const Input = ({
         name={name}
         placeholder={placeholder}
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) => setValue(e.target.value.trim())}
         className={inputClass}
         required={required}
       />
