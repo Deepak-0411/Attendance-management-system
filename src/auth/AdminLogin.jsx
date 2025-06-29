@@ -24,7 +24,7 @@ const AdminLogin = () => {
     const response = await apiRequest({
       url: "/admin/login",
       method: "POST",
-      body: { username: userId, password: password },
+      body: { username: userId.trim(), password: password.trim() },
       token: false,
       setLoading,
     });
