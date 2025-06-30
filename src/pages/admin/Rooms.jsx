@@ -46,6 +46,7 @@ const Rooms = () => {
     nameKey: "buildingName",
     addText: "+ Add Room",
     formFields: {
+      school: { value: "", placeholder: "School Name", role: "text" },
       buildingName: { value: "", placeholder: "Building Name", role: "text" },
       roomNo: { value: "", placeholder: "Room No.", role: "text" },
       capacity: { value: "", placeholder: "Capacity", role: "text" },

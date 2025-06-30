@@ -38,7 +38,7 @@ const Home = () => {
 
   const fetchData = async () => {
     const response = await apiRequest({
-      url: `/admin/homestatus?fromdete=${fromDate}&todate=${toDate}`,
+      url: `/admin/homestatus?fromdate=${fromDate}&todate=${toDate}`,
       method: "GET",
       token: token,
       setLoading,

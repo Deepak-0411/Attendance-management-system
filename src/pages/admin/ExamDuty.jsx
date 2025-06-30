@@ -62,6 +62,7 @@ const ExamDuty = () => {
     addText: "+ Assign Duty",
     formFields: {
       teacherId: { value: "", placeholder: "Faculty-ID", role: "text" },
+      school: { value: "", placeholder: "School Name", role: "text" },
       buildingName: { value: "", placeholder: "Building Name", role: "text" },
       roomNo: { value: "", placeholder: "Room no.", role: "text" },
       shift: { value: "", placeholder: "Shift", role: "text" },

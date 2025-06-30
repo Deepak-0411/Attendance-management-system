@@ -61,6 +61,7 @@ const Attendance = () => {
     nameKey: "courseCode",
     addText: "+ Add Student",
     formFields: {
+      school: { value: "", placeholder: "School Name", role: "text" },
       buildingName: { value: "", placeholder: "Building Name", role: "text" },
       roomNo: { value: "", placeholder: "Room No.", role: "text" },
       shift: { value: "", placeholder: "Shift", role: "text" },

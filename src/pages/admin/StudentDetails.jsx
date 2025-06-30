@@ -63,6 +63,7 @@ const StudentDetails = () => {
       name: { value: "", placeholder: "Student Name", role: "text" },
       branch: { value: "", placeholder: "Branch", role: "text" },
       year: { value: "", placeholder: "Year", role: "text" },
+      school: { value: "", placeholder: "School name", role: "text" },
       programmeName: { value: "", placeholder: "Programme", role: "text" },
       semester: { value: "", placeholder: "Semester", role: "text" },
     },

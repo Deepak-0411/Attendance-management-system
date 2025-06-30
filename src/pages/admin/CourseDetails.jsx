@@ -57,6 +57,8 @@ const CourseDetails = () => {
     nameKey: "courseName",
     addText: "+ Add Course",
     formFields: {
+      school: { value: "", placeholder: "School Name", role: "text" },
+      branch: { value: "", placeholder: "Branch", role: "text" },
       courseName: { value: "", placeholder: "Course Name", role: "text" },
       courseCode: { value: "", placeholder: "Course Code", role: "text" },
     },
