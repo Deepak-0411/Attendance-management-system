@@ -1,4 +1,4 @@
-import Logo from "../../../public/FAVICON.png";
+import Logo from "../../assets/FAVICON.webP";
 import styles from "./LogoSpinner.module.css";
 
 const LogoSpinner = () => {
