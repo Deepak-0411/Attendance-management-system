@@ -56,14 +56,17 @@ const Downloadfile = ({
         filters={exportFilters}
         maxDate={0}
         showSearchBtn={false}
+        showDownloadBtn={true}
+        downloadBtnAction={handleDownload}
+        isBtnDissabled={loading}
       />
-      <button
+      {/* <button
         onClick={handleDownload}
         disabled={loading}
         className={`${styles.downloadBtn} ${loading ? styles.downloading : ""}`}
       >
         {loading ? "Downloading..." : "Download Excel"}
-      </button>
+      </button> */}
     </div>
   );
 };

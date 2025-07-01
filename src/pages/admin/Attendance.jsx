@@ -19,7 +19,8 @@ const Attendance = () => {
     roomNo: "",
     shift: "",
   });
-  const {school,building,roomNo,shift,fromDate,toDate}=attendanceFilter;
+  const { school, building, roomNo, shift, fromDate, toDate } =
+    attendanceFilter;
 
   useEffect(() => {
     setExportFilters((prev) => ({
@@ -41,6 +42,15 @@ const Attendance = () => {
     getRoomNo,
   });
 
+  const exportInputs = generateFilterInputs({
+    fields: ["school", "building", "roomNo", "shift"],
+    filterState: exportFilter,
+    setFilterState: setExportFilters,
+    getSchoolList,
+    getBuildingName,
+    getRoomNo,
+  });
+
   const dateFilterContext = {
     fromDate: fromDate,
     toDate: toDate,
@@ -56,19 +66,13 @@ const Attendance = () => {
       })),
   };
 
-  const exportInputs = generateFilterInputs({
-    fields: ["school", "building", "roomNo", "shift"],
-    filterState: exportFilter,
-    setFilterState: setExportFilters,
-    getSchoolList,
-    getBuildingName,
-    getRoomNo,
-  });
 
   const config = {
     title: "Attendance",
     apiGet: `/admin/formFilterData?fromDate=${fromDate}&toDate=${toDate}&school=${school}&building=${building}&roomNo=${roomNo}&shift=${shift}`,
     apiExport: "",
+    apiEndPointSingle: "/admin/addStudent",
+    apiEndPointBulk: "/admin/uploadExcel",
     filterBox: true,
     dateFilter: true,
     dateFilterContext,
@@ -109,8 +113,6 @@ const Attendance = () => {
       "status",
       "signature",
     ],
-    apiEndPointSingle: "addStudent",
-    apiEndPointBulk: "importExcel",
     dataList: attendanceData,
     setDataList: setAttendanceData,
   };

@@ -11,6 +11,9 @@ const FilterBar = ({
   maxDate = 30,
   showSearchBtn = true,
   searchBtnAction = () => {},
+  showDownloadBtn = false,
+  downloadBtnAction = () => {},
+  isBtnDissabled = false,
 }) => {
   const { fromDate, toDate, setFromDate, setToDate } =
     dateFilterContext || useData();
@@ -21,6 +24,9 @@ const FilterBar = ({
     setFromDate(value);
 
     if (maxDate === 0) {
+      if (toDate < value) {
+        setToDate(value);
+      }
       return;
     }
 
@@ -118,6 +124,19 @@ const FilterBar = ({
           disabled={isSearchDisabled}
         >
           Search
+        </button>
+      )}
+
+      {/* Download button */}
+      {showDownloadBtn && (
+        <button
+          onClick={downloadBtnAction}
+          disabled={isBtnDissabled || isSearchDisabled}
+          className={`${styles.downloadBtn} ${
+            isBtnDissabled ? styles.downloading : ""
+          }`}
+        >
+          {isBtnDissabled ? "Downloading..." : "Download Excel"}
         </button>
       )}
     </div>

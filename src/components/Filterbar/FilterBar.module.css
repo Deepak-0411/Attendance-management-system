@@ -4,17 +4,16 @@
   align-items: start;
   gap: 1.5rem;
 }
-.filtersContainer{
+.filtersContainer {
   display: flex;
   align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
-
 }
-.filterBlock{
-    display: flex;
-    gap: 0.8rem;
-    align-items: center;
+.filterBlock {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
 }
 .searchButton {
   background-color: #9a93e9;
@@ -30,4 +29,17 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
-
+.downloadBtn {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border: none;
+  color: white;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background-color: #4caf50;
+}
+.downloading,
+.downloadBtn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
