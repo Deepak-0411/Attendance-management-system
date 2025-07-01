@@ -18,6 +18,7 @@ const ContentBox = ({
   apiExport,
   filterBox,
   dateFilter,
+  dateFilterContext,
   filterInputs,
   exportInputs,
   searchBoxPlaceholder,
@@ -96,6 +97,7 @@ const ContentBox = ({
           filters={filterInputs}
           dateFilter={dateFilter}
           searchBtnAction={fetchData}
+          dateFilterContext={dateFilterContext}
         />
       )}
 

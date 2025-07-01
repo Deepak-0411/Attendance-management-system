@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { date } from "../utility/GetDate";
 import apiRequest from "../utility/apiRequest";
 import { toast } from "react-toastify";
 
@@ -10,18 +11,24 @@ export const FilterProvider = ({ children }) => {
     school: "",
     branch: "",
     shift: "",
+    fromDate: date,
+    toDate: date,
   });
   const [attendanceFilter, setAttendanceFilter] = useState({
     school: "",
     building: "",
     roomNo: "",
     shift: "",
+    fromDate: date,
+    toDate: date,
   });
   const [examDutyFilter, setExamDutyFilter] = useState({
     school: "",
     building: "",
     roomNo: "",
     shift: "",
+    fromDate: date,
+    toDate: date,
   });
   const [roomsFilter, setRoomsFilter] = useState({ school: "" });
   const [facultyFilter, setFacultyFilter] = useState({
@@ -114,7 +121,7 @@ export const FilterProvider = ({ children }) => {
     }
   };
 
-  const isFiltersEmpty = () => {    
+  const isFiltersEmpty = () => {
     return (
       Object.keys(schoolFilterData).length === 0 ||
       Object.keys(roomFilterData).length === 0

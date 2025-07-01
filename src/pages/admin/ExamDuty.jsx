@@ -48,12 +48,28 @@ const ExamDuty = () => {
     getRoomNo,
   });
 
+  const dateFilterContext = {
+    fromDate: examDutyFilter.fromDate,
+    toDate: examDutyFilter.toDate,
+    setFromDate: (val) =>
+      setExamDutyFilter((prev) => ({
+        ...prev,
+        fromDate: val,
+      })),
+    setToDate: (val) =>
+      setExamDutyFilter((prev) => ({
+        ...prev,
+        toDate: val,
+      })),
+  };
+
   const config = {
     title: "Exam Duty",
     apiGet: `/admin/duty`,
     apiExport: "",
     filterBox: true,
     dateFilter: true,
+    dateFilterContext,
     exportInputs: exportInputs,
     filterInputs: filterInputs,
     searchBoxPlaceholder: "Search by name or ID",

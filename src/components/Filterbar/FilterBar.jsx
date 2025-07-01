@@ -7,11 +7,13 @@ const FilterBar = ({
   filters = [],
   dateFilter = true,
   optionsFilter = true,
+  dateFilterContext,
   maxDate = 30,
   showSearchBtn = true,
   searchBtnAction = () => {},
 }) => {
-  const { fromDate, toDate, setFromDate, setToDate } = useData();
+  const { fromDate, toDate, setFromDate, setToDate } =
+    dateFilterContext || useData();
 
   const maxToDate = addDays(fromDate, maxDate);
 
@@ -49,64 +51,64 @@ const FilterBar = ({
   return (
     <div className={styles.filterBarContainer} id="filterContainer">
       <div className={styles.filtersContainer}>
-      {/* Date filters */}
-      {dateFilter && (
-        <div className={styles.filterBlock}>
-          <label htmlFor="fromDate"> From </label>
-          <Input
-            id="fromDate"
-            role="date"
-            value={fromDate}
-            setValue={handleFromDateChange}
-            required={true}
-          />
+        {/* Date filters */}
+        {dateFilter && (
+          <div className={styles.filterBlock}>
+            <label htmlFor="fromDate"> From </label>
+            <Input
+              id="fromDate"
+              role="date"
+              value={fromDate}
+              setValue={handleFromDateChange}
+              required={true}
+            />
 
-          <label htmlFor="toDate"> To </label>
-          <Input
-            id="toDate"
-            role="date"
-            value={toDate}
-            setValue={handleToDateChange}
-            required={true}
-            min={fromDate}
-            {...(maxDate && { max: maxToDate })}
-          />
-        </div>
-      )}
-
-      {/* Dynamic filters */}
-
-      {optionsFilter &&
-        filters.map(
-          (
-            {
-              label,
-              name,
-              value,
-              onChange,
-              options,
-              placeholder,
-              required,
-              type = 1,
-            },
-            idx
-          ) => (
-            <div key={name || idx} className={styles.filterBlock}>
-              <label htmlFor={label}>{label}</label>
-              <Input
-                id={label}
-                role="select"
-                value={value || ""}
-                setValue={(val) => handleChange(val, name, onChange)}
-                options={options}
-                placeholder={placeholder}
-                type={type}
-                required={required}
-              />
-            </div>
-          )
+            <label htmlFor="toDate"> To </label>
+            <Input
+              id="toDate"
+              role="date"
+              value={toDate}
+              setValue={handleToDateChange}
+              required={true}
+              min={fromDate}
+              {...(maxDate && { max: maxToDate })}
+            />
+          </div>
         )}
-        </div>
+
+        {/* Dynamic filters */}
+
+        {optionsFilter &&
+          filters.map(
+            (
+              {
+                label,
+                name,
+                value,
+                onChange,
+                options,
+                placeholder,
+                required,
+                type = 1,
+              },
+              idx
+            ) => (
+              <div key={name || idx} className={styles.filterBlock}>
+                <label htmlFor={label}>{label}</label>
+                <Input
+                  id={label}
+                  role="select"
+                  value={value || ""}
+                  setValue={(val) => handleChange(val, name, onChange)}
+                  options={options}
+                  placeholder={placeholder}
+                  type={type}
+                  required={required}
+                />
+              </div>
+            )
+          )}
+      </div>
 
       {/* Search button */}
       {showSearchBtn && (

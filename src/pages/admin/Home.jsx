@@ -25,9 +25,24 @@ const responseKeyToLabel = {
 
 const Home = () => {
   const { token } = useAuth();
-  const { fromDate, toDate, homeData, setHomeData } = useData();
+  const { homeData, setHomeData } = useData();
   const { homeFilter, setHomeFilter, getSchoolList, getBranchList } =
     useFilter();
+
+  const dateFilterContext = {
+    fromDate: homeFilter.fromDate,
+    toDate: homeFilter.toDate,
+    setFromDate: (val) =>
+      setHomeFilter((prev) => ({
+        ...prev,
+        fromDate: val,
+      })),
+    setToDate: (val) =>
+      setHomeFilter((prev) => ({
+        ...prev,
+        toDate: val,
+      })),
+  };
 
   const [loading, setLoading] = useState(false);
 
@@ -38,7 +53,7 @@ const Home = () => {
 
   const fetchData = async () => {
     const response = await apiRequest({
-      url: `/admin/homestatus?fromdate=${fromDate}&todate=${toDate}`,
+      url: `/admin/homestatus?fromdate=${homeFilter.fromDate}&todate=${homeFilter.toDate}`,
       method: "GET",
       token: token,
       setLoading,
@@ -76,7 +91,11 @@ const Home = () => {
 
   return (
     <div className={styles.container}>
-      <FilterBar filters={filterInputs} searchBtnAction={fetchData} />
+      <FilterBar
+        filters={filterInputs}
+        searchBtnAction={fetchData}
+        dateFilterContext={dateFilterContext}
+      />
 
       {loading ? (
         <Spinner />

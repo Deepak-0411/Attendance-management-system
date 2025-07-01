@@ -39,6 +39,22 @@ const Attendance = () => {
     getBuildingName,
     getRoomNo,
   });
+
+  const dateFilterContext = {
+    fromDate: attendanceFilter.fromDate,
+    toDate: attendanceFilter.toDate,
+    setFromDate: (val) =>
+      setAttendanceFilter((prev) => ({
+        ...prev,
+        fromDate: val,
+      })),
+    setToDate: (val) =>
+      setAttendanceFilter((prev) => ({
+        ...prev,
+        toDate: val,
+      })),
+  };
+
   const exportInputs = generateFilterInputs({
     fields: ["school", "building", "roomNo", "shift"],
     filterState: exportFilter,
@@ -50,10 +66,11 @@ const Attendance = () => {
 
   const config = {
     title: "Attendance",
-    apiGet: "/admin/viewEntries",
+    apiGet: `/admin/formFilterData`,
     apiExport: "",
     filterBox: true,
     dateFilter: true,
+    dateFilterContext,
     exportInputs: exportInputs,
     filterInputs: filterInputs,
     searchBoxPlaceholder: "Search by name or ID",
