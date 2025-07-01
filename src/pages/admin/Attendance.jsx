@@ -19,14 +19,15 @@ const Attendance = () => {
     roomNo: "",
     shift: "",
   });
+  const {school,building,roomNo,shift,fromDate,toDate}=attendanceFilter;
 
   useEffect(() => {
     setExportFilters((prev) => ({
       ...prev,
-      school: attendanceFilter.school || "",
-      building: attendanceFilter.building || "",
-      roomNo: attendanceFilter.roomNo || "",
-      shift: attendanceFilter.shift || "",
+      school: school || "",
+      building: building || "",
+      roomNo: roomNo || "",
+      shift: shift || "",
     }));
   }, [attendanceFilter]);
 
@@ -41,8 +42,8 @@ const Attendance = () => {
   });
 
   const dateFilterContext = {
-    fromDate: attendanceFilter.fromDate,
-    toDate: attendanceFilter.toDate,
+    fromDate: fromDate,
+    toDate: toDate,
     setFromDate: (val) =>
       setAttendanceFilter((prev) => ({
         ...prev,
@@ -66,7 +67,7 @@ const Attendance = () => {
 
   const config = {
     title: "Attendance",
-    apiGet: `/admin/formFilterData`,
+    apiGet: `/admin/formFilterData?fromDate=${fromDate}&toDate=${toDate}&school=${school}&building=${building}&roomNo=${roomNo}&shift=${shift}`,
     apiExport: "",
     filterBox: true,
     dateFilter: true,

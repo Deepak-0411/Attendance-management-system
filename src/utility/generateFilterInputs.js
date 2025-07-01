@@ -24,7 +24,7 @@ export const generateFilterInputs = ({
         options = getRoomNo?.(filterState.school, filterState.building) || [];
         break;
       case "shift":
-        options = ["Morning", "Evening"];
+        options = [1, 2];
         break;
       case "year":
         options = ["1st", "2nd", "3rd", "4th", "5th"];
