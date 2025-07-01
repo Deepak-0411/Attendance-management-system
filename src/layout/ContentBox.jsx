@@ -58,11 +58,11 @@ const ContentBox = ({
   };
 
   useEffect(() => {
-    if (!Array.isArray(dataList) || dataList.length === 0) {
-      // console.log("datalist",dataList);
+    // if (!Array.isArray(dataList) || dataList.length === 0) {
+    //   // console.log("datalist",dataList);
 
-      fetchData();
-    }
+    //   fetchData();
+    // }
     if (isFiltersEmpty()) {
       loadFilterOptions(token);
     }
