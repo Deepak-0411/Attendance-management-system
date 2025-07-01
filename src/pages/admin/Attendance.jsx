@@ -69,7 +69,7 @@ const Attendance = () => {
 
   const config = {
     title: "Attendance",
-    apiGet: `/admin/formEntries?fromDate=${fromDate}&toDate=${toDate}&school=${school}&building=${building}&roomNo=${roomNo}&shift=${shift}`,
+    apiGet: `/admin/formEntries?fromDate=${fromDate}&toDate=${toDate}&school=${school}&buildingName=${building}&roomNo=${roomNo}&shift=${shift}`,
     apiExport: "",
     apiEndPointSingle: "/admin/addStudent",
     apiEndPointBulk: "/admin/uploadExcel",
