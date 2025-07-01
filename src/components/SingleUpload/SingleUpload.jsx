@@ -30,7 +30,7 @@ const SingleUpload = ({
     e.preventDefault();
 
     const response = await apiRequest({
-      url: `/admin/${apiEndPointSingle}`,
+      url: apiEndPointSingle,
       method: "POST",
       body: data,
       token: token,
