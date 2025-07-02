@@ -48,9 +48,11 @@ const ContentBox = ({
       token: token,
       setLoading,
     });
+    console.log(response);
+    
 
     if (response.status === "success") {
-      setDataList(response.data);
+      setDataList(response.data.entries);
     } else {
       console.error("Error:", response.message);
       toast.error(`Error: Failed to fetch data.`);
