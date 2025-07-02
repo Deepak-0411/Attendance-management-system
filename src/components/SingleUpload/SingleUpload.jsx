@@ -38,16 +38,15 @@ const SingleUpload = ({
     });
 
     if (response.status === "success") {
-      console.log(response);
       
       toast.success(`Added successfully! ${response.data.message}`);
     } else if (response.data?.error) {
-      toast.error(`Upload failed: ${response.data.message || "Unknown error"}`, {
+      toast.error(`Upload failed: ${response.data.error || "Unknown error 11"}`, {
         autoClose: 5000,
       });
     } else {
       console.error("Error:", response.message);
-      toast.error(`Upload failed: ${response.message || "Unknown error"}`);
+      toast.error(`Upload failed: ${response.data || "Unknown error"}`);
     }
   };
 
