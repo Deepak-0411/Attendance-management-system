@@ -23,16 +23,16 @@ const Faculty = () => {
   }, [facultyFilter]);
 
   const filterInputs = generateFilterInputs({
-    fields: ["school", "branch"],
+    fields: ["school"],
     filterState: facultyFilter,
     setFilterState: setFacultyFilter,
-    requiredFields: ["school", "branch"],
+    requiredFields: ["school"],
     getSchoolList,
     getBranchList,
   });
 
   const exportInputs = generateFilterInputs({
-    fields: ["school", "branch"],
+    fields: ["school"],
     filterState: exportFilter,
     setFilterState: setExportFilters,
     getSchoolList,
@@ -41,8 +41,10 @@ const Faculty = () => {
 
   const config = {
     title: "Faculty Available",
-    apiGet: "/admin/faculty",
+    apiGet: `/admin/faculty?school=${facultyFilter.school}`,
     apiExport: "",
+    apiEndPointSingle: "/admin/faculty",
+    apiEndPointBulk: "/admin/faculty/import",
     filterBox: true,
     dateFilter: false,
     exportInputs: exportInputs,
@@ -60,8 +62,6 @@ const Faculty = () => {
     },
     tableHeading: ["Faculty Name", "Faculty-ID", "School Name"],
     tableColumn: ["fName", "teacherId", "schoolName"],
-    apiEndPointSingle: "faculty",
-    apiEndPointBulk: "faculty/import",
     dataList: facultyData,
     setDataList: setFacultyData,
   };

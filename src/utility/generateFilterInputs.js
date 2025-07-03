@@ -27,7 +27,7 @@ export const generateFilterInputs = ({
         options = [1, 2];
         break;
       case "year":
-        options = ["1st", "2nd", "3rd", "4th", "5th"];
+        options = ["1", "2", "3", "4", "5"];
         break;
       default:
         options = [];

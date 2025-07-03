@@ -33,7 +33,7 @@ export const FilterProvider = ({ children }) => {
   const [roomsFilter, setRoomsFilter] = useState({ school: "" });
   const [facultyFilter, setFacultyFilter] = useState({
     school: "",
-    branch: "",
+    // branch: "",
   });
   const [studentDetailsFilter, setStudentDetailsFilter] = useState({
     school: "",

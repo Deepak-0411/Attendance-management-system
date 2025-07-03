@@ -20,12 +20,14 @@ const StudentDetails = () => {
     year: "",
   });
 
+  const { school, branch, year } = studentDetailsFilter;
+
   useEffect(() => {
     setExportFilters((prev) => ({
       ...prev,
-      school: studentDetailsFilter.school || "",
-      branch: studentDetailsFilter.branch || "",
-      year: studentDetailsFilter.year || "",
+      school: school || "",
+      branch: branch || "",
+      year: year || "",
     }));
   }, [studentDetailsFilter]);
 
@@ -48,7 +50,9 @@ const StudentDetails = () => {
 
   const config = {
     title: "Students",
-    apiGet: "/admin/students",
+    apiGet: `/admin/students?year=${year}&branch=${branch}&school=${school}`,
+    apiEndPointSingle: "/admin/students",
+    apiEndPointBulk: "/admin/importStudents",
     apiExport: "",
     filterBox: true,
     dateFilter: false,
@@ -69,8 +73,6 @@ const StudentDetails = () => {
     },
     tableHeading: ["Name", "Roll no."],
     tableColumn: ["name", "rollNo"],
-    apiEndPointSingle: "students",
-    apiEndPointBulk: "importStudents",
     dataList: studentDetailsData,
     setDataList: setStudentDetailsData,
   };
