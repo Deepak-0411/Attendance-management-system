@@ -35,7 +35,9 @@ const Rooms = () => {
 
   const config = {
     title: "Rooms Available",
-    apiGet: "/admin/examRooms",
+    apiGet: `/admin/viewRooms?school=${roomsFilter.school}`,
+    apiEndPointSingle: "/admin/addRoom",
+    apiEndPointBulk: "/admin/roomImport",
     apiExport: "",
     filterBox: true,
     dateFilter: false,
@@ -53,8 +55,6 @@ const Rooms = () => {
     },
     tableHeading: ["Building Name", "Room No", "Capacity"],
     tableColumn: ["buildingName", "roomNo", "capacity"],
-    apiEndPointSingle: "faculty",
-    apiEndPointBulk: "roomImport",
     dataList: roomsData,
     setDataList: setRoomsData,
   };

@@ -20,13 +20,16 @@ const ExamDuty = () => {
     shift: "",
   });
 
+  const { school, building, roomNo, shift, fromDate, toDate } = examDutyFilter;
+
+
   useEffect(() => {
     setExportFilters((prev) => ({
       ...prev,
-      school: examDutyFilter.school || "",
-      building: examDutyFilter.building || "",
-      roomNo: examDutyFilter.rollNo || "",
-      shift: examDutyFilter.shift || "",
+      school: school || "",
+      building: building || "",
+      roomNo: roomNo || "",
+      shift: shift || "",
     }));
   }, [examDutyFilter]);
 
@@ -49,8 +52,8 @@ const ExamDuty = () => {
   });
 
   const dateFilterContext = {
-    fromDate: examDutyFilter.fromDate,
-    toDate: examDutyFilter.toDate,
+    fromDate: fromDate,
+    toDate: toDate,
     setFromDate: (val) =>
       setExamDutyFilter((prev) => ({
         ...prev,
@@ -65,8 +68,10 @@ const ExamDuty = () => {
 
   const config = {
     title: "Exam Duty",
-    apiGet: `/admin/duty`,
+    apiGet: `/admin/duty?fromDate=${fromDate}&toDate=${toDate}&school=${school}&buildingName=${building}&roomNo=${roomNo}&shift=${shift}`,
     apiExport: "",
+    apiEndPointSingle: "/admin/duty",
+    apiEndPointBulk: "/admin/duty/import",
     filterBox: true,
     dateFilter: true,
     dateFilterContext,
@@ -100,8 +105,6 @@ const ExamDuty = () => {
       "shift",
       "date",
     ],
-    apiEndPointSingle: "duty",
-    apiEndPointBulk: "duty/import",
     dataList: examDutyData,
     setDataList: setExamDutyData,
   };
