@@ -18,12 +18,14 @@ const CourseDetails = () => {
     school: "",
     branch: "",
   });
+  
+  const {school,branch}=courseDetailsFilter;
 
   useEffect(() => {
     setExportFilters((prev) => ({
       ...prev,
-      school: courseDetailsFilter.school || "",
-      branch: courseDetailsFilter.branch || "",
+      school: school || "",
+      branch: branch || "",
     }));
   }, [courseDetailsFilter]);
 
@@ -46,7 +48,9 @@ const CourseDetails = () => {
 
   const config = {
     title: "Courses",
-    apiGet: "/admin/courses",
+    apiGet: `/admin/courses?school=${school}&branch=${branch}`,
+    apiEndPointSingle: "/admin/courses",
+    apiEndPointBulk: "/admin/importCourses",
     apiExport: "",
     filterBox: true,
     dateFilter: false,
@@ -64,8 +68,6 @@ const CourseDetails = () => {
     },
     tableHeading: ["Course Name", "Course Code"],
     tableColumn: ["courseName", "courseCode"],
-    apiEndPointSingle: "courses",
-    apiEndPointBulk: "importCourses",
     dataList: courceDetailsData,
     setDataList: setCourceDetailsData,
   };
