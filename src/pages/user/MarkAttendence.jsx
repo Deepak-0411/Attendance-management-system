@@ -119,12 +119,27 @@ const MarkAttendence = () => {
             [
               "Scanned no",
               isEditingSheet ? (
+                // <input
+                //   type="number"
+                //   min={0}
+                //   className={styles.inputField}
+                //   value={sheetNo}
+                //   onChange={(e) => setSheetNo(Math.max(0, e.target.value))}
+                //   onBlur={() => setIsEditingSheet(false)}
+                //   autoFocus
+                // />
                 <input
-                  type="number"
-                  min={0}
+                  type="text"
                   className={styles.inputField}
                   value={sheetNo}
-                  onChange={(e) => setSheetNo(Math.max(0, e.target.value))}
+                  onChange={(e) => {
+                    const newValue = e.target.value;
+
+                    // Allow only numeric input, including leading zeros
+                    if (/^\d*$/.test(newValue)) {
+                      setSheetNo(newValue);
+                    }
+                  }}
                   onBlur={() => setIsEditingSheet(false)}
                   autoFocus
                 />

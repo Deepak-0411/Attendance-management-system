@@ -1,15 +1,14 @@
-import { Link, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import styles from "./Navbar.module.css";
 
 const Navbar = () => {
-  const location = useLocation();
   const { logout } = useAuth();
 
   const navItems = [
     {
       name: "Home",
-      path: "/admin/home",
+      path: "home",
       svg: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +40,7 @@ const Navbar = () => {
     },
     {
       name: "Attendance",
-      path: "/admin/attendance",
+      path: "attendance",
       svg: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +72,7 @@ const Navbar = () => {
     },
     {
       name: "Exam Duty",
-      path: "/admin/examDuty",
+      path: "examDuty",
       svg: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +124,7 @@ const Navbar = () => {
     },
     {
       name: "Rooms",
-      path: "/admin/rooms",
+      path: "rooms",
       svg: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -157,7 +156,7 @@ const Navbar = () => {
     },
     {
       name: "Faculty",
-      path: "/admin/faculty",
+      path: "faculty",
       svg: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -189,7 +188,7 @@ const Navbar = () => {
     },
     {
       name: "Students",
-      path: "/admin/students",
+      path: "students",
       svg: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -227,7 +226,7 @@ const Navbar = () => {
     },
     {
       name: "Course details",
-      path: "/admin/course-details",
+      path: "course-details",
       svg: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -304,39 +303,44 @@ const Navbar = () => {
       </div>
       <div className={styles.navbarBtns}>
         {navItems.map(({ name, path, svg, svgActive }) => (
-          <Link
+          <NavLink
             key={name}
             to={path}
-            className={`${styles.navbarBtn} ${
-              location.pathname === path ? styles.navbarBtnActive : ""
-            }`}
+            end
+            className={({ isActive }) =>
+              `${styles.navbarBtn} ${isActive ? styles.navbarBtnActive : ""}`
+            }
           >
-            <span className={styles.navIcon}>
-              {location.pathname === path ? svgActive : svg}
-            </span>
-            {name}
-          </Link>
+            {({ isActive }) => (
+              <>
+                <span className={styles.navIcon}>
+                  {isActive ? svgActive : svg}
+                </span>
+                {name}
+              </>
+            )}
+          </NavLink>
         ))}
       </div>
 
       <div className={styles.logoutBtnBox}>
-      <button onClick={logout} className={styles.logoutBtn}>
-        LOGOUT
-        <span className={styles.logoutSpan}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="25"
-            height="24"
-            viewBox="0 0 25 24"
-            fill="none"
-          >
-            <path
-              d="M17.5 7L16.09 8.41L18.67 11H8.5V13H18.67L16.09 15.58L17.5 17L22.5 12L17.5 7ZM4.5 5H12.5V3H4.5C3.4 3 2.5 3.9 2.5 5V19C2.5 20.1 3.4 21 4.5 21H12.5V19H4.5V5Z"
-              fill="#5A4FCF"
-            />
-          </svg>
-        </span>
-      </button>
+        <button onClick={logout} className={styles.logoutBtn}>
+          LOGOUT
+          <span className={styles.logoutSpan}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="25"
+              height="24"
+              viewBox="0 0 25 24"
+              fill="none"
+            >
+              <path
+                d="M17.5 7L16.09 8.41L18.67 11H8.5V13H18.67L16.09 15.58L17.5 17L22.5 12L17.5 7ZM4.5 5H12.5V3H4.5C3.4 3 2.5 3.9 2.5 5V19C2.5 20.1 3.4 21 4.5 21H12.5V19H4.5V5Z"
+                fill="#5A4FCF"
+              />
+            </svg>
+          </span>
+        </button>
       </div>
     </div>
   );

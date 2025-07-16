@@ -1,9 +1,18 @@
-.tableBox {
-  overflow: auto;
-  background: white;
+.tableContainer {
+  display: flex;
+  flex-direction: column;
   border-radius: 8px;
-  padding: 1rem;
+  padding: 1rem 0rem 1rem 1rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+.tableBox {
+  flex-grow: 1;
+  overflow-y: scroll;
+  width: 100%;
+  background: white;
+  padding-right: .5rem;
+  position: relative;
 }
 .table {
   width: 100%;
@@ -21,6 +30,11 @@
 .table tr:hover {
   background-color: #f6f6f6;
 }
+.tableHead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
 
 .tableHeading {
   background: #9a93e9;
@@ -30,12 +44,12 @@
   font-weight: 500;
 }
 
- .tableHeading:first-child{
+.tableHeading:first-child {
   border-top-left-radius: 0.8rem;
- }
- .tableHeading:last-child{
+}
+.tableHeading:last-child {
   border-top-right-radius: 0.8rem;
- }
+}
 
 .noData {
   text-align: center;
@@ -43,4 +57,3 @@
   color: #777;
   padding: 1.5rem;
 }
-
