@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useData } from "../../context/DataContext";
 import styles from "../../styles/modules/public/MarkAttendence.module.css";
@@ -14,8 +14,9 @@ const MarkAttendence = () => {
   const { token } = useAuth();
   const selectedShift = sessionStorage.getItem("shift");
   const selectedIdx = Number(sessionStorage.getItem("index")) || 0;
-  const { studentlist, setStudentList, fetchStudents } = useData();
+  const { setStudentList, fetchStudents } = useData();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [sheetNo, setSheetNo] = useState("");
   const [currentIdx, setCurrentIdx] = useState(selectedIdx);
@@ -23,6 +24,8 @@ const MarkAttendence = () => {
   const [scanning, setScanning] = useState(false);
   const [isEditingSheet, setIsEditingSheet] = useState(false);
   const [error, setError] = useState(null);
+
+  const studentlist = location.state?.studentlist || [];
 
   useEffect(() => {
     if (!studentlist?.length) {
@@ -50,6 +53,7 @@ const MarkAttendence = () => {
 
   const handleStatusChange = async (newStatus) => {
     if (!student) return;
+      toast.info(`rollno: ${student.rollNo}`);
 
     const validSheet = newStatus === "Absent" || sheetNo;
     if (!validSheet) {

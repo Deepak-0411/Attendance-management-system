@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./Input.module.css";
 
 const Input = ({
-  id,
+  id="",
   type,
   role,
   required,

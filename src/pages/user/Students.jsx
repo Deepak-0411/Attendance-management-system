@@ -17,7 +17,7 @@ const Students = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const {tableHeight} = useTableHeight();  
+  const { tableHeight } = useTableHeight();
   const { token } = useAuth();
   const { studentlist, fetchStudents, facultyName } = useData();
   const navigate = useNavigate();
@@ -38,11 +38,6 @@ const Students = () => {
     // fetchStudents(selectedShift, token, setLoading, setError);
   }, []);
 
-  const handleClick = (index) => {
-    sessionStorage.setItem("index", index);
-    navigate(`/faculty/markAttendance`);
-  };
-
   const filteredStudents = studentlist.filter((student) => {
     const statusMatch =
       activeStatus === "All" ||
@@ -55,6 +50,13 @@ const Students = () => {
 
     return statusMatch && searchMatch;
   });
+
+  const handleClick = (index) => {
+    sessionStorage.setItem("index", index);
+    navigate(`/faculty/markAttendance`, {
+      state: { studentlist: filteredStudents },
+    });
+  };
 
   const getStudentCount = (status) =>
     status === "All"
