@@ -66,6 +66,7 @@ const Login = () => {
             <span className={styles.loginOptionsSpan}>{checkboxSVG}</span>
             <label>
               <input
+                id="12121"
                 type="checkbox"
                 className={styles.checkBox}
                 defaultChecked={true}

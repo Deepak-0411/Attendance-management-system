@@ -48,7 +48,6 @@ const ContentBox = ({
       token: token,
       setLoading,
     });
-    console.log(response);
     
 
     if (response.status === "success") {

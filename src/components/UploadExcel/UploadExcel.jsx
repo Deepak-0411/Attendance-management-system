@@ -46,6 +46,7 @@ const UploadExcel = ({ closebulk, apiEndPoint }) => {
   return (
     <div className={styles.uploadContainer}>
       <input
+        id="aqc2113"
         className={styles.uploadContainerInput}
         type="file"
         accept=".xlsx, .xls"
