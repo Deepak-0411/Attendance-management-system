@@ -11,14 +11,12 @@ const Downloadfile = ({
 }) => {
   const { token } = useAuth();
   const [loading, setLoading] = useState(false);
-
-  // apiEndPoint: `https://gbu-server.vercel.app/api/admin/duty/export`,
-  // apiEndPoint: `https://gbu-server.vercel.app/api/admin/attandance/export`,
+  const baseURl = "https://gbu-server.vercel.app/api";
 
   const handleDownload = async () => {
     setLoading(true);
     try {
-      const response = await fetch(apiEndPoint, {
+      const response = await fetch(baseURl + apiEndPoint, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
