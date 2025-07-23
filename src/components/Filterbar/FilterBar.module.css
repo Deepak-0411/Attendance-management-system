@@ -1,5 +1,5 @@
 .filterBarContainer {
-  margin: 0rem 1.5rem 1rem 1.5rem;
+  padding: 0rem 1.5rem ;
   display: flex;
   align-items: start;
   gap: 1.5rem;
@@ -30,7 +30,7 @@
   cursor: not-allowed;
 }
 .downloadBtn {
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
   padding: 0.5rem;
   border: none;
   color: white;
