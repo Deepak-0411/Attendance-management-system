@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useId } from "react";
 import styles from "./Input.module.css";
 
 const Input = ({
-  id="",
+  id = "",
   type,
   role,
   required,
@@ -15,11 +15,10 @@ const Input = ({
   max,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const generateRandomId = () => {
-    return Math.floor(100000 + Math.random() * 900000);
-  };
 
-  id += generateRandomId();
+  const generatedId = useId();
+
+  id += generatedId;
 
   const inputClass = styles[`input${type}`] || styles.input3;
   const filterInput = type == 3 ? styles.input3 : styles.filterInput;

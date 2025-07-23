@@ -5,7 +5,12 @@ import ContentBox from "../../layout/ContentBox";
 import { generateFilterInputs } from "../../utility/generateFilterInputs";
 
 const ExamDuty = () => {
-  const { examDutyData, setExamDutyData } = useData();
+  const {
+    examDutyData,
+    setExamDutyData,
+    fromDate: dataFromDate,
+    toDate: dataToDate,
+  } = useData();
   const {
     examDutyFilter,
     setExamDutyFilter,
@@ -21,7 +26,6 @@ const ExamDuty = () => {
   });
 
   const { school, building, roomNo, shift, fromDate, toDate } = examDutyFilter;
-
 
   useEffect(() => {
     setExportFilters((prev) => ({
@@ -69,7 +73,7 @@ const ExamDuty = () => {
   const config = {
     title: "Exam Duty",
     apiGet: `/admin/duty?fromDate=${fromDate}&toDate=${toDate}&school=${school}&buildingName=${building}&roomNo=${roomNo}&shift=${shift}`,
-    apiExport: "",
+    apiExport: `/admin/duty/export?fromDate=${dataFromDate}&toDate=${dataToDate}&school=${exportFilter.school}&buildingName=${exportFilter.building}&roomNo=${exportFilter.roomNo}&shift=${exportFilter.shift}`,
     apiEndPointSingle: "/admin/duty",
     apiEndPointBulk: "/admin/duty/import",
     filterBox: true,

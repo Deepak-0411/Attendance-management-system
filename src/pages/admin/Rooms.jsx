@@ -38,7 +38,7 @@ const Rooms = () => {
     apiGet: `/admin/viewRooms?school=${roomsFilter.school}`,
     apiEndPointSingle: "/admin/addRoom",
     apiEndPointBulk: "/admin/roomImport",
-    apiExport: "",
+    apiExport: `/admin/rooms/export?school=${exportFilter.school}`,
     filterBox: true,
     dateFilter: false,
     exportInputs: exportInputs,

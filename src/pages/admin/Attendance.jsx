@@ -5,7 +5,12 @@ import { useEffect, useState } from "react";
 import { generateFilterInputs } from "../../utility/generateFilterInputs";
 
 const Attendance = () => {
-  const { attendanceData, setAttendanceData } = useData();
+  const {
+    attendanceData,
+    setAttendanceData,
+    fromDate: dataFromDate,
+    toDate: dataToDate,
+  } = useData();
   const {
     attendanceFilter,
     setAttendanceFilter,
@@ -66,11 +71,10 @@ const Attendance = () => {
       })),
   };
 
-
   const config = {
     title: "Attendance",
     apiGet: `/admin/formEntries?fromDate=${fromDate}&toDate=${toDate}&school=${school}&buildingName=${building}&roomNo=${roomNo}&shift=${shift}`,
-    apiExport: "",
+    apiExport: `/admin/attendance/export?fromDate=${dataFromDate}&toDate=${dataToDate}&school=${exportFilter.school}&buildingName=${exportFilter.building}&roomNo=${exportFilter.roomNo}&shift=${exportFilter.shift}`,
     apiEndPointSingle: "/admin/addStudent",
     apiEndPointBulk: "/admin/uploadExcel",
     filterBox: true,

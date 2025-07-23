@@ -18,8 +18,8 @@ const CourseDetails = () => {
     school: "",
     branch: "",
   });
-  
-  const {school,branch}=courseDetailsFilter;
+
+  const { school, branch } = courseDetailsFilter;
 
   useEffect(() => {
     setExportFilters((prev) => ({
@@ -51,7 +51,7 @@ const CourseDetails = () => {
     apiGet: `/admin/courses?school=${school}&branch=${branch}`,
     apiEndPointSingle: "/admin/courses",
     apiEndPointBulk: "/admin/importCourses",
-    apiExport: "",
+    apiExport: `/admin/exportcourses?school=${exportFilter.school}&branch=${exportFilter.branch}`,
     filterBox: true,
     dateFilter: false,
     exportInputs: exportInputs,
