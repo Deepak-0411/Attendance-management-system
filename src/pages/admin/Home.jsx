@@ -7,7 +7,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import { useFilter } from "../../context/FilterContext";
 import { useData } from "../../context/DataContext";
 import { toast } from "react-toastify";
-import apiRequest from "../../utility/apiRequest";
+import { apiRequest } from "../../utility/apiRequest";
 import { generateFilterInputs } from "../../utility/generateFilterInputs";
 
 const colorMap = {

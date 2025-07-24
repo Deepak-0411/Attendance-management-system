@@ -3,7 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import styles from "./SingleUpload.module.css";
 import UploadExcel from "../UploadExcel/UploadExcel";
 import { toast } from "react-toastify";
-import apiRequest from "../../utility/apiRequest";
+import { apiRequest } from "../../utility/apiRequest";
 import Input from "../Input/Input";
 import Overlay from "../Overlay/Overlay";
 
@@ -38,12 +38,14 @@ const SingleUpload = ({
     });
 
     if (response.status === "success") {
-      
       toast.success(`Added successfully! ${response.data.message}`);
     } else if (response.data?.error) {
-      toast.error(`Upload failed: ${response.data.error || "Unknown error 11"}`, {
-        autoClose: 5000,
-      });
+      toast.error(
+        `Upload failed: ${response.data.error || "Unknown error 11"}`,
+        {
+          autoClose: 5000,
+        }
+      );
     } else {
       console.error("Error:", response.message);
       toast.error(`Upload failed: ${response.data || "Unknown error"}`);

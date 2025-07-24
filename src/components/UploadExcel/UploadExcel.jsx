@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import styles from "./UploadExcel.module.css";
 import { toast } from "react-toastify";
-import apiRequest from "../../utility/apiRequest";
+import { apiRequest } from "../../utility/apiRequest";
 
 const UploadExcel = ({ closebulk, apiEndPoint }) => {
   const [file, setFile] = useState(null);

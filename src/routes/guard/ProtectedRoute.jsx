@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useEffect, useState, useMemo } from "react";
-import apiRequest from "../../utility/apiRequest";
+import { apiRequest } from "../../utility/apiRequest";
 import { toast } from "react-toastify";
 import LogoSpinner from "../../components/Spinner/LogoSpinner";
 import { useFilter } from "../../context/FilterContext";

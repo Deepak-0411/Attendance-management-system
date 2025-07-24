@@ -7,7 +7,7 @@ import ScanSheet from "./ScanSheet";
 import Spinner from "../../components/Spinner/Spinner";
 import { toast } from "react-toastify";
 import ErrorBox from "../../components/ErrorBox/ErrorBox";
-import apiRequest from "../../utility/apiRequest";
+import { apiRequest } from "../../utility/apiRequest";
 import Overlay from "../../components/Overlay/Overlay";
 
 const MarkAttendence = () => {
@@ -53,7 +53,7 @@ const MarkAttendence = () => {
 
   const handleStatusChange = async (newStatus) => {
     if (!student) return;
-      toast.info(`rollno: ${student.rollNo}`);
+    toast.info(`rollno: ${student.rollNo}`);
 
     const validSheet = newStatus === "Absent" || sheetNo;
     if (!validSheet) {

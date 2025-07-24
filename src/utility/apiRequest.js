@@ -67,7 +67,7 @@ const apiRequest = async ({
   }
 };
 
-export default apiRequest;
+export  {apiRequest , baseURl};
 
 // apiRequest.js
 // import axios from "axios";

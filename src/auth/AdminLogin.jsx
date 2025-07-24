@@ -3,7 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/modules/auth/AdminLogin.module.css";
 import loginsvg from "../assets/login illustration.svg";
-import apiRequest from "../utility/apiRequest";
+import { apiRequest } from "../utility/apiRequest";
 import { toast } from "react-toastify";
 import Input from "../components/Input/Input";
 

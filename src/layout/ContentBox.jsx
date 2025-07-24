@@ -6,7 +6,7 @@ import SingleUpload from "../components/SingleUpload/SingleUpload";
 import FilterBar from "../components/Filterbar/FilterBar";
 import DownloadFile from "../components/DownloadFile/DownloadFile";
 import Spinner from "../components/Spinner/Spinner";
-import apiRequest from "../utility/apiRequest";
+import { apiRequest } from "../utility/apiRequest";
 import { toast } from "react-toastify";
 import styles from "../styles/modules/layout/ContentBox.module.css";
 import Overlay from "../components/Overlay/Overlay";
@@ -48,7 +48,6 @@ const ContentBox = ({
       token: token,
       setLoading,
     });
-    
 
     if (response.status === "success") {
       setDataList(response.data.entries);

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import FilterBar from "../Filterbar/FilterBar";
 import styles from "./DownloadFile.module.css";
+import { baseURl } from "../../utility/apiRequest";
 
 const Downloadfile = ({
   exportFilters = [],
@@ -10,7 +11,6 @@ const Downloadfile = ({
 }) => {
   const { token } = useAuth();
   const [loading, setLoading] = useState(false);
-  const baseURl = "https://gbu-server.vercel.app/api";
 
   const handleDownload = async () => {
     setLoading(true);

@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { date } from "../utility/GetDate";
-import apiRequest from "../utility/apiRequest";
+import { apiRequest } from "../utility/apiRequest";
 import { toast } from "react-toastify";
 
 const DataContext = createContext();
