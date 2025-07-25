@@ -53,7 +53,7 @@ const StudentDetails = () => {
     apiGet: `/admin/students?year=${year}&branch=${branch}&school=${school}`,
     apiEndPointSingle: "/admin/students",
     apiEndPointBulk: "/admin/importStudents",
-    apiExport: "",
+    apiExport: `/admin/students/export?year=${exportFilter.year}&branch=${exportFilter.branch}&school=${exportFilter.school}`,
     filterBox: true,
     dateFilter: false,
     exportInputs: exportInputs,
