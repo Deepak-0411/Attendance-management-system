@@ -11,14 +11,12 @@ const Faculty = () => {
 
   const [exportFilter, setExportFilters] = useState({
     school: "",
-    branch: "",
   });
 
   useEffect(() => {
     setExportFilters((prev) => ({
       ...prev,
       school: facultyFilter.school || "",
-      branch: facultyFilter.branch || "",
     }));
   }, [facultyFilter]);
 
@@ -35,6 +33,7 @@ const Faculty = () => {
     fields: ["school"],
     filterState: exportFilter,
     setFilterState: setExportFilters,
+    requiredFields: ["school"],
     getSchoolList,
     getBranchList,
   });
@@ -42,7 +41,7 @@ const Faculty = () => {
   const config = {
     title: "Faculty Available",
     apiGet: `/admin/faculty?school=${facultyFilter.school}`,
-    apiExport: "",
+    apiExport: `/admin/faculty/export?school=${exportFilter.school}`,
     apiEndPointSingle: "/admin/faculty",
     apiEndPointBulk: "/admin/faculty/import",
     filterBox: true,

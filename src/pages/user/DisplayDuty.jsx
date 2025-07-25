@@ -17,7 +17,7 @@ const DisplayDuty = () => {
 
   const navigate = useNavigate();
   
-  useEffect(() => {
+  useEffect(() => {    
     const needsData = facultyName.length === 0 && facultyDuty.length === 0;
 
     if (needsData) {

@@ -35,7 +35,7 @@ const Students = () => {
       return;
     }
 
-    // fetchStudents(selectedShift, token, setLoading, setError);
+    fetchStudents(selectedShift, token, setLoading, setError);
   }, []);
 
   const filteredStudents = studentlist.filter((student) => {
