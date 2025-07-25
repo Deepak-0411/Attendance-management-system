@@ -52,10 +52,12 @@ const Students = () => {
   });
 
   const handleClick = (index) => {
-    sessionStorage.setItem("index", index);
-    navigate(`/faculty/markAttendance`, {
-      state: { studentlist: filteredStudents },
-    });
+    sessionStorage.setItem("rollNo", filteredStudents[index].rollNo);
+    sessionStorage.setItem(
+      "filteredRollNos",
+      JSON.stringify(filteredStudents.map((student) => student.rollNo))
+    );
+    navigate("/faculty/markAttendance");
   };
 
   const getStudentCount = (status) =>

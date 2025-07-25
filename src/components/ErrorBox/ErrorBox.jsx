@@ -1,9 +1,9 @@
 import styles from "./ErrorBox.module.css";
-const ErrorBox = ({ error, onclick }) => {
+const ErrorBox = ({ error, onClick }) => {
   return (
     <div className={styles.errorBox}>
       <p className={styles.errorp}>{error}</p>
-      <button className={styles.retryBtn} onClick={onclick}>
+      <button className={styles.retryBtn} onClick={onClick}>
         Retry
       </button>
     </div>

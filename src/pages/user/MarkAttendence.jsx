@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useData } from "../../context/DataContext";
 import styles from "../../styles/modules/public/MarkAttendence.module.css";
@@ -12,33 +12,54 @@ import Overlay from "../../components/Overlay/Overlay";
 
 const MarkAttendence = () => {
   const { token } = useAuth();
-  const selectedShift = sessionStorage.getItem("shift");
-  const selectedIdx = Number(sessionStorage.getItem("index")) || 0;
-  const { setStudentList, fetchStudents } = useData();
+  const {
+    studentlist: fullStudentList,
+    fetchStudents,
+    setStudentList,
+  } = useData();
   const navigate = useNavigate();
-  const location = useLocation();
 
+  const selectedShift = sessionStorage.getItem("shift");
+  const rollNoFromStorage = sessionStorage.getItem("rollNo");
+  const filteredRollNos = JSON.parse(
+    sessionStorage.getItem("filteredRollNos") || "[]"
+  );
+
+  const [filteredStudents, setFilteredStudents] = useState([]);
+  const [currentIdx, setCurrentIdx] = useState(0);
   const [sheetNo, setSheetNo] = useState("");
-  const [currentIdx, setCurrentIdx] = useState(selectedIdx);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [scanning, setScanning] = useState(false);
   const [isEditingSheet, setIsEditingSheet] = useState(false);
   const [error, setError] = useState(null);
 
-  const studentlist = location.state?.studentlist || [];
-
   useEffect(() => {
-    if (!studentlist?.length) {
+    if (!fullStudentList?.length) {
       fetchStudents(selectedShift, token, setLoading, setError);
     }
-    if (studentlist?.length && currentIdx >= studentlist.length) {
-      setCurrentIdx(0);
+    else{
+      setLoading(false);
     }
-  }, [studentlist]);
+  }, []);
+
+  useEffect(() => {
+    if (fullStudentList?.length && filteredRollNos?.length) {
+      const newFiltered = fullStudentList.filter((s) =>
+        filteredRollNos.includes(s.rollNo)
+      );
+
+      const foundIndex = newFiltered.findIndex(
+        (s) => s.rollNo === rollNoFromStorage
+      );
+
+      setFilteredStudents(newFiltered);
+      setCurrentIdx(foundIndex >= 0 ? foundIndex : 0);
+    }
+  }, [fullStudentList]);
 
   useEffect(() => {
     const handleBeforeUnload = () => {
-      if (studentlist?.length) {
+      if (filteredStudents?.length) {
         sessionStorage.setItem("index", currentIdx);
       }
     };
@@ -47,13 +68,12 @@ const MarkAttendence = () => {
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [currentIdx, studentlist]);
+  }, [currentIdx, filteredStudents]);
 
-  const student = studentlist?.[currentIdx];
+  const student = filteredStudents?.[currentIdx];
 
   const handleStatusChange = async (newStatus) => {
     if (!student) return;
-    toast.info(`rollno: ${student.rollNo}`);
 
     const validSheet = newStatus === "Absent" || sheetNo;
     if (!validSheet) {
@@ -74,13 +94,20 @@ const MarkAttendence = () => {
     });
 
     if (response.status === "success") {
-      const updatedList = [...studentlist];
+      const updatedList = [...filteredStudents];
       updatedList[currentIdx] = {
         ...updatedList[currentIdx],
         status: newStatus,
         bookletNumber: sheetNo,
       };
-      setStudentList(updatedList);
+      setFilteredStudents(updatedList);
+      setStudentList(
+        fullStudentList.map((s) =>
+          s.rollNo === student.rollNo
+            ? { ...s, status: newStatus, bookletNumber: sheetNo }
+            : s
+        )
+      );
       setSheetNo("");
       toast.success(`Marked as ${newStatus}`);
     } else {
@@ -88,7 +115,7 @@ const MarkAttendence = () => {
     }
   };
 
-  if (error)
+  if (error) {
     return (
       <ErrorBox
         error={error}
@@ -97,11 +124,16 @@ const MarkAttendence = () => {
         }
       />
     );
+  }
 
-  if (!student) {
+  if (loading && filteredStudents.length === 0) {
+    return <Spinner color="white" fullPage size="large" />;
+  }
+
+  if (!loading && filteredStudents.length === 0 && fullStudentList.length > 0) {
     return (
       <ErrorBox
-        error="No student data found"
+        error="No students matched your filters."
         onClick={() => navigate("/faculty/displayDuty")}
       />
     );
@@ -113,33 +145,22 @@ const MarkAttendence = () => {
         {/* Student Details */}
         <div className={styles.detailsContainer}>
           {[
-            ["Name", student.name],
-            ["Roll no", student.rollNo],
-            ["Course Code", student.courseCode],
-            ["Course Name", student.courseName],
-            ["Programme", student.programmeName],
-            ["Status", student.status],
-            ["Sheet no", student.bookletNumber],
+            ["Name", student?.name],
+            ["Roll no", student?.rollNo],
+            ["Course Code", student?.courseCode],
+            ["Course Name", student?.courseName],
+            ["Programme", student?.programmeName],
+            ["Status", student?.status],
+            ["Sheet no", student?.bookletNumber],
             [
               "Scanned no",
               isEditingSheet ? (
-                // <input
-                //   type="number"
-                //   min={0}
-                //   className={styles.inputField}
-                //   value={sheetNo}
-                //   onChange={(e) => setSheetNo(Math.max(0, e.target.value))}
-                //   onBlur={() => setIsEditingSheet(false)}
-                //   autoFocus
-                // />
                 <input
                   type="text"
                   className={styles.inputField}
                   value={sheetNo}
                   onChange={(e) => {
                     const newValue = e.target.value;
-
-                    // Allow only numeric input, including leading zeros
                     if (/^\d*$/.test(newValue)) {
                       setSheetNo(newValue);
                     }
@@ -209,12 +230,17 @@ const MarkAttendence = () => {
           <button
             className={styles.next}
             onClick={() =>
-              setCurrentIdx(Math.min(studentlist.length - 1, currentIdx + 1))
+              setCurrentIdx(
+                Math.min(filteredStudents.length - 1, currentIdx + 1)
+              )
             }
-            disabled={currentIdx === studentlist.length - 1 || loading}
+            disabled={currentIdx === filteredStudents.length - 1 || loading}
           >
             Next{" "}
-            {icon("frwd", currentIdx === studentlist.length - 1 || loading)}
+            {icon(
+              "frwd",
+              currentIdx === filteredStudents.length - 1 || loading
+            )}
           </button>
         </div>
       </div>
@@ -224,7 +250,7 @@ const MarkAttendence = () => {
 
 export default MarkAttendence;
 
-// SVG Icon
+// SVG Icon component
 const icon = (type, isDisabled) => (
   <svg
     width="18px"
