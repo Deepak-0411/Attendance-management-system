@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: url("../../../assets/AdminLoginbg.jpg") no-repeat center center / cover,
+  background: url("../../../assets/AdminLoginbg.webp") no-repeat center center / cover,
     /* First background is the image */
       linear-gradient(to bottom right, #6a11cb, #2575fc); /* Fallback gradient if the image is missing or fails to load */
 }

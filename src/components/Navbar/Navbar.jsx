@@ -308,7 +308,7 @@ const Navbar = () => {
             to={path}
             end
             className={({ isActive }) =>
-              `${styles.navbarBtn} ${isActive ? styles.navbarBtnActive : ""}`
+              `${styles.navbarBtn} ${isActive ? styles.navbarBtnActive : ""} btn`
             }
           >
             {({ isActive }) => (

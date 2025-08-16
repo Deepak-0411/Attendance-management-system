@@ -13,7 +13,7 @@
 }
 
 ::-webkit-scrollbar-track {
-  background:transparent;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -37,9 +37,16 @@ body {
 .Toastify__toast {
   max-width: 90vw;
   margin: 1rem;
-  border-radius: .5rem !important;
+  border-radius: 0.5rem !important;
 }
 
 button:disabled {
   cursor: not-allowed;
+}
+button , .btn {
+  transition: transform 0.06s ease;
+}
+
+button:active , .btn:active {
+  transform: translateY(0px) scale(0.97);
 }
