@@ -13,11 +13,11 @@ const DisplayDuty = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const {tableHeight} = useTableHeight();
+  const { tableHeight } = useTableHeight();
 
   const navigate = useNavigate();
-  
-  useEffect(() => {    
+
+  useEffect(() => {
     const needsData = facultyName.length === 0 && facultyDuty.length === 0;
 
     if (needsData) {
@@ -31,7 +31,7 @@ const DisplayDuty = () => {
     sessionStorage.setItem("shift", shift);
     sessionStorage.setItem("building", buildingName);
     sessionStorage.setItem("room", roomNo);
-    navigate("/faculty/students", { state: { secondTeacher } });
+    navigate("/faculty/students");
   };
 
   if (loading) return <Spinner color="white" fullPage size="large" />;
@@ -67,12 +67,7 @@ const DisplayDuty = () => {
                 key={index}
                 className={styles.content}
                 onClick={() =>
-                  handleClick(
-                    duty.shift,
-                    duty.buildingName,
-                    duty.roomNo,
-                    duty.secondTeacher
-                  )
+                  handleClick(duty.shift, duty.buildingName, duty.roomNo)
                 }
               >
                 <div className={styles.contentData}>
@@ -80,15 +75,15 @@ const DisplayDuty = () => {
                     {duty.buildingName + " - " + duty.roomNo}
                   </p>
                   <p className={styles.contentDataP}>
-                    {"Shift - " + duty.shift}
+                    {duty.totalStrength || "N/A"}
                   </p>
                 </div>
                 <div className={styles.contentData}>
                   <p className={styles.contentDataP}>
-                    {duty.secondTeacher || "Not Assigned"}
+                    {"Shift - " + duty.shift}
                   </p>
                   <p className={styles.contentDataP}>
-                    {duty.totalStrength || "N/A"}
+                    {duty.capacity || "N/A"}
                   </p>
                 </div>
               </div>

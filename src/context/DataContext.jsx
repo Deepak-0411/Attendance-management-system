@@ -84,7 +84,6 @@ export const DataProvider = ({ children }) => {
     });
 
     if (response.status === "success") {      
-      // facultyname [0] id[1]
       setFacultyName(response.data.faculty || []);
       setFacultyDuty(response.data.viewDuty || []);
     } else {

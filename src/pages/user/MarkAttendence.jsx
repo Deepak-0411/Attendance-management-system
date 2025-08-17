@@ -36,8 +36,7 @@ const MarkAttendence = () => {
   useEffect(() => {
     if (!fullStudentList?.length) {
       fetchStudents(selectedShift, token, setLoading, setError);
-    }
-    else{
+    } else {
       setLoading(false);
     }
   }, []);
@@ -58,16 +57,9 @@ const MarkAttendence = () => {
   }, [fullStudentList]);
 
   useEffect(() => {
-    const handleBeforeUnload = () => {
-      if (filteredStudents?.length) {
-        sessionStorage.setItem("index", currentIdx);
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
+    if (filteredStudents[currentIdx]) {
+      sessionStorage.setItem("rollNo", filteredStudents[currentIdx].rollNo);
+    }
   }, [currentIdx, filteredStudents]);
 
   const student = filteredStudents?.[currentIdx];

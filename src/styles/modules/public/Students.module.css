@@ -13,14 +13,12 @@
   display: flex;
   width: 100%;
   flex-direction: column;
-  /* height: clamp(15vh, 17vh, 17vh); */
 }
 .roomInfoP {
   color: #fff;
   font-family: "PT Serif";
   font-size: 1.5rem;
   font-weight: 700;
-  /* line-height: 1.7; */
 }
 
 .Studentlist {
@@ -29,7 +27,6 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  /* height:clamp(85vh, 83vh, 83vh); */
 }
 
 .filterBtns {
@@ -52,22 +49,18 @@
   text-align: center;
   border: 0.24rem solid white;
   background-color: white;
-  /* opacity: .7; */
 }
 .filterBtnPresent {
   background-color: #5ca904;
   color: white;
-  /* opacity: 1; */
 }
 .filterBtnAbsent {
   background-color: #f44336;
   color: white;
-  /* opacity: 1; */
 }
 .filterBtnUFM {
   background-color: #14bce1;
   color: white;
-  /* opacity: 1; */
 }
 .filterBtnAll {
   background-color: #555555;
@@ -80,13 +73,11 @@
 }
 
 .contentBox {
-  /* flex-grow: 1; */
   display: flex;
   flex-direction: column;
   overflow: auto;
   gap: 1rem;
   width: 100%;
-  overflow: auto;
 }
 .contentBox::-webkit-scrollbar {
   display: none;
@@ -111,7 +102,7 @@
 }
 .contentStatus {
   font-family: Barlow;
-  padding: 0.3rem .8rem;
+  padding: 0.3rem 0.8rem;
   margin-right: 0.8rem;
   border-radius: 2rem;
   background-color: #ffffff42;
@@ -122,20 +113,14 @@
   font-weight: 500;
 }
 .contentStatuspresent {
-  /* color: #c7ffc7;
-  background-color: #00cf00ab; */
   background-color: #153921;
   color: #36dd87;
 }
 .contentStatusabsent {
-  /* color: #ffb3ae;
-  background-color: #cd0101ab; */
   background-color: #441320;
   color: #d85577;
 }
 .contentStatusufm {
-  /* color: #14bce1;
-  background-color: #14bce15c; */
   background-color: #432e15;
   color: #edb348;
 }

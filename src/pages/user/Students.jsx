@@ -21,12 +21,10 @@ const Students = () => {
   const { token } = useAuth();
   const { studentlist, fetchStudents, facultyName } = useData();
   const navigate = useNavigate();
-  const { state } = useLocation();
 
   const selectedShift = sessionStorage.getItem("shift");
   const selectedBuilding = sessionStorage.getItem("building");
   const selectedRoomNo = sessionStorage.getItem("room");
-  const secondTeacher = state?.secondTeacher || "N/A";
 
   useEffect(() => {
     if (!(selectedShift && selectedBuilding && selectedRoomNo)) {
@@ -84,9 +82,7 @@ const Students = () => {
         <p className={styles.roomInfoP}>
           Room no: {selectedBuilding + " " + selectedRoomNo || "N/A"}
         </p>
-        <p className={styles.roomInfoP}>
-          Duty: {facultyName.fName} , {secondTeacher}
-        </p>
+        <p className={styles.roomInfoP}>Duty: {facultyName.fName}</p>
         <p className={styles.roomInfoP}>Shift: {selectedShift || "N/A"}</p>
       </div>
 
@@ -121,7 +117,10 @@ const Students = () => {
         </div>
 
         {/* Student List */}
-        <div className={styles.contentBox} style={{ height: tableHeight }}>
+        <div
+          className={styles.contentBox}
+          style={{ height: `calc(${tableHeight} - 1.4rem)` }}
+        >
           {loading ? (
             <Spinner color="white" fullPage size="large" />
           ) : filteredStudents.length ? (

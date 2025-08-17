@@ -1,0 +1,20 @@
+.devTeamDiv {
+    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-bottom: 0.4rem;
+  position: absolute;
+  bottom: 0;
+}
+.devTeam {
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+.devName {
+  color: #6aff82;
+  cursor: pointer;
+  user-select: none;
+}
