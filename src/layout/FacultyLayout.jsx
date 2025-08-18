@@ -1,9 +1,10 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import styles from "../styles/modules/layout/FacultyLayout.module.css";
 
 const FacultyLayout = () => {
+  const navigate = useNavigate();
   const handleDevClick =()=>{
-    console.log("hii");
+    navigate("/devTeam");
     
   };
   return (

@@ -58,6 +58,8 @@
   font-family: Roboto;
   letter-spacing: 0.05rem;
   margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 700;
 }
 
 .loginForm {

@@ -1,9 +1,13 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import styles from "./Navbar.module.css";
 
 const Navbar = () => {
   const { logout } = useAuth();
+  const navigate = useNavigate();
+  const handleDevClick = () => {
+    navigate("/devTeam");
+  };
 
   const navItems = [
     {
@@ -308,7 +312,9 @@ const Navbar = () => {
             to={path}
             end
             className={({ isActive }) =>
-              `${styles.navbarBtn} ${isActive ? styles.navbarBtnActive : ""} btn`
+              `${styles.navbarBtn} ${
+                isActive ? styles.navbarBtnActive : ""
+              } btn`
             }
           >
             {({ isActive }) => (
@@ -341,6 +347,22 @@ const Navbar = () => {
             </svg>
           </span>
         </button>
+        <div className={styles.devTeamDiv}>
+          <p className={styles.devTeam}>
+            Designed & Developed By
+            <span className={styles.devName} onClick={handleDevClick}>
+              {" Ansh"}
+            </span>
+            ,
+            <span className={styles.devName} onClick={handleDevClick}>
+              {" Deepak "}
+            </span>
+            &
+            <span className={styles.devName} onClick={handleDevClick}>
+              {" Harsh"}
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   );

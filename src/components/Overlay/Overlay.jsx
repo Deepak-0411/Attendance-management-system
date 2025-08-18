@@ -4,9 +4,7 @@ import styles from "./Overlay.module.css";
 const Overlay = ({ children, onClose }) => {
   const handleClick = (e) => {
     e.stopPropagation();
-    const isOverlayClick = e.target.classList.contains(styles.overlay);
-    console.log("clicked",isOverlayClick);
-    
+    const isOverlayClick = e.target.classList.contains(styles.overlay);    
     if (isOverlayClick) {
       onClose();
     }

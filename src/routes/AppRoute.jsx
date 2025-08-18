@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import AdminLayout from "../layout/AdminLayout";
 import FacultyLayout from "../layout/FacultyLayout";
 import PageNotFound from "../pages/PageNotFound";
-import { FilterProvider } from "../context/FilterContext";
+import Devs from "../pages/Devs";
 
 // Guard
 import ProtectedRoute from "../routes/guard/ProtectedRoute";
@@ -33,6 +33,7 @@ function AppRoute() {
 
   return (
     <Routes>
+      <Route path="devTeam" element={<Devs />} />
       <Route path="/" element={<Navigate to={`${defaultRoot}`} />} />
       {/* Auth  */}
       <Route path="/faculty/login" element={<Login />} />
