@@ -5,6 +5,8 @@ const Overlay = ({ children, onClose }) => {
   const handleClick = (e) => {
     e.stopPropagation();
     const isOverlayClick = e.target.classList.contains(styles.overlay);
+    console.log("clicked",isOverlayClick);
+    
     if (isOverlayClick) {
       onClose();
     }
@@ -18,7 +20,6 @@ const Overlay = ({ children, onClose }) => {
         type="button"
         onClick={(e) => {
           e.stopPropagation();
-
           onClose();
         }}
       >

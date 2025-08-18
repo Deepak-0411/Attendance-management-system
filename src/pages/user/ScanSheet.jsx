@@ -8,6 +8,7 @@ const QRScanner = ({ closeDiv, setSheet }) => {
   const html5QrCodeRef = useRef(null);
 
   useEffect(() => {
+    startScanning();
     return () => stopScanning();
   }, []);
 
@@ -21,26 +22,34 @@ const QRScanner = ({ closeDiv, setSheet }) => {
       if (!readerElement) return setIsScanning(false);
 
       html5QrCodeRef.current = new Html5Qrcode("reader");
+
+      // Track scan results for consensus
+      let scanResults = {};
       let scannedOnce = false;
 
       try {
         await html5QrCodeRef.current.start(
           { facingMode },
-          { fps: 25, qrbox: { width: 320, height: 240 } },
+          { fps: 10, qrbox: { width: 320, height: 240 } },
           async (decodedText) => {
             if (!scannedOnce) {
-              scannedOnce = true;
-              await stopScanning();
-              setSheet(decodedText);
-              closeDiv();
+              scanResults[decodedText] = (scanResults[decodedText] || 0) + 1;
+
+              // Require at least 3 identical scans before accepting
+              if (scanResults[decodedText] >= 3) {
+                scannedOnce = true;
+                await stopScanning();
+                setSheet(decodedText);
+                closeDiv();
+              }
             }
           }
         );
       } catch (err) {
-        console.error("Error starting QR scanner:", err);
+        console.error("Error starting Barcode scanner:", err);
         setIsScanning(false);
       }
-    }, 100); // Small delay to ensure DOM is ready
+    }, 100);
   };
 
   const stopScanning = async () => {
@@ -48,7 +57,7 @@ const QRScanner = ({ closeDiv, setSheet }) => {
       try {
         await html5QrCodeRef.current.stop();
       } catch (err) {
-        console.warn("Error stopping QR scanner:", err);
+        console.warn("Error stopping Barcode scanner:", err);
       }
       html5QrCodeRef.current = null;
       setIsScanning(false);

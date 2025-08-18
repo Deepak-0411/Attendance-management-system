@@ -184,7 +184,10 @@ const MarkAttendence = () => {
           </button>
           {scanning && (
             <Overlay onClose={() => setScanning(false)}>
-              <ScanSheet setSheet={(scanned) => setSheetNo(scanned)} />
+              <ScanSheet
+                setSheet={(scanned) => setSheetNo(scanned)}
+                closeDiv={() => setScanning(false)}
+              />
             </Overlay>
           )}
         </div>
