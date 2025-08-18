@@ -43,6 +43,11 @@
 .detailRow {
   display: contents;
 }
+.truncateText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .inputField {
   background: #76767640;

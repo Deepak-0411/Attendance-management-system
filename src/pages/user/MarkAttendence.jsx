@@ -107,6 +107,38 @@ const MarkAttendence = () => {
     }
   };
 
+  const valueToShow = [
+    ["Name", student?.name],
+    ["Roll no", student?.rollNo],
+    ["Course Code", student?.courseCode],
+    ["Course Name", student?.courseName],
+    ["Programme", student?.programmeName],
+    ["Status", student?.status],
+    ["Sheet no", student?.bookletNumber],
+    [
+      "Scanned no",
+      isEditingSheet ? (
+        <input
+          type="text"
+          className={styles.inputField}
+          value={sheetNo}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            if (/^\d*$/.test(newValue)) {
+              setSheetNo(newValue);
+            }
+          }}
+          onBlur={() => setIsEditingSheet(false)}
+          autoFocus
+        />
+      ) : (
+        <span onDoubleClick={() => setIsEditingSheet(true)} style={{background: "#76767640"}}>
+          {sheetNo || "No sheet scanned yet"}
+        </span>
+      ),
+    ],
+  ];
+
   if (error) {
     return (
       <ErrorBox
@@ -136,40 +168,10 @@ const MarkAttendence = () => {
       <div className={styles.card}>
         {/* Student Details */}
         <div className={styles.detailsContainer}>
-          {[
-            ["Name", student?.name],
-            ["Roll no", student?.rollNo],
-            ["Course Code", student?.courseCode],
-            ["Course Name", student?.courseName],
-            ["Programme", student?.programmeName],
-            ["Status", student?.status],
-            ["Sheet no", student?.bookletNumber],
-            [
-              "Scanned no",
-              isEditingSheet ? (
-                <input
-                  type="text"
-                  className={styles.inputField}
-                  value={sheetNo}
-                  onChange={(e) => {
-                    const newValue = e.target.value;
-                    if (/^\d*$/.test(newValue)) {
-                      setSheetNo(newValue);
-                    }
-                  }}
-                  onBlur={() => setIsEditingSheet(false)}
-                  autoFocus
-                />
-              ) : (
-                <span onDoubleClick={() => setIsEditingSheet(true)}>
-                  {sheetNo || "No sheet scanned yet"}
-                </span>
-              ),
-            ],
-          ].map(([label, value]) => (
+          {valueToShow.map(([label, value]) => (
             <div key={label} className={styles.detailRow}>
               <strong>{label} :</strong>
-              <span>{value || "N/A"}</span>
+              <span className={styles.truncateText}>{value || "N/A"}</span>
             </div>
           ))}
         </div>
