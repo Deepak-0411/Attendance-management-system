@@ -57,7 +57,7 @@ const Faculty = () => {
       teacherId: { value: "", placeholder: "Teacher ID", role: "text" },
       username: { value: "", placeholder: "Username", role: "text" },
       password: { value: "", placeholder: "Password", role: "text" },
-      schoolName: { value: "", placeholder: "School Name", role: "text" },
+      school: { value: "", placeholder: "School Name", role: "text" },
     },
     tableHeading: ["Faculty Name", "Faculty-ID", "School Name"],
     tableColumn: ["fName", "teacherId", "schoolName"],

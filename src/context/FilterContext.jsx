@@ -47,26 +47,9 @@ export const FilterProvider = ({ children }) => {
 
   // Metadata
   const [schoolFilterData, setSchoolFilterData] = useState({
-    // SOICT: ["Computer Science", "Electronics", "Mechanical"],
-    // SOM: ["Bachelor of Pharmacy", "Diploma in Pharmacy"],
-    // Management: [
-    //   "Masters of Business Administration",
-    //   "Bachelor of Business Administration",
-    // ],
   });
 
-  const [roomFilterData, setRoomFilterData] = useState({
-    // Engineering: {
-    //   "Block A": ["101", "102", "103"],
-    //   "Block B": ["201", "202"],
-    // },
-    // Pharmacy: {
-    //   "Pharma Block": ["P1", "P2"],
-    // },
-    // Management: {
-    //   "MG Block": ["M101", "M102"],
-    // },
-  });
+  const [roomFilterData, setRoomFilterData] = useState({  });
 
   // Utilities (Fixed logic here)
   const getSchoolList = () => {
