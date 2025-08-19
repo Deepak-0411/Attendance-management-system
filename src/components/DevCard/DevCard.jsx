@@ -26,7 +26,7 @@ export const DevCard = ({
   ].filter((s) => s.url);
 
   return (
-    <div className="relative w-full h-[24rem] max-w-[18rem] rounded-2xl overflow-hidden shadow-xl bg-white text-white mx-auto">
+    <div className="relative  w-full h-[24rem] max-w-[18rem] rounded-2xl overflow-hidden shadow-xl bg-white text-white mx-auto">
       {/* Image */}
       <img
         src={image}
@@ -50,7 +50,7 @@ export const DevCard = ({
         </p>
 
         {/* Social Links */}
-        <div className="flex gap-3 flex-wrap">
+        <div className="flex gap-3  flex-wrap">
           {socials.map(({ url, icon, label }, index) => (
             <a
               key={index}

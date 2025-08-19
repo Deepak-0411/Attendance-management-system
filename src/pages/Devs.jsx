@@ -32,12 +32,12 @@ function Devs() {
       </div>
 
       {/* Section Heading */}
-      <h2 className="relative z-10 mb-12 lg:mb-20 text-3xl sm:text-4xl font-bold text-white tracking-wide text-center">
+      <h2 className=" z-10 lg:mb-20 mb-12  text-3xl sm:text-4xl font-bold text-white tracking-wide text-center">
         Meet Our Developers
       </h2>
 
       {/* Developer Cards */}
-      <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 justify-items-center">
+      <div className=" z-10 gap-10 flex flex-wrap items-center justify-center w-full">
         {developers.map((dev, idx) => (
           <DevCard key={idx} {...dev} />
         ))}
