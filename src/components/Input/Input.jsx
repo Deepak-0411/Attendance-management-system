@@ -72,7 +72,7 @@ const Input = ({
         onChange={(e) => setValue(e.target.value)}
         className={filterInput}
       >
-        <option value="">Select</option>
+        <option value="">{placeholder || "Select"}</option>
         {options.map((option, index) => (
           <option key={index} value={option}>
             {option}

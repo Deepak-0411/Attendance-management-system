@@ -3,12 +3,11 @@ import styles from "../styles/modules/layout/FacultyLayout.module.css";
 
 const FacultyLayout = () => {
   const navigate = useNavigate();
-  const handleDevClick =()=>{
+  const handleDevClick = () => {
     navigate("/devTeam");
-    
   };
   return (
-    <>
+    <div className=" relative">
       <Outlet />
       <div className={styles.devTeamDiv}>
         <p className={styles.devTeam}>
@@ -26,7 +25,7 @@ const FacultyLayout = () => {
           </span>
         </p>
       </div>
-    </>
+    </div>
   );
 };
 export default FacultyLayout;

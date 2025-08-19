@@ -87,9 +87,25 @@ const ExamDuty = () => {
     addText: "+ Assign Duty",
     formFields: {
       teacherId: { value: "", placeholder: "Faculty-ID", role: "text" },
-      school: { value: "", placeholder: "School Name", role: "text" },
-      buildingName: { value: "", placeholder: "Building Name", role: "text" },
-      roomNo: { value: "", placeholder: "Room no.", role: "text" },
+      school: {
+        value: "",
+        placeholder: "School Name",
+        role: "select",
+        options: () => getSchoolList(),
+      },
+      buildingName: {
+        value: "",
+        placeholder: "Building Name",
+        role: "select",
+        options: (formData) => getBuildingName(formData.school),
+      },
+      roomNo: {
+        value: "",
+        placeholder: "Room No.",
+        role: "select",
+        options: (formData) =>
+          getRoomNo(formData.school, formData.buildingName),
+      },
       shift: { value: "", placeholder: "Shift", role: "text" },
       date: { value: "", placeholder: "Date", role: "date" },
     },

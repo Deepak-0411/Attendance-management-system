@@ -17,32 +17,8 @@ export const DataProvider = ({ children }) => {
 
   // Faculty states
   const [facultyName, setFacultyName] = useState([]);
-  const [facultyDuty, setFacultyDuty] = useState([
-    // {
-    //   shift: 1,
-    //   buildingName: "IL",
-    //   roomNo: 102,
-    //   secondTeacher: "Deepak Kumar",
-    // },
-    // {
-    //   shift: 2,
-    //   buildingName: "IL",
-    //   roomNo: 103,
-    // },
-  ]);
-  // const [selectedShift, setSelectedShift] = useState("1");
-  // const [selectedBuilding, setSelectedBuilding] = useState("IL");
-  // const [selectedRoomNo, setSelectedRoomNo] = useState("101");
-  // const [currentIdx, setCurrentIdx] = useState(1);
-  const [studentlist, setStudentList] = useState([
-    // { rollNo: "235UCS050", name: "Deepak", status: "Present" },
-    // { rollNo: "235UCS060", name: "Jai", status: "" },
-    // { rollNo: "235UCS058", name: "Harsh", status: "Absent" },
-    // { rollNo: "235UCS024", name: "Ankit", status: "absent" },
-    // { rollNo: "235UCS026", name: "Ansh", status: "present" },
-    // { rollNo: "235UCS015", name: "Aman", status: "UFM" },
-    // { rollNo: "235UCS016", name: "Solanki", status: "ufm" },
-  ]);
+  const [facultyDuty, setFacultyDuty] = useState([]);
+  const [studentlist, setStudentList] = useState([]);
 
   // Date states
   const [fromDate, setFromDate] = useState(date);
@@ -61,10 +37,6 @@ export const DataProvider = ({ children }) => {
       setStudentList([]);
       setFacultyDuty([]);
       setFacultyName([]);
-      // setSelectedShift("");
-      // setSelectedBuilding("");
-      // setSelectedRoomNo("");
-      // setCurrentIdx("");
     } else {
       naam([]);
     }
@@ -127,10 +99,6 @@ export const DataProvider = ({ children }) => {
         // Faculty data
         facultyName,
         facultyDuty,
-        // selectedShift,
-        // selectedBuilding,
-        // selectedRoomNo,
-        // currentIdx,
         studentlist,
 
         // Dates
@@ -149,10 +117,6 @@ export const DataProvider = ({ children }) => {
         // faculty
         setFacultyName,
         setFacultyDuty,
-        // setSelectedShift,
-        // setSelectedBuilding,
-        // setSelectedRoomNo,
-        // setCurrentIdx,
         setStudentList,
 
         setFromDate,

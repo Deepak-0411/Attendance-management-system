@@ -87,10 +87,31 @@ const Attendance = () => {
     nameKey: "courseCode",
     addText: "+ Add Student",
     formFields: {
-      school: { value: "", placeholder: "School Name", role: "text" },
-      buildingName: { value: "", placeholder: "Building Name", role: "text" },
-      roomNo: { value: "", placeholder: "Room No.", role: "text" },
-      shift: { value: "", placeholder: "Shift", role: "text" },
+      school: {
+        value: "",
+        placeholder: "School Name",
+        role: "select",
+        options: () => getSchoolList(),
+      },
+      buildingName: {
+        value: "",
+        placeholder: "Building Name",
+        role: "select",
+        options: (formData) => getBuildingName(formData.school),
+      },
+      roomNo: {
+        value: "",
+        placeholder: "Room No.",
+        role: "select",
+        options: (formData) =>
+          getRoomNo(formData.school, formData.buildingName),
+      },
+      shift: {
+        value: "",
+        placeholder: "Shift",
+        role: "select",
+        options: () => [1, 2],
+      },
       rollNo: { value: "", placeholder: "Roll No.", role: "text" },
       courseCode: { value: "", placeholder: "Course Code", role: "text" },
       date: { value: "", placeholder: "Date", role: "date" },

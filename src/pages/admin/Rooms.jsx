@@ -5,7 +5,13 @@ import { useEffect, useState } from "react";
 import { generateFilterInputs } from "../../utility/generateFilterInputs";
 
 const Rooms = () => {
-  const { roomsFilter, setRoomsFilter, getSchoolList } = useFilter();
+  const {
+    roomsFilter,
+    setRoomsFilter,
+    getSchoolList,
+    getBuildingName,
+    getRoomNo,
+  } = useFilter();
   const { roomsData, setRoomsData } = useData();
   const [exportFilter, setExportFilters] = useState({
     school: "",
@@ -48,9 +54,25 @@ const Rooms = () => {
     nameKey: "buildingName",
     addText: "+ Add Room",
     formFields: {
-      school: { value: "", placeholder: "School Name", role: "text" },
-      buildingName: { value: "", placeholder: "Building Name", role: "text" },
-      roomNo: { value: "", placeholder: "Room No.", role: "text" },
+      school: {
+        value: "",
+        placeholder: "School Name",
+        role: "select",
+        options: () => getSchoolList(),
+      },
+      buildingName: {
+        value: "",
+        placeholder: "Building Name",
+        role: "select",
+        options: (formData) => getBuildingName(formData.school),
+      },
+      roomNo: {
+        value: "",
+        placeholder: "Room No.",
+        role: "select",
+        options: (formData) =>
+          getRoomNo(formData.school, formData.buildingName),
+      },
       capacity: { value: "", placeholder: "Capacity", role: "text" },
     },
     tableHeading: ["Building Name", "Room No", "Capacity"],

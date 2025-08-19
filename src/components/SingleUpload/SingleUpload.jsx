@@ -62,14 +62,21 @@ const SingleUpload = ({
 
       <form onSubmit={handleSubmit} className={styles.form}>
         {Object.keys(dataToSend).map((key) => {
+          const field = dataToSend[key];
+
           return (
             <div key={key}>
               <Input
                 type={3}
-                role={dataToSend[key].role}
+                role={field.role}
                 name={key}
-                placeholder={dataToSend[key].placeholder}
+                placeholder={field.placeholder}
                 required={true}
+                options={
+                  field.role === "select" && field.options
+                    ? field.options(data)
+                    : []
+                }
                 value={data[key] || ""}
                 setValue={(value) => handleChange(key, value)}
               />

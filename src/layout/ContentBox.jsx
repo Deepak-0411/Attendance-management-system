@@ -47,13 +47,13 @@ const ContentBox = ({
       method: "GET",
       token: token,
       setLoading,
-    });
+    });    
 
     if (response.status === "success") {
       setDataList(response.data.entries);
     } else {
       console.error("Error:", response.message);
-      toast.error(`Error: Failed to fetch data.`);
+      toast.error(`Error:${response.message ||"Failed to fetch data."}`);
     }
   };
 
