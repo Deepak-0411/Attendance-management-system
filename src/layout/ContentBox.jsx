@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthContext";
 import Header from "../components/Header/Header";
 import Table from "../components/Table/Table";
 import SingleUpload from "../components/SingleUpload/SingleUpload";
@@ -38,14 +37,12 @@ const ContentBox = ({
   const [showUpload, setShowUpload] = useState(false);
   const [showExport, setShowExport] = useState(false);
 
-  const { token } = useAuth();
   const { isFiltersEmpty, loadFilterOptions } = useFilter();
 
   const fetchData = async () => {
     const response = await apiRequest({
       url: apiGet,
       method: "GET",
-      token: token,
       setLoading,
     });    
 
@@ -64,7 +61,7 @@ const ContentBox = ({
     //   fetchData();
     // }
     if (isFiltersEmpty()) {
-      loadFilterOptions(token);
+      loadFilterOptions();
     }
   }, []);
 

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
 import styles from "./UploadExcel.module.css";
 import { toast } from "react-toastify";
 import { apiRequest } from "../../utility/apiRequest";
@@ -7,7 +6,6 @@ import { apiRequest } from "../../utility/apiRequest";
 const UploadExcel = ({ closebulk, apiEndPoint }) => {
   const [file, setFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
-  const { token } = useAuth();
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -26,7 +24,6 @@ const UploadExcel = ({ closebulk, apiEndPoint }) => {
       method: "POST",
       body: formData,
       bodyStringify: false,
-      token: token,
       setLoading: setIsUploading,
     });
 

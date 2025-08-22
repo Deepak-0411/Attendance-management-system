@@ -1,6 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { apiRequest } from "../../utility/apiRequest";
 import { toast } from "react-toastify";
 import LogoSpinner from "../../components/Spinner/LogoSpinner";
@@ -8,14 +7,10 @@ import { useFilter } from "../../context/FilterContext";
 import { useData } from "../../context/DataContext";
 
 const ProtectedRoute = ({ element, user }) => {
-  const { token } = useAuth();
   const { loadFilterOptions, isFiltersEmpty } = useFilter();
   const { getFacultyInfo } = useData();
   const [isAuthorized, setIsAuthorized] = useState(null);
   const [defaultRoot, setDefaultRoot] = useState("/faculty/login");
-
-  // Memoized token to prevent unnecessary re-renders
-  const authToken = useMemo(() => token, [token]);
 
   useEffect(() => {
     if (window.innerWidth > 600) setDefaultRoot("/admin/login");
@@ -26,14 +21,13 @@ const ProtectedRoute = ({ element, user }) => {
       const response = await apiRequest({
         url: user === "faculty" ? "/user/dashboard" : "/admin/dash",
         method: "POST",
-        token: authToken,
       });
 
       if (response.status === "success") {
         if (user === "faculty") {
-          await getFacultyInfo(authToken);
+          await getFacultyInfo();
         } else if (user === "admin" && isFiltersEmpty()) {
-          await loadFilterOptions(authToken);
+          await loadFilterOptions();
         }
         setIsAuthorized(true);
       } else {
@@ -42,15 +36,8 @@ const ProtectedRoute = ({ element, user }) => {
         setIsAuthorized(false);
       }
     };
-
-    if (authToken) {
-      checkAuth();
-    }
-  }, [authToken]);
-
-  if (!authToken) {
-    return <Navigate to={`${defaultRoot}`} />;
-  }
+    checkAuth();
+  }, []);
 
   // Handle loading state
   if (isAuthorized === null) {

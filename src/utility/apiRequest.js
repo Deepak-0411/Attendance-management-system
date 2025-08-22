@@ -6,8 +6,8 @@ const apiRequest = async ({
   method = "GET",
   body = null,
   bodyStringify = true,
-  token = "",
   headers = {},
+  credentials = true,
   setLoading = () => {},
   setError = () => {},
 }) => {
@@ -19,19 +19,15 @@ const apiRequest = async ({
 
     const options = {
       method,
+      ...(credentials && { credentials: "include" }),
       headers: {
         ...(isFormData ? {} : { "Content-Type": "application/json" }),
         ...headers,
       },
+      ...(body && {
+        body: bodyStringify && !isFormData ? JSON.stringify(body) : body,
+      }),
     };
-
-    if (token) {
-      options.headers["Authorization"] = `Bearer ${token}`;
-    }
-
-    if (body) {
-      options.body = bodyStringify && !isFormData ? JSON.stringify(body) : body;
-    }
 
     const response = await fetch(baseURl + url, options);
     const rawText = await response.text();
@@ -67,7 +63,7 @@ const apiRequest = async ({
   }
 };
 
-export  {apiRequest , baseURl};
+export { apiRequest, baseURl };
 
 // apiRequest.js
 // import axios from "axios";
@@ -129,7 +125,7 @@ export  {apiRequest , baseURl};
 //       delete config.data;
 //     }
 //     console.log(config);
-    
+
 //     const response = await axiosInstance(config);
 
 //     return {

@@ -1,6 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import {  useNavigate } from "react-router-dom";
 import ErrorBox from "../../components/ErrorBox/ErrorBox";
 import useTableHeight from "../../utility/setHeight";
 import styles from "../../styles/modules/public/Students.module.css";
@@ -18,7 +17,6 @@ const Students = () => {
   const [error, setError] = useState(null);
 
   const { tableHeight } = useTableHeight();
-  const { token } = useAuth();
   const { studentlist, fetchStudents, facultyName } = useData();
   const navigate = useNavigate();
 
@@ -33,7 +31,7 @@ const Students = () => {
       return;
     }
 
-    fetchStudents(selectedShift, token, setLoading, setError);
+    fetchStudents(selectedShift, setLoading, setError);
   }, []);
 
   const filteredStudents = studentlist.filter((student) => {
@@ -70,7 +68,7 @@ const Students = () => {
       <ErrorBox
         error={error}
         onClick={() =>
-          fetchStudents(selectedShift, token, setLoading, setError)
+          fetchStudents(selectedShift, setLoading, setError)
         }
       />
     );

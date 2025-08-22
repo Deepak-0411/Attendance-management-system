@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../context/AuthContext";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import styles from "../../styles/modules/admin/Home.module.css";
 import FilterBar from "../../components/Filterbar/FilterBar";
@@ -24,7 +23,6 @@ const responseKeyToLabel = {
 };
 
 const Home = () => {
-  const { token } = useAuth();
   const { homeData, setHomeData } = useData();
   const { homeFilter, setHomeFilter, getSchoolList, getBranchList } =
     useFilter();
@@ -55,7 +53,6 @@ const Home = () => {
     const response = await apiRequest({
       url: `/admin/homestatus?fromdate=${homeFilter.fromDate}&todate=${homeFilter.toDate}`,
       method: "GET",
-      token: token,
       setLoading,
     });
 

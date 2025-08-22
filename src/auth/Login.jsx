@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/modules/auth/Login.module.css";
 import Input from "../components/Input/Input";
@@ -11,7 +10,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -22,13 +20,11 @@ const Login = () => {
       url: "/faculty/login",
       method: "POST",
       body: { username: userId.trim(), password: password.trim() },
-      token: false,
       setLoading,
     });
 
     if (response.status === "success" && response.data.message === "ok") {
       toast.success("LoggedIn Sucessfully!!! ");
-      login(response.data.token);
       navigate("/faculty/displayDuty");
     } else if (response.message === "Incorrect credentials") {
       toast.error("Invalid username or password");

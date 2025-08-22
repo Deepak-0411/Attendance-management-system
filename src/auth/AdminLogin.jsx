@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/modules/auth/AdminLogin.module.css";
 import loginsvg from "../assets/login illustration.svg";
@@ -12,7 +11,6 @@ const AdminLogin = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -23,13 +21,11 @@ const AdminLogin = () => {
       url: "/admin/login",
       method: "POST",
       body: { username: userId.trim(), password: password.trim() },
-      token: false,
       setLoading,
     });
 
     if (response.status === "success" && response.data.message === "ok") {
       toast.success("LoggedIn Sucessfully!!! ");
-      login(response.data.token);
       navigate("/admin/home");
     } else {
       console.error("Error:", response.message);

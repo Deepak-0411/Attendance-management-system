@@ -87,12 +87,11 @@ export const FilterProvider = ({ children }) => {
     },
   ];
 
-  const loadFilterOptions = async (authToken) => {
+  const loadFilterOptions = async () => {
     for (const api of adminAPIs) {
       const response = await apiRequest({
         url: api.url,
         method: "GET",
-        token: authToken,
       });
 
       if (response.status === "success") {

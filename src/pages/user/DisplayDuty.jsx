@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import styles from "../../styles/modules/public/DisplayDuty.module.css";
 import ErrorBox from "../../components/ErrorBox/ErrorBox";
 import useTableHeight from "../../utility/setHeight";
 import { useData } from "../../context/DataContext";
 import Spinner from "../../components/Spinner/Spinner";
+import { apiRequest } from "../../utility/apiRequest";
 
 const DisplayDuty = () => {
-  const { token, logout } = useAuth();
-  const { facultyName, facultyDuty, getFacultyInfo } = useData();
+  const { facultyName, facultyDuty, getFacultyInfo, dataReset } = useData();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -21,11 +20,25 @@ const DisplayDuty = () => {
     const needsData = facultyName.length === 0 && facultyDuty.length === 0;
 
     if (needsData) {
-      getFacultyInfo(token, setLoading, setError);
+      getFacultyInfo(setLoading, setError);
     } else {
       setLoading(false);
     }
   }, []);
+  const handleLogout = async () => {
+    const response = await apiRequest({
+      url: "logoutApi",
+      method: "POST",
+      setLoading,
+    });
+
+    if (response.status === "success") {
+      dataReset();
+      navigate("/faculty/login");
+    } else {
+      toast.error("Failed to logout");
+    }
+  };
 
   const handleClick = (shift, buildingName, roomNo, secondTeacher) => {
     sessionStorage.setItem("shift", shift);
@@ -40,7 +53,7 @@ const DisplayDuty = () => {
     return (
       <ErrorBox
         error={error}
-        onClick={() => getFacultyInfo(token, setLoading, setError)}
+        onClick={() => getFacultyInfo(setLoading, setError)}
       />
     );
 
@@ -96,7 +109,7 @@ const DisplayDuty = () => {
 
       {/* Logout Btn */}
       <div className={styles.logoutBtnBox}>
-        <button onClick={logout} className={styles.logoutBtn}>
+        <button onClick={handleLogout} className={styles.logoutBtn}>
           LOGOUT
           <span id={styles.logoutSpan}>
             <svg

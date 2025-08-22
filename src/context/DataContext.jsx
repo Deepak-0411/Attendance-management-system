@@ -43,14 +43,12 @@ export const DataProvider = ({ children }) => {
   };
 
   const getFacultyInfo = async (
-    authtoken,
     setLoading = () => {},
     setError = () => {}
   ) => {
     const response = await apiRequest({
       url: "/faculty/preview",
       method: "GET",
-      token: authtoken,
       setLoading,
       setError,
     });
@@ -64,11 +62,10 @@ export const DataProvider = ({ children }) => {
     }
   };
 
-  const fetchStudents = async (selectedShift, token, setLoading, setError) => {
+  const fetchStudents = async (selectedShift, setLoading, setError) => {
     const response = await apiRequest({
       url: `/faculty/studentList?shift=${selectedShift}`,
       method: "GET",
-      token,
       setLoading,
       setError,
     });

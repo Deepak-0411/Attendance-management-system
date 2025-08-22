@@ -1,12 +1,28 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
 import styles from "./Navbar.module.css";
+import { apiRequest } from "../../utility/apiRequest";
+import { toast } from "react-toastify";
+import { useData } from "../../context/DataContext";
 
 const Navbar = () => {
-  const { logout } = useAuth();
+  const { dataReset } = useData();
   const navigate = useNavigate();
   const handleDevClick = () => {
     navigate("/devTeam");
+  };
+  const handleLogout = async () => {
+    const response = await apiRequest({
+      url: "logoutApi",
+      method: "POST",
+      setLoading,
+    });
+
+    if (response.status === "success") {
+      dataReset();
+      navigate("/admin/login");
+    } else {
+      toast.error("Failed to logout");
+    }
   };
 
   const navItems = [
@@ -330,7 +346,7 @@ const Navbar = () => {
       </div>
 
       <div className={styles.logoutBtnBox}>
-        <button onClick={logout} className={styles.logoutBtn}>
+        <button onClick={handleLogout} className={styles.logoutBtn}>
           LOGOUT
           <span className={styles.logoutSpan}>
             <svg

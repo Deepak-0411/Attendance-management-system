@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
 import styles from "./SingleUpload.module.css";
 import UploadExcel from "../UploadExcel/UploadExcel";
 import { toast } from "react-toastify";
@@ -20,7 +19,6 @@ const SingleUpload = ({
     )
   );
 
-  const { token } = useAuth();
 
   const handleChange = (name, value) => {
     setData((prevData) => ({ ...prevData, [name]: value }));
@@ -33,7 +31,6 @@ const SingleUpload = ({
       url: apiEndPointSingle,
       method: "POST",
       body: data,
-      token: token,
       setLoading: setIsUploading,
     });
 

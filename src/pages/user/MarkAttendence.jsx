@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
 import { useData } from "../../context/DataContext";
 import styles from "../../styles/modules/public/MarkAttendence.module.css";
 import ScanSheet from "./ScanSheet";
@@ -11,7 +10,6 @@ import { apiRequest } from "../../utility/apiRequest";
 import Overlay from "../../components/Overlay/Overlay";
 
 const MarkAttendence = () => {
-  const { token } = useAuth();
   const {
     studentlist: fullStudentList,
     fetchStudents,
@@ -35,7 +33,7 @@ const MarkAttendence = () => {
 
   useEffect(() => {
     if (!fullStudentList?.length) {
-      fetchStudents(selectedShift, token, setLoading, setError);
+      fetchStudents(selectedShift, setLoading, setError);
     } else {
       setLoading(false);
     }
@@ -76,7 +74,6 @@ const MarkAttendence = () => {
     const response = await apiRequest({
       url: `/faculty/markStatus`,
       method: "PATCH",
-      token,
       body: {
         rollNo: student.rollNo,
         bookletNumber: sheetNo,
@@ -144,7 +141,7 @@ const MarkAttendence = () => {
       <ErrorBox
         error={error}
         onClick={() =>
-          fetchStudents(selectedShift, token, setLoading, setError)
+          fetchStudents(selectedShift, setLoading, setError)
         }
       />
     );

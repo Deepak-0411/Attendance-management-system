@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
 import FilterBar from "../Filterbar/FilterBar";
 import styles from "./DownloadFile.module.css";
 import { baseURl } from "../../utility/apiRequest";
@@ -9,7 +8,6 @@ const Downloadfile = ({
   apiEndPoint,
   dateFilter = true,
 }) => {
-  const { token } = useAuth();
   const [loading, setLoading] = useState(false);
 
   const handleDownload = async () => {
@@ -17,9 +15,7 @@ const Downloadfile = ({
     try {
       const response = await fetch(baseURl + apiEndPoint, {
         method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        credentials: "include",
       });
 
       if (!response.ok) {
