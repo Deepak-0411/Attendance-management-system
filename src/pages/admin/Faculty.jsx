@@ -64,8 +64,8 @@ const Faculty = () => {
         options: () => getSchoolList(),
       },
     },
-    tableHeading: ["Faculty Name", "Faculty-ID", "School Name"],
-    tableColumn: ["fName", "teacherId", "school"],
+    tableHeading: ["Faculty Name", "Faculty-ID"],
+    tableColumn: ["name", "facultyNo"],
     dataList: facultyData,
     setDataList: setFacultyData,
   };

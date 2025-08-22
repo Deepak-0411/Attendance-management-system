@@ -4,13 +4,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(
-      197deg,
-      rgba(0, 0, 0, 0) 21.3%,
-      rgba(0, 0, 0, 0) 75.83%,
-      rgba(0, 0, 0, 0.2) 99.5%
-    ),
-    linear-gradient(171deg, #1f1c2c 7.26%, #675d92 94.36%);
+  background: #212121;
 }
 
 /* Card */
@@ -18,12 +12,7 @@
   width: 21rem;
   padding: 2rem;
   gap: 1.5rem;
-  border: 0.1rem solid #fefefe;
-  background: linear-gradient(
-    147deg,
-    rgba(209, 204, 233, 0.5) 11.15%,
-    rgba(38, 34, 56, 0.5) 95.43%
-  );
+  background: #494949;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,9 +21,9 @@
 }
 
 .title {
-  color: #fff;
+  color: #f0f7ff;
   font-family: Righteous;
-  /* font-size: 1.25rem; */
+  font-size: 1.8rem;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -59,9 +48,8 @@
   cursor: pointer;
   transition: 0.3s;
   border-radius: 2rem;
-  border: 0.1rem solid #000;
-  background: #1da1f2;
-  font-size: 1.5rem;
+  background: #000000;
+  font-size: 1.6rem;
   line-height: normal;
   letter-spacing: 0.1875rem;
   color: #ffe7e7;

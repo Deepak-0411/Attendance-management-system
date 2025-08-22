@@ -33,12 +33,10 @@
   padding: 0.8rem;
   border: 0.1rem solid #ddd;
   border-radius: 0.2rem;
-  transition: 0.3s ease-in-out;
 }
 
 .input3:focus {
   border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 /* Input 4 – Larger text and padding */

@@ -42,7 +42,7 @@ const apiRequest = async ({
     if (!response.ok) {
       return {
         status: "error",
-        message: data?.message || `Error ${response.status}`,
+        message: data?.message || data?.error || `${response.status}`,
         data,
       };
     }
@@ -55,7 +55,7 @@ const apiRequest = async ({
   } catch (error) {
     return {
       status: "error",
-      message: error.message || "Unknown error occurred",
+      message: error?.message || error?.error || `${response.status}`,
       data: null,
     };
   } finally {

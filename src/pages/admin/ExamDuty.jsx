@@ -45,12 +45,10 @@ const ExamDuty = () => {
     getSchoolList,
   });
   const exportInputs = generateFilterInputs({
-    fields: ["school", "building", "roomNo", "shift"],
+    fields: ["school"],
     filterState: exportFilter,
     setFilterState: setExportFilters,
     getSchoolList,
-    getBuildingName,
-    getRoomNo,
   });
 
   const dateFilterContext = {
