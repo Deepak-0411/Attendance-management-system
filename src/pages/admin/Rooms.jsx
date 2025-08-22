@@ -41,10 +41,10 @@ const Rooms = () => {
 
   const config = {
     title: "Rooms Available",
-    apiGet: `/admin/viewRooms?school=${roomsFilter.school}`,
-    apiEndPointSingle: "/admin/addRoom",
-    apiEndPointBulk: "/admin/roomImport",
-    apiExport: `/admin/rooms/export?school=${exportFilter.school}`,
+    apiGet: `/api/room?schoolName=${roomsFilter.school}`,
+    apiEndPointSingle: "/api/room",
+    apiEndPointBulk: "/api/room/import",
+    apiExport: `/api/room/export?schoolName=${exportFilter.school}`,
     filterBox: true,
     dateFilter: false,
     exportInputs: exportInputs,
@@ -54,7 +54,7 @@ const Rooms = () => {
     nameKey: "buildingName",
     addText: "+ Add Room",
     formFields: {
-      school: {
+      schoolName: {
         value: "",
         placeholder: "School Name",
         role: "select",
@@ -64,14 +64,14 @@ const Rooms = () => {
         value: "",
         placeholder: "Building Name",
         role: "select",
-        options: (formData) => getBuildingName(formData.school),
+        options: (formData) => getBuildingName(formData.schoolName),
       },
       roomNo: {
         value: "",
         placeholder: "Room No.",
         role: "select",
         options: (formData) =>
-          getRoomNo(formData.school, formData.buildingName),
+          getRoomNo(formData.schoolName, formData.buildingName),
       },
       capacity: { value: "", placeholder: "Capacity", role: "text" },
     },

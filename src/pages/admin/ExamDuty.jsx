@@ -38,13 +38,11 @@ const ExamDuty = () => {
   }, [examDutyFilter]);
 
   const filterInputs = generateFilterInputs({
-    fields: ["school", "building", "roomNo", "shift"],
+    fields: ["school"],
     filterState: examDutyFilter,
     setFilterState: setExamDutyFilter,
-    requiredFields: ["school", "building", "roomNo", "shift"],
+    requiredFields: ["school",],
     getSchoolList,
-    getBuildingName,
-    getRoomNo,
   });
   const exportInputs = generateFilterInputs({
     fields: ["school", "building", "roomNo", "shift"],
@@ -72,10 +70,10 @@ const ExamDuty = () => {
 
   const config = {
     title: "Exam Duty",
-    apiGet: `/admin/duty?fromDate=${fromDate}&toDate=${toDate}&school=${school}&buildingName=${building}&roomNo=${roomNo}&shift=${shift}`,
-    apiExport: `/admin/duty/export?fromDate=${dataFromDate}&toDate=${dataToDate}&school=${exportFilter.school}&buildingName=${exportFilter.building}&roomNo=${exportFilter.roomNo}&shift=${exportFilter.shift}`,
-    apiEndPointSingle: "/admin/duty",
-    apiEndPointBulk: "/admin/duty/import",
+    apiGet: `/api/duty?fromDate=${fromDate}&toDate=${toDate}&schoolName=${school}&buildingName=${building}&roomNo=${roomNo}&shift=${shift}`,
+    apiExport: `/api/duty/export?fromDate=${dataFromDate}&toDate=${dataToDate}&schoolName=${exportFilter.school}`,
+    apiEndPointSingle: "/api/duty",
+    apiEndPointBulk: "/api/duty/import",
     filterBox: true,
     dateFilter: true,
     dateFilterContext,
@@ -87,7 +85,7 @@ const ExamDuty = () => {
     addText: "+ Assign Duty",
     formFields: {
       teacherId: { value: "", placeholder: "Faculty-ID", role: "text" },
-      school: {
+      schoolName: {
         value: "",
         placeholder: "School Name",
         role: "select",
@@ -97,14 +95,14 @@ const ExamDuty = () => {
         value: "",
         placeholder: "Building Name",
         role: "select",
-        options: (formData) => getBuildingName(formData.school),
+        options: (formData) => getBuildingName(formData.schoolName),
       },
       roomNo: {
         value: "",
         placeholder: "Room No.",
         role: "select",
         options: (formData) =>
-          getRoomNo(formData.school, formData.buildingName),
+          getRoomNo(formData.schoolName, formData.buildingName),
       },
       shift: { value: "", placeholder: "Shift", role: "text" },
       date: { value: "", placeholder: "Date", role: "date" },

@@ -27,7 +27,7 @@ const DisplayDuty = () => {
   }, []);
   const handleLogout = async () => {
     const response = await apiRequest({
-      url: "logoutApi",
+      url: "/api/root/logout",
       method: "POST",
       setLoading,
     });

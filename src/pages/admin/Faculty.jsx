@@ -40,10 +40,10 @@ const Faculty = () => {
 
   const config = {
     title: "Faculty Available",
-    apiGet: `/admin/faculty?school=${facultyFilter.school}`,
-    apiExport: `/admin/faculty/export?school=${exportFilter.school}`,
-    apiEndPointSingle: "/admin/faculty",
-    apiEndPointBulk: "/admin/faculty/import",
+    apiGet: `/api/task?schoolName=${facultyFilter.school}`,
+    apiExport: `/admin/faculty/export?schoolName=${exportFilter.school}`,
+    apiEndPointSingle: "/api/task/import",
+    apiEndPointBulk: "/api/task/export",
     filterBox: true,
     dateFilter: false,
     exportInputs: exportInputs,
@@ -57,7 +57,7 @@ const Faculty = () => {
       teacherId: { value: "", placeholder: "Teacher ID", role: "text" },
       username: { value: "", placeholder: "Username", role: "text" },
       password: { value: "", placeholder: "Password", role: "password" },
-      school: {
+      schoolName: {
         value: "",
         placeholder: "School Name",
         role: "select",

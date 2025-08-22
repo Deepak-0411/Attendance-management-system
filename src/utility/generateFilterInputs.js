@@ -4,6 +4,7 @@ export const generateFilterInputs = ({
   setFilterState,
   getSchoolList,
   getBuildingName,
+  getProgrammeList,
   getBranchList,
   getRoomNo,
   requiredFields = [], // new addition
@@ -14,9 +15,14 @@ export const generateFilterInputs = ({
       case "school":
         options = getSchoolList();
         break;
-      case "branch":
-        options = getBranchList?.(filterState.school) || [];
+      case "programme":
+        options = getProgrammeList?.(filterState.school) || [];
         break;
+      case "branch":
+        options =
+          getBranchList?.(filterState.school, filterState.programme) || [];
+        break;
+
       case "building":
         options = getBuildingName?.(filterState.school) || [];
         break;

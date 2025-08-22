@@ -24,8 +24,11 @@ const responseKeyToLabel = {
 
 const Home = () => {
   const { homeData, setHomeData } = useData();
-  const { homeFilter, setHomeFilter, getSchoolList, getBranchList } =
-    useFilter();
+  const {
+    homeFilter,
+    setHomeFilter,
+    getSchoolList,
+  } = useFilter();
 
   const dateFilterContext = {
     fromDate: homeFilter.fromDate,
@@ -51,7 +54,7 @@ const Home = () => {
 
   const fetchData = async () => {
     const response = await apiRequest({
-      url: `/admin/homestatus?fromdate=${homeFilter.fromDate}&todate=${homeFilter.toDate}`,
+      url: `/api/home/attendancestatus?fromdate=${homeFilter.fromDate}&todate=${homeFilter.toDate}schoolName=${homeFilter.school}`,
       method: "GET",
       setLoading,
     });
@@ -79,12 +82,11 @@ const Home = () => {
   }, []);
 
   const filterInputs = generateFilterInputs({
-    fields: ["school", "branch", "shift"],
+    fields: ["school"],
     filterState: homeFilter,
     setFilterState: setHomeFilter,
     getSchoolList,
-    getBranchList,
-  });
+      });
 
   return (
     <div className={styles.container}>

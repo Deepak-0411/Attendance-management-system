@@ -73,10 +73,10 @@ const Attendance = () => {
 
   const config = {
     title: "Attendance",
-    apiGet: `/admin/formEntries?fromDate=${fromDate}&toDate=${toDate}&school=${school}&buildingName=${building}&roomNo=${roomNo}&shift=${shift}`,
-    apiExport: `/admin/attendance/export?fromDate=${dataFromDate}&toDate=${dataToDate}&school=${exportFilter.school}&buildingName=${exportFilter.building}&roomNo=${exportFilter.roomNo}&shift=${exportFilter.shift}`,
-    apiEndPointSingle: "/admin/addStudent",
-    apiEndPointBulk: "/admin/uploadExcel",
+    apiGet: `/api/form/view?fromDate=${fromDate}&toDate=${toDate}&schoolName=${school}&buildingName=${building}&roomNo=${roomNo}&shift=${shift}`,
+    apiExport: `/api/form/export?fromDate=${dataFromDate}&toDate=${dataToDate}&schoolName=${exportFilter.school}&buildingName=${exportFilter.building}&roomNo=${exportFilter.roomNo}&shift=${exportFilter.shift}`,
+    apiEndPointSingle: "/api/form/allocate",
+    apiEndPointBulk: "/api/form/allocate",
     filterBox: true,
     dateFilter: true,
     dateFilterContext,
@@ -87,7 +87,7 @@ const Attendance = () => {
     nameKey: "courseCode",
     addText: "+ Add Student",
     formFields: {
-      school: {
+      schoolName: {
         value: "",
         placeholder: "School Name",
         role: "select",
@@ -97,14 +97,14 @@ const Attendance = () => {
         value: "",
         placeholder: "Building Name",
         role: "select",
-        options: (formData) => getBuildingName(formData.school),
+        options: (formData) => getBuildingName(formData.schoolName),
       },
       roomNo: {
         value: "",
         placeholder: "Room No.",
         role: "select",
         options: (formData) =>
-          getRoomNo(formData.school, formData.buildingName),
+          getRoomNo(formData.schoolName, formData.buildingName),
       },
       shift: {
         value: "",

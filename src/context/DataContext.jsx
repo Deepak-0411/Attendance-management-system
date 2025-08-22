@@ -47,7 +47,7 @@ export const DataProvider = ({ children }) => {
     setError = () => {}
   ) => {
     const response = await apiRequest({
-      url: "/faculty/preview",
+      url: "/api/invigilator/preview",
       method: "GET",
       setLoading,
       setError,
@@ -55,7 +55,7 @@ export const DataProvider = ({ children }) => {
 
     if (response.status === "success") {      
       setFacultyName(response.data.faculty || []);
-      setFacultyDuty(response.data.viewDuty || []);
+      setFacultyDuty(response.data.entries || []);
     } else {
       console.error("Error:", response.message);
       toast.error(`Failed to load faculty info.`);
@@ -64,7 +64,7 @@ export const DataProvider = ({ children }) => {
 
   const fetchStudents = async (selectedShift, setLoading, setError) => {
     const response = await apiRequest({
-      url: `/faculty/studentList?shift=${selectedShift}`,
+      url: `/api/invigilator/studentList?shift=${selectedShift}`,
       method: "GET",
       setLoading,
       setError,

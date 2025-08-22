@@ -11,6 +11,7 @@ const StudentDetails = () => {
     studentDetailsFilter,
     setStudentDetailsFilter,
     getSchoolList,
+    getProgrammeList,
     getBranchList,
   } = useFilter();
 
@@ -18,9 +19,10 @@ const StudentDetails = () => {
     school: "",
     branch: "",
     year: "",
+    programme: "",
   });
 
-  const { school, branch, year } = studentDetailsFilter;
+  const { school, branch, year, programme } = studentDetailsFilter;
 
   useEffect(() => {
     setExportFilters((prev) => ({
@@ -28,32 +30,37 @@ const StudentDetails = () => {
       school: school || "",
       branch: branch || "",
       year: year || "",
+      programme: programme || "",
     }));
   }, [studentDetailsFilter]);
 
   const filterInputs = generateFilterInputs({
-    fields: ["school", "branch", "year"],
+    fields: ["school", "programme", "branch", "year"],
     filterState: studentDetailsFilter,
     setFilterState: setStudentDetailsFilter,
     requiredFields: ["school", "branch", "year"],
     getSchoolList,
     getBranchList,
+    getProgrammeList,
   });
 
   const exportInputs = generateFilterInputs({
-    fields: ["school", "branch", "year"],
+    fields: ["school", "programme", "branch", "year"],
     filterState: exportFilter,
     setFilterState: setExportFilters,
     getSchoolList,
     getBranchList,
+    getProgrammeList,
   });
+
+  const sem = { 1: [1, 2], 2: [3, 4], 3: [5, 6], 4: [7, 8], 5: [9, 10] };
 
   const config = {
     title: "Students",
-    apiGet: `/admin/students?year=${year}&branch=${branch}&school=${school}`,
-    apiEndPointSingle: "/admin/students",
-    apiEndPointBulk: "/admin/importStudents",
-    apiExport: `/admin/students/export?year=${exportFilter.year}&branch=${exportFilter.branch}&school=${exportFilter.school}`,
+    apiGet: `/api/student?year=${year}&branch=${branch}&schoolName=${school}&programme=${programme}`,
+    apiEndPointSingle: "/api/student",
+    apiEndPointBulk: "/api/student/import",
+    apiExport: `/api/student/export?year=${exportFilter.year}&branch=${exportFilter.branch}&schoolName=${exportFilter.school}&programme=${exportFilter.programme}`,
     filterBox: true,
     dateFilter: false,
     exportInputs: exportInputs,
@@ -65,11 +72,33 @@ const StudentDetails = () => {
     formFields: {
       rollNo: { value: "", placeholder: "Roll No", role: "text" },
       name: { value: "", placeholder: "Student Name", role: "text" },
-      branch: { value: "", placeholder: "Branch", role: "text" },
-      year: { value: "", placeholder: "Year", role: "text" },
-      school: { value: "", placeholder: "School name", role: "text" },
-      programmeName: { value: "", placeholder: "Programme", role: "text" },
-      semester: { value: "", placeholder: "Semester", role: "text" },
+      year: { value: "", placeholder: "Year", role: "select",
+        options: () => Object.keys(sem) },
+      schoolName: {
+        value: "",
+        placeholder: "School Name",
+        role: "select",
+        options: () => getSchoolList(),
+      },
+      programme: {
+        value: "",
+        placeholder: "Programme",
+        role: "select",
+        options: (formData) => getProgrammeList(formData.schoolName),
+      },
+      branch: {
+        value: "",
+        placeholder: "Branch",
+        role: "select",
+        options: (formData) =>
+          getBranchList(formData.schoolName, formData.programme),
+      },
+      semester: {
+        value: "",
+        placeholder: "Semester",
+        role: "select",
+        options: (formData) => sem[formData.year],
+      },
     },
     tableHeading: ["Name", "Roll no."],
     tableColumn: ["name", "rollNo"],

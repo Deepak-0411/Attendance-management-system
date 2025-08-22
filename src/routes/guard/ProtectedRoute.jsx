@@ -19,8 +19,8 @@ const ProtectedRoute = ({ element, user }) => {
   useEffect(() => {
     const checkAuth = async () => {
       const response = await apiRequest({
-        url: user === "faculty" ? "/user/dashboard" : "/admin/dash",
-        method: "POST",
+        url: user === "faculty" ? "/api/soict/faculty-auth" : "/api/soict/admin-auth",
+        method: "GET",
       });
 
       if (response.status === "success") {

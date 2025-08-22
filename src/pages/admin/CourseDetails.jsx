@@ -11,11 +11,13 @@ const CourseDetails = () => {
     courseDetailsFilter,
     setCourseDetailsFilter,
     getSchoolList,
+    getProgrammeList,
     getBranchList,
   } = useFilter();
 
   const [exportFilter, setExportFilters] = useState({
     school: "",
+    programme: "",
     branch: "",
   });
 
@@ -26,15 +28,17 @@ const CourseDetails = () => {
       ...prev,
       school: school || "",
       branch: branch || "",
+      programme: programme || "",
     }));
   }, [courseDetailsFilter]);
 
   const filterInputs = generateFilterInputs({
-    fields: ["school", "branch"],
+    fields: ["school", "programme", "branch"],
     filterState: courseDetailsFilter,
     setFilterState: setCourseDetailsFilter,
-    requiredFields: ["school", "branch"],
+    requiredFields: ["school", "programme", "branch"],
     getSchoolList,
+    getProgrammeList,
     getBranchList,
   });
 
@@ -48,10 +52,12 @@ const CourseDetails = () => {
 
   const config = {
     title: "Courses",
-    apiGet: `/admin/courses?school=${school}&branch=${branch}`,
-    apiEndPointSingle: "/admin/courses",
-    apiEndPointBulk: "/admin/importCourses",
-    apiExport: `/admin/exportcourses?school=${exportFilter.school}&branch=${exportFilter.branch}`,
+    apiGet: `/api/course?schoolName=${school}&programme=${""}&branch=${branch}`,
+    apiEndPointSingle: "/api/course",
+    apiEndPointBulk: "/api/course/import",
+    apiExport: `/api/course/export?schoolName=${
+      exportFilter.school
+    }&programme=${""}&branch=${exportFilter.branch}`,
     filterBox: true,
     dateFilter: false,
     exportInputs: exportInputs,
@@ -61,7 +67,8 @@ const CourseDetails = () => {
     nameKey: "courseName",
     addText: "+ Add Course",
     formFields: {
-      school: { value: "", placeholder: "School Name", role: "text" },
+      schoolName: { value: "", placeholder: "School Name", role: "text" },
+      programme: { value: "", placeholder: "Programme", role: "text" },
       branch: { value: "", placeholder: "Branch", role: "text" },
       courseName: { value: "", placeholder: "Course Name", role: "text" },
       courseCode: { value: "", placeholder: "Course Code", role: "text" },

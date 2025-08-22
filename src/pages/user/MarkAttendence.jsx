@@ -72,7 +72,7 @@ const MarkAttendence = () => {
     }
 
     const response = await apiRequest({
-      url: `/faculty/markStatus`,
+      url: `/api/invigilator/markStatus`,
       method: "PATCH",
       body: {
         rollNo: student.rollNo,

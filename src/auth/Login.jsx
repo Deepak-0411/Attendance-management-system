@@ -17,7 +17,7 @@ const Login = () => {
     if (!(userId && password)) return;
 
     const response = await apiRequest({
-      url: "/faculty/login",
+      url: "/api/faculty/login",
       method: "POST",
       body: { username: userId.trim(), password: password.trim() },
       setLoading,

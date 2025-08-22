@@ -1,4 +1,4 @@
-const baseURl = "https://gbu-server.vercel.app/api";
+const baseURl = "https://ams-gbu.up.railway.app";
 // const baseURl = "/api";
 
 const apiRequest = async ({

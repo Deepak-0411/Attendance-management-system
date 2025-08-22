@@ -18,7 +18,7 @@ const AdminLogin = () => {
     if (!(userId && password)) return;
 
     const response = await apiRequest({
-      url: "/admin/login",
+      url: "/api/root/login",
       method: "POST",
       body: { username: userId.trim(), password: password.trim() },
       setLoading,

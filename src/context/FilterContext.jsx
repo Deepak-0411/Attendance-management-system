@@ -39,17 +39,18 @@ export const FilterProvider = ({ children }) => {
     school: "",
     branch: "",
     year: "",
+    programme: "",
   });
   const [courseDetailsFilter, setCourseDetailsFilter] = useState({
     school: "",
+    programme: "",
     branch: "",
   });
 
   // Metadata
-  const [schoolFilterData, setSchoolFilterData] = useState({
-  });
+  const [schoolFilterData, setSchoolFilterData] = useState({});
 
-  const [roomFilterData, setRoomFilterData] = useState({  });
+  const [roomFilterData, setRoomFilterData] = useState({});
 
   // Utilities (Fixed logic here)
   const getSchoolList = () => {
@@ -57,9 +58,18 @@ export const FilterProvider = ({ children }) => {
     return Object.keys(schoolFilterData);
   };
 
-  const getBranchList = (schoolName) => {
+  const getProgrammeList = (schoolName) => {
+
+    return schoolFilterData[schoolName]
+      ? Object.keys(schoolFilterData[schoolName])
+      : [];
+  };
+
+  const getBranchList = (schoolName, programme) => {
     // console.log("GetBranch is called");
-    return schoolFilterData[schoolName] ? schoolFilterData[schoolName] : [];
+    return schoolFilterData[schoolName]?.[programme]
+      ? schoolFilterData[schoolName]?.[programme]
+      : [];
   };
 
   const getBuildingName = (schoolName) => {
@@ -78,12 +88,12 @@ export const FilterProvider = ({ children }) => {
     {
       setDataList: setSchoolFilterData,
       key: "Schools data",
-      url: "/admin/filterdata",
+      url: "/api/data/school-filter",
     },
     {
       setDataList: setRoomFilterData,
       key: "Rooms data",
-      url: "/admin/rooms",
+      url: "/api/data/room-filter",
     },
   ];
 
@@ -137,6 +147,7 @@ export const FilterProvider = ({ children }) => {
 
         // Utility functions
         getSchoolList,
+        getProgrammeList,
         getBranchList,
         getBuildingName,
         getRoomNo,
