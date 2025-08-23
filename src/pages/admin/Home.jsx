@@ -46,6 +46,8 @@ const Home = () => {
   const [total, setTotal] = useState(0);
 
   const fetchData = async () => {
+    setHomeData([]);
+    setTotal(0);
     const response = await apiRequest({
       url: `/api/home/attendancestatus?from=${homeFilter.fromDate}&to=${homeFilter.toDate}&schoolName=${homeFilter.school}`,
       method: "GET",
