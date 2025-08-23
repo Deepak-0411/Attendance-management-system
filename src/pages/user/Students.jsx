@@ -17,7 +17,7 @@ const Students = () => {
   const [error, setError] = useState(null);
 
   const { tableHeight } = useTableHeight();
-  const { studentlist, fetchStudents, facultyName } = useData();
+  const { studentlist, fetchStudents } = useData();
   const navigate = useNavigate();
 
   const selectedShift = sessionStorage.getItem("shift");
@@ -80,7 +80,6 @@ const Students = () => {
         <p className={styles.roomInfoP}>
           Room no: {selectedBuilding + " " + selectedRoomNo || "N/A"}
         </p>
-        <p className={styles.roomInfoP}>Duty: {facultyName.name}</p>
         <p className={styles.roomInfoP}>Shift: {selectedShift || "N/A"}</p>
       </div>
 
