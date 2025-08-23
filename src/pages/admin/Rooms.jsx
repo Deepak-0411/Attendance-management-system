@@ -48,6 +48,7 @@ const Rooms = () => {
     filterBox: true,
     dateFilter: false,
     exportInputs: exportInputs,
+    exportFileName : "Rooms List",
     filterInputs: filterInputs,
     searchBoxPlaceholder: "Search by name or ID",
     idKey: "roomNo",

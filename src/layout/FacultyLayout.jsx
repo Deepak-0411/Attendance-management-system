@@ -12,17 +12,16 @@ const FacultyLayout = () => {
       <div className={styles.devTeamDiv}>
         <p className={styles.devTeam}>
           Designed & Developed By
-          <span className={styles.devName} onClick={handleDevClick}>
-            {" Ansh"}
-          </span>
-          ,
-          <span className={styles.devName} onClick={handleDevClick}>
-            {" Deepak "}
-          </span>
+          <button className={styles.devName} onClick={handleDevClick}>
+            &nbsp;Ansh,&nbsp;
+          </button>
+          <button className={styles.devName} onClick={handleDevClick}>
+            Deepak&nbsp;
+          </button>
           &
-          <span className={styles.devName} onClick={handleDevClick}>
-            {" Harsh"}
-          </span>
+          <button className={styles.devName} onClick={handleDevClick}>
+            Harsh
+          </button>
         </p>
       </div>
     </div>

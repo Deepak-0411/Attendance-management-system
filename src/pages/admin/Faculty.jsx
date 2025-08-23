@@ -50,12 +50,12 @@ const Faculty = () => {
     exportFileName: "Faculty List",
     filterInputs: filterInputs,
     searchBoxPlaceholder: "Search by name or ID",
-    idKey: "teacherId",
-    nameKey: "fName",
+    idKey: "facultyNo",
+    nameKey: "name",
     addText: "+ Add Faculty",
     formFields: {
-      fName: { value: "", placeholder: "Name", role: "text" },
-      teacherId: { value: "", placeholder: "Teacher ID", role: "text" },
+      name: { value: "", placeholder: "Name", role: "text" },
+      facultyNo: { value: "", placeholder: "Teacher ID", role: "text" },
       username: { value: "", placeholder: "Username", role: "text" },
       password: { value: "", placeholder: "Password", role: "password" },
       schoolName: {

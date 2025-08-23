@@ -80,7 +80,7 @@ const Students = () => {
         <p className={styles.roomInfoP}>
           Room no: {selectedBuilding + " " + selectedRoomNo || "N/A"}
         </p>
-        <p className={styles.roomInfoP}>Duty: {facultyName.fName}</p>
+        <p className={styles.roomInfoP}>Duty: {facultyName.name}</p>
         <p className={styles.roomInfoP}>Shift: {selectedShift || "N/A"}</p>
       </div>
 

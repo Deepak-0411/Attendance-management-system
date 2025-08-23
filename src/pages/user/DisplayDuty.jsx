@@ -62,7 +62,7 @@ const DisplayDuty = () => {
       <div className={styles.userInfo} id="header">
         <div className={styles.userName}>
           <p className={styles.userNameP}>
-            Hey {facultyName?.fName?.split?.(" ")[0] || "User"}
+            Hey {facultyName?.name?.split?.(" ")[0] || "User"}
           </p>
         </div>
 

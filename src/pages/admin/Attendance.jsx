@@ -79,6 +79,7 @@ const Attendance = () => {
     apiEndPointBulk: "/api/form/allocate",
     filterBox: true,
     dateFilter: true,
+    exportFileName: "form-1",
     dateFilterContext,
     exportInputs: exportInputs,
     filterInputs: filterInputs,
