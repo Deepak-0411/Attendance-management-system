@@ -54,7 +54,7 @@ const Home = () => {
 
   const fetchData = async () => {
     const response = await apiRequest({
-      url: `/api/home/attendancestatus?fromdate=${homeFilter.fromDate}&todate=${homeFilter.toDate}schoolName=${homeFilter.school}`,
+      url: `/api/home/attendancestatus?from=${homeFilter.fromDate}&to=${homeFilter.toDate}&schoolName=${homeFilter.school}`,
       method: "GET",
       setLoading,
     });
