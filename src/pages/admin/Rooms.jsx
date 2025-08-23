@@ -71,7 +71,7 @@ const Rooms = () => {
         placeholder: "Room No.",
         role: "text",
       },
-      capacity: { value: "", placeholder: "Capacity", role: "text" },
+      capacity: { value: "", placeholder: "Capacity", role: "number" },
     },
     tableHeading: ["Building Name", "Room No", "Capacity"],
     tableColumn: ["buildingName", "roomNo", "capacity"],

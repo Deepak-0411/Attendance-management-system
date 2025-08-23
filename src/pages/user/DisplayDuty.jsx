@@ -6,10 +6,12 @@ import useTableHeight from "../../utility/setHeight";
 import { useData } from "../../context/DataContext";
 import Spinner from "../../components/Spinner/Spinner";
 import { apiRequest } from "../../utility/apiRequest";
+import { toast } from "react-toastify";
 
 const DisplayDuty = () => {
   const { facultyName, facultyDuty, getFacultyInfo, dataReset } = useData();
   const [loading, setLoading] = useState(true);
+  const [logoutLoading, setLogoutLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const { tableHeight } = useTableHeight();
@@ -27,9 +29,9 @@ const DisplayDuty = () => {
   }, []);
   const handleLogout = async () => {
     const response = await apiRequest({
-      url: "/api/root/logout",
+      url: "/api/faculty/logout",
       method: "POST",
-      setLoading,
+      setLoading: setLogoutLoading,
     });
 
     if (response.status === "success") {
@@ -109,22 +111,32 @@ const DisplayDuty = () => {
 
       {/* Logout Btn */}
       <div className={styles.logoutBtnBox}>
-        <button onClick={handleLogout} className={styles.logoutBtn}>
-          LOGOUT
-          <span id={styles.logoutSpan}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="25"
-              height="24"
-              viewBox="0 0 25 24"
-              fill="none"
-            >
-              <path
-                d="M17.5 7L16.09 8.41L18.67 11H8.5V13H18.67L16.09 15.58L17.5 17L22.5 12L17.5 7ZM4.5 5H12.5V3H4.5C3.4 3 2.5 3.9 2.5 5V19C2.5 20.1 3.4 21 4.5 21H12.5V19H4.5V5Z"
-                fill="#000"
-              />
-            </svg>
-          </span>
+        <button
+          onClick={handleLogout}
+          className={styles.logoutBtn}
+          disabled={logoutLoading}
+        >
+          {logoutLoading ? (
+            <Spinner color="blue" size="small" />
+          ) : (
+            <>
+              LOGOUT
+              <span id={styles.logoutSpan}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="24"
+                  viewBox="0 0 25 24"
+                  fill="none"
+                >
+                  <path
+                    d="M17.5 7L16.09 8.41L18.67 11H8.5V13H18.67L16.09 15.58L17.5 17L22.5 12L17.5 7ZM4.5 5H12.5V3H4.5C3.4 3 2.5 3.9 2.5 5V19C2.5 20.1 3.4 21 4.5 21H12.5V19H4.5V5Z"
+                    fill="#000"
+                  />
+                </svg>
+              </span>
+            </>
+          )}
         </button>
       </div>
     </div>

@@ -95,6 +95,7 @@
   right: 2.1rem;
 }
 .logoutBtn {
+  min-width: 9rem;
   display: flex;
   align-items: center;
   justify-content: center;

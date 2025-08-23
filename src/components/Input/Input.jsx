@@ -37,6 +37,23 @@ const Input = ({
       />
     );
   }
+  if (role === "number") {
+    return (
+      <input
+        id={id}
+        type="number"
+        name={name}
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => {
+          const val = e.target.value;
+          setValue(val === "" ? "" : Number(val));
+        }}
+        className={inputClass}
+        required={required}
+      />
+    );
+  }
 
   if (role === "password") {
     return (

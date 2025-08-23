@@ -107,7 +107,12 @@ const ExamDuty = () => {
         options: (formData) =>
           getRoomNo(formData.schoolName, formData.buildingName),
       },
-      shift: { value: "", placeholder: "Shift", role: "text" },
+      shift: {
+        value: "",
+        placeholder: "Shift",
+        role: "select",
+        options: ()=>([1, 2]),
+      },
       date: { value: "", placeholder: "Date", role: "date" },
     },
     tableHeading: [
@@ -119,7 +124,7 @@ const ExamDuty = () => {
       "Date",
     ],
     tableColumn: [
-      "name",
+      "facultyName",
       "facultyNo",
       "buildingName",
       "roomNo",

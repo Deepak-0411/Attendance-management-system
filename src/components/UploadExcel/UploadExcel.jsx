@@ -2,10 +2,14 @@ import { useState } from "react";
 import styles from "./UploadExcel.module.css";
 import { toast } from "react-toastify";
 import { apiRequest } from "../../utility/apiRequest";
+import Overlay from "../Overlay/Overlay";
+import SkippedData from "../SkippedData/SkippedData";
 
 const UploadExcel = ({ apiEndPoint }) => {
   const [file, setFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [showUploadInfo, setShowUploadInfo] = useState(false);
+  const [data, setData] = useState([]);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -20,7 +24,7 @@ const UploadExcel = ({ apiEndPoint }) => {
     formData.append("file", file);
 
     const response = await apiRequest({
-      url: `/admin/${apiEndPoint}`,
+      url: apiEndPoint,
       method: "POST",
       body: formData,
       bodyStringify: false,
@@ -29,6 +33,10 @@ const UploadExcel = ({ apiEndPoint }) => {
 
     if (response.status === "success") {
       toast.success(`File uploaded successfully! ${response.message}`);
+      if (response.data.skipped > 0) {
+        setData(response.data);
+        setShowUploadInfo(true);
+      }
     } else if (response.data?.error) {
       console.error("Error:", response.message || response.data.error);
       toast.error(
@@ -66,6 +74,12 @@ const UploadExcel = ({ apiEndPoint }) => {
       >
         {isUploading ? "Uploading..." : "Upload"}
       </button>
+
+      {showUploadInfo && (
+        <Overlay onClose={() => setShowUploadInfo(false)}>
+          <SkippedData data={data} />
+        </Overlay>
+      )}
     </div>
   );
 };

@@ -41,7 +41,7 @@ const Faculty = () => {
   const config = {
     title: "Faculty Available",
     apiGet: `/api/task?schoolName=${facultyFilter.school}`,
-    apiExport: "/api/task/export",
+    apiExport: `/api/task/export?schoolName=${exportFilter.school}`,
     apiEndPointSingle: `/api/faculty/signup`,
     apiEndPointBulk: "/api/task/import",
     filterBox: true,

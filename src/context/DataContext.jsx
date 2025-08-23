@@ -25,7 +25,7 @@ export const DataProvider = ({ children }) => {
   const [toDate, setToDate] = useState(date);
 
   // Utility functions
-  const dataReset = (naam) => {
+  const dataReset = (naam="all") => {
     if (naam === "all") {
       setHomeData([]);
       setAttendanceData([]);
