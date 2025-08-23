@@ -3,7 +3,7 @@ import styles from "./UploadExcel.module.css";
 import { toast } from "react-toastify";
 import { apiRequest } from "../../utility/apiRequest";
 
-const UploadExcel = ({ closebulk, apiEndPoint }) => {
+const UploadExcel = ({ apiEndPoint }) => {
   const [file, setFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -30,13 +30,22 @@ const UploadExcel = ({ closebulk, apiEndPoint }) => {
     if (response.status === "success") {
       toast.success(`File uploaded successfully! ${response.message}`);
     } else if (response.data?.error) {
-      console.error("Error:", response.data.error);
-      toast.error(`Upload failed: ${response.data.error || "Unknown error"}`, {
-        autoClose: 5000,
-      });
+      console.error("Error:", response.message || response.data.error);
+      toast.error(
+        `Upload failed: ${
+          response.message || response.data.error || "Unknown error"
+        }`,
+        {
+          autoClose: 5000,
+        }
+      );
     } else {
       console.error("Error:", response.message);
-      toast.error(`Upload failed: ${response.message || "Unknown error"}`);
+      toast.error(
+        `Upload failed: ${
+          response.message || response.data.error || "Unknown error"
+        }`
+      );
     }
   };
 

@@ -9,8 +9,8 @@ const Rooms = () => {
     roomsFilter,
     setRoomsFilter,
     getSchoolList,
-    getBuildingName,
-    getRoomNo,
+    // getBuildingName,
+    // getRoomNo,
   } = useFilter();
   const { roomsData, setRoomsData } = useData();
   const [exportFilter, setExportFilters] = useState({
@@ -63,15 +63,12 @@ const Rooms = () => {
       buildingName: {
         value: "",
         placeholder: "Building Name",
-        role: "select",
-        options: (formData) => getBuildingName(formData.schoolName),
+        role: "text",
       },
       roomNo: {
         value: "",
         placeholder: "Room No.",
-        role: "select",
-        options: (formData) =>
-          getRoomNo(formData.schoolName, formData.buildingName),
+        role: "text",
       },
       capacity: { value: "", placeholder: "Capacity", role: "text" },
     },

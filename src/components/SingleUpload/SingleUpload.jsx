@@ -19,7 +19,6 @@ const SingleUpload = ({
     )
   );
 
-
   const handleChange = (name, value) => {
     setData((prevData) => ({ ...prevData, [name]: value }));
   };
@@ -38,14 +37,20 @@ const SingleUpload = ({
       toast.success(`Added successfully! ${response.data.message}`);
     } else if (response.data?.error) {
       toast.error(
-        `Upload failed: ${response.data.error || "Unknown error 11"}`,
+        `Upload failed: ${
+          response.message || response.data.error || "Unknown error 11"
+        }`,
         {
           autoClose: 5000,
         }
       );
     } else {
       console.error("Error:", response.message);
-      toast.error(`Upload failed: ${response.data || "Unknown error"}`);
+      toast.error(
+        `Upload failed: ${
+          response.message || response.data.error || "Unknown error"
+        }`
+      );
     }
   };
 

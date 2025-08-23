@@ -2,10 +2,12 @@ import { useState } from "react";
 import FilterBar from "../Filterbar/FilterBar";
 import styles from "./DownloadFile.module.css";
 import { baseURl } from "../../utility/apiRequest";
+import { toast } from "react-toastify";
 
 const Downloadfile = ({
   exportFilters = [],
   apiEndPoint,
+  exportFileName = "",
   dateFilter = true,
 }) => {
   const [loading, setLoading] = useState(false);
@@ -24,7 +26,7 @@ const Downloadfile = ({
 
       const blob = await response.blob();
 
-      let fileName = "report.xlsx";
+      let fileName = exportFileName || "report.xlsx";
 
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -36,7 +38,9 @@ const Downloadfile = ({
       window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error("Error downloading file:", error);
-      alert("Error downloading Excel file");
+      toast.error(
+        `Error downloading Excel file : ${error.message || error.error}`
+      );
     } finally {
       setLoading(false);
     }

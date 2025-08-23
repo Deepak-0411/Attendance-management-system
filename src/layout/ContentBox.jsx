@@ -20,6 +20,7 @@ const ContentBox = ({
   dateFilterContext,
   filterInputs,
   exportInputs,
+  exportFileName,
   searchBoxPlaceholder,
   idKey,
   nameKey,
@@ -115,6 +116,7 @@ const ContentBox = ({
             dateFilter={dateFilter}
             exportFilters={exportInputs}
             apiEndPoint={apiExport}
+            exportFileName={exportFileName}
           />
         </Overlay>
       )}

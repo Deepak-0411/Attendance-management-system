@@ -64,6 +64,7 @@ const StudentDetails = () => {
     filterBox: true,
     dateFilter: false,
     exportInputs: exportInputs,
+    exportFileName: "Students List",
     filterInputs: filterInputs,
     searchBoxPlaceholder: "Search by name or ID",
     idKey: "rollNo",
@@ -72,8 +73,12 @@ const StudentDetails = () => {
     formFields: {
       rollNo: { value: "", placeholder: "Roll No", role: "text" },
       name: { value: "", placeholder: "Student Name", role: "text" },
-      year: { value: "", placeholder: "Year", role: "select",
-        options: () => Object.keys(sem) },
+      year: {
+        value: "",
+        placeholder: "Year",
+        role: "select",
+        options: () => Object.keys(sem),
+      },
       schoolName: {
         value: "",
         placeholder: "School Name",

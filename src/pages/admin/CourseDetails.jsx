@@ -21,7 +21,7 @@ const CourseDetails = () => {
     branch: "",
   });
 
-  const { school, branch } = courseDetailsFilter;
+  const { school, branch, programme } = courseDetailsFilter;
 
   useEffect(() => {
     setExportFilters((prev) => ({
@@ -43,33 +43,49 @@ const CourseDetails = () => {
   });
 
   const exportInputs = generateFilterInputs({
-    fields: ["school", "branch"],
+    fields: ["school", "programme", "branch"],
     filterState: exportFilter,
     setFilterState: setExportFilters,
     getSchoolList,
+    getProgrammeList,
     getBranchList,
   });
 
   const config = {
     title: "Courses",
-    apiGet: `/api/course?schoolName=${school}&programme=${""}&branch=${branch}`,
+    apiGet: `/api/course?schoolName=${school}&programme=${programme}&branch=${branch}`,
     apiEndPointSingle: "/api/course",
     apiEndPointBulk: "/api/course/import",
-    apiExport: `/api/course/export?schoolName=${
-      exportFilter.school
-    }&programme=${""}&branch=${exportFilter.branch}`,
+    apiExport: `/api/course/export?schoolName=${exportFilter.school}&programme=${exportFilter.programme}&branch=${exportFilter.branch}`,
     filterBox: true,
     dateFilter: false,
     exportInputs: exportInputs,
+    exportFileName: "Cources List",
     filterInputs: filterInputs,
     searchBoxPlaceholder: "Search by name or ID",
     idKey: "courseCode",
     nameKey: "courseName",
     addText: "+ Add Course",
     formFields: {
-      schoolName: { value: "", placeholder: "School Name", role: "text" },
-      programme: { value: "", placeholder: "Programme", role: "text" },
-      branch: { value: "", placeholder: "Branch", role: "text" },
+      schoolName: {
+        value: "",
+        placeholder: "School Name",
+        role: "select",
+        options: () => getSchoolList(),
+      },
+      programme: {
+        value: "",
+        placeholder: "Programme",
+        role: "select",
+        options: (formData) => getProgrammeList(formData.schoolName),
+      },
+      branch: {
+        value: "",
+        placeholder: "Branch",
+        role: "select",
+        options: (formData) =>
+          getBranchList(formData.schoolName, formData.programme),
+      },
       courseName: { value: "", placeholder: "Course Name", role: "text" },
       courseCode: { value: "", placeholder: "Course Code", role: "text" },
     },

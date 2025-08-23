@@ -38,17 +38,21 @@ const ExamDuty = () => {
   }, [examDutyFilter]);
 
   const filterInputs = generateFilterInputs({
-    fields: ["school"],
+    fields: ["school", "building", "roomNo", "shift"],
     filterState: examDutyFilter,
     setFilterState: setExamDutyFilter,
-    requiredFields: ["school",],
+    requiredFields: ["school"],
     getSchoolList,
+    getBuildingName,
+    getRoomNo,
   });
   const exportInputs = generateFilterInputs({
-    fields: ["school"],
+    fields: ["school", "building", "roomNo", "shift"],
     filterState: exportFilter,
     setFilterState: setExportFilters,
     getSchoolList,
+    getBuildingName,
+    getRoomNo,
   });
 
   const dateFilterContext = {
@@ -69,7 +73,7 @@ const ExamDuty = () => {
   const config = {
     title: "Exam Duty",
     apiGet: `/api/duty?fromDate=${fromDate}&toDate=${toDate}&schoolName=${school}&buildingName=${building}&roomNo=${roomNo}&shift=${shift}`,
-    apiExport: `/api/duty/export?fromDate=${dataFromDate}&toDate=${dataToDate}&schoolName=${exportFilter.school}`,
+    apiExport: `/api/duty/export?fromDate=${dataFromDate}&toDate=${dataToDate}&schoolName=${exportFilter.school}&buildingName=${exportFilter.building}&roomNo=${exportFilter.roomNo}&shift=${exportFilter.shift}`,
     apiEndPointSingle: "/api/duty",
     apiEndPointBulk: "/api/duty/import",
     filterBox: true,
