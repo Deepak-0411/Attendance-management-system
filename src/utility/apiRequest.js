@@ -11,6 +11,21 @@ const apiRequest = async ({
   setLoading = () => {},
   setError = () => {},
 }) => {
+  const redirectTOLogin = (message) => {
+    const currentPath = window.location.pathname;
+    const loginPaths = ["/admin/login", "/faculty/login"];
+
+    if (message === "No token provided.") {
+      if (!loginPaths.includes(currentPath)) {
+        if (currentPath.startsWith("/admin")) {
+          navigateTo("/admin/login");
+        } else {
+          navigateTo("/faculty/login");
+        }
+      }
+    }
+  };
+
   try {
     setLoading(true);
     if (setError) setError(null);
@@ -40,6 +55,7 @@ const apiRequest = async ({
     }
 
     if (!response.ok) {
+      redirectTOLogin(data.message);
       return {
         status: "error",
         message: data?.message || data?.error || `${response.status}`,
@@ -53,6 +69,7 @@ const apiRequest = async ({
       data,
     };
   } catch (error) {
+    redirectTOLogin(error.message);
     return {
       status: "error",
       message: error?.message || error?.error || `${response.status}`,

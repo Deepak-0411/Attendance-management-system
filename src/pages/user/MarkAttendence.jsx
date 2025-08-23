@@ -109,7 +109,8 @@ const MarkAttendence = () => {
     ["Roll no", student?.rollNo],
     ["Course Code", student?.courseCode],
     ["Course Name", student?.courseName],
-    ["Programme", student?.programmeName],
+    ["Programme", student?.programme],
+    ["Branch", student?.branch],
     ["Status", student?.status],
     ["Sheet no", student?.bookletNumber],
     [
