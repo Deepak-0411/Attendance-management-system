@@ -1,3 +1,4 @@
+import { navigateTo } from "./navigation";
 const baseURl = "https://ams-gbu.up.railway.app";
 // const baseURl = "/api";
 

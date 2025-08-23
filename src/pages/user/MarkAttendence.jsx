@@ -32,6 +32,14 @@ const MarkAttendence = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!selectedShift) {
+      toast.info("Please select a room and shift");
+      navigate("/faculty/displayDuty");
+      return;
+    }
+  }, []);
+
+  useEffect(() => {
     if (!fullStudentList?.length) {
       fetchStudents(selectedShift, setLoading, setError);
     } else {
@@ -130,7 +138,10 @@ const MarkAttendence = () => {
           autoFocus
         />
       ) : (
-        <span onDoubleClick={() => setIsEditingSheet(true)} style={{background: "#76767640"}}>
+        <span
+          onDoubleClick={() => setIsEditingSheet(true)}
+          style={{ background: "#76767640" }}
+        >
           {sheetNo || "No sheet scanned yet"}
         </span>
       ),
@@ -141,9 +152,7 @@ const MarkAttendence = () => {
     return (
       <ErrorBox
         error={error}
-        onClick={() =>
-          fetchStudents(selectedShift, setLoading, setError)
-        }
+        onClick={() => fetchStudents(selectedShift, setLoading, setError)}
       />
     );
   }

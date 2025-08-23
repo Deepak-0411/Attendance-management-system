@@ -63,6 +63,7 @@ export const DataProvider = ({ children }) => {
   };
 
   const fetchStudents = async (selectedShift, setLoading, setError) => {
+    if (!selectedShift) return;
     const response = await apiRequest({
       url: `/api/invigilator/studentList?shift=${selectedShift}`,
       method: "GET",
