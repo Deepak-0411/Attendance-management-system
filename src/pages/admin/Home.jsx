@@ -75,11 +75,11 @@ const Home = () => {
     }
   };
 
-  useEffect(() => {
-    if (!Array.isArray(homeData) || homeData.length === 0) {
-      fetchData();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!Array.isArray(homeData) || homeData.length === 0) {
+  //     fetchData();
+  //   }
+  // }, []);
 
   const filterInputs = generateFilterInputs({
     fields: ["school"],

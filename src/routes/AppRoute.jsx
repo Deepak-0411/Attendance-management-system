@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import AdminLayout from "../layout/AdminLayout";
 import FacultyLayout from "../layout/FacultyLayout";
 import PageNotFound from "../pages/PageNotFound";
@@ -26,10 +26,19 @@ import DisplayDuty from "../pages/user/DisplayDuty";
 import Students from "../pages/user/Students";
 import MarkAttendence from "../pages/user/MarkAttendence";
 
+import { setGlobalNavigate } from "../utility/navigation";
+
+
 function AppRoute() {
   const initialRoot =
     window.innerWidth > 600 ? "/admin/home" : "/faculty/displayDuty";
   const [defaultRoot, setDefaultRoot] = useState(initialRoot);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setGlobalNavigate(navigate);
+  }, []);
 
   return (
     <Routes>
