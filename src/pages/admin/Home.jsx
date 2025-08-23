@@ -15,6 +15,7 @@ const colorMap = {
   UFM: "#edb348",
   "Not Marked": "#9E9E9E",
 };
+
 const responseKeyToLabel = {
   Present: "Present",
   Absent: "Absent",
@@ -24,11 +25,7 @@ const responseKeyToLabel = {
 
 const Home = () => {
   const { homeData, setHomeData } = useData();
-  const {
-    homeFilter,
-    setHomeFilter,
-    getSchoolList,
-  } = useFilter();
+  const { homeFilter, setHomeFilter, getSchoolList } = useFilter();
 
   const dateFilterContext = {
     fromDate: homeFilter.fromDate,
@@ -46,11 +43,7 @@ const Home = () => {
   };
 
   const [loading, setLoading] = useState(false);
-
-  const hasData = homeData.length > 0;
-  const total = hasData
-    ? homeData.reduce((sum, entry) => sum + entry.value, 0)
-    : 0;
+  const [total, setTotal] = useState(0);
 
   const fetchData = async () => {
     const response = await apiRequest({
@@ -60,18 +53,27 @@ const Home = () => {
     });
 
     if (response.status === "success") {
-      const rawData = response.data.data || {};
+      const summary = response.data?.summary || {};
+      const rawCounts = summary.data || {};
+      const rawPercentages = summary.percentages || {};
+      setTotal(summary.total);
 
       const formattedData = Object.entries(responseKeyToLabel).map(
         ([responseKey, displayLabel]) => ({
           name: displayLabel,
-          value: rawData[responseKey] || 0,
+          value: rawCounts[responseKey] || 0,
+          percentage: rawPercentages[responseKey] || "0.00",
         })
       );
+
       setHomeData(formattedData);
     } else {
       console.error("Error:", response.message);
-      toast.error(`Error: Failed to fetch data.`);
+      toast.error(
+        `${
+          response.message || response.error || "Error: Failed to fetch data."
+        }`
+      );
     }
   };
 
@@ -83,10 +85,11 @@ const Home = () => {
 
   const filterInputs = generateFilterInputs({
     fields: ["school"],
+    requiredFields: ["school"],
     filterState: homeFilter,
     setFilterState: setHomeFilter,
     getSchoolList,
-      });
+  });
 
   return (
     <div className={styles.container}>
@@ -112,16 +115,21 @@ const Home = () => {
                 nameKey="name"
                 outerRadius={180}
                 innerRadius={90}
-                label={({ name, percent }) =>
-                  `${name} : ${(percent * 100).toFixed(1)}%`
+                label={({ name, payload }) =>
+                  `${name} : ${payload.percentage}%`
                 }
-                isAnimationActive={false}
+                isAnimationActive={true}
               >
                 {homeData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={colorMap[entry.name]} />
                 ))}
               </Pie>
-              <Tooltip />
+              <Tooltip
+                formatter={(value, name, props) => [
+                  `${value} (${props.payload.percentage}%)`,
+                  name,
+                ]}
+              />
             </PieChart>
           </ResponsiveContainer>
 
@@ -138,7 +146,7 @@ const Home = () => {
                     {item.name}
                   </span>
                   <span>
-                    {item.value} ({((item.value / total) * 100).toFixed(1)}%)
+                    {item.value} ({item.percentage}%)
                   </span>
                 </li>
               ))}
