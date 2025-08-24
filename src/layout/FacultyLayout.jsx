@@ -10,19 +10,10 @@ const FacultyLayout = () => {
     <div className=" relative">
       <Outlet />
       <div className={styles.devTeamDiv}>
-        <p className={styles.devTeam}>
+        <button className={styles.devTeam} onClick={handleDevClick}>
           Designed & Developed By
-          <button className={styles.devName} onClick={handleDevClick}>
-            &nbsp;Ansh,&nbsp;
-          </button>
-          <button className={styles.devName} onClick={handleDevClick}>
-            Deepak&nbsp;
-          </button>
-          &
-          <button className={styles.devName} onClick={handleDevClick}>
-            Harsh
-          </button>
-        </p>
+          <span className={styles.devName}> Team GBU</span>
+        </button>
       </div>
     </div>
   );

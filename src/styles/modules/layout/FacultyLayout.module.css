@@ -12,9 +12,9 @@
   color: #fff;
   font-size: 0.85rem;
   font-weight: 400;
+  user-select: none;
 }
 .devName {
   color: #6aff82;
   cursor: pointer;
-  user-select: none;
 }
