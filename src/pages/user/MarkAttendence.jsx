@@ -126,6 +126,7 @@ const MarkAttendence = () => {
       isEditingSheet ? (
         <input
           type="text"
+          inputMode="numeric"
           className={styles.inputField}
           value={sheetNo}
           onChange={(e) => {

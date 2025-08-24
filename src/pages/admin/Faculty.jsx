@@ -55,8 +55,7 @@ const Faculty = () => {
     addText: "+ Add Faculty",
     formFields: {
       name: { value: "", placeholder: "Name", role: "text" },
-      facultyNo: { value: "", placeholder: "Teacher ID", role: "text" },
-      username: { value: "", placeholder: "Username", role: "text" },
+      username: { value: "", placeholder: "Username (email)", role: "email" },
       password: { value: "", placeholder: "Password", role: "password" },
       schoolName: {
         value: "",
