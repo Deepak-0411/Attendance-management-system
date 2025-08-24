@@ -66,9 +66,9 @@ const Input = ({
           onClick={() => setShowPassword((prev) => !prev)}
         >
           {showPassword ? (
-            <IoEyeOutline size={26} />
+            <IoEyeOutline size={26} color="#acb5bb" />
           ) : (
-            <IoEyeOffOutline size={26} />
+            <IoEyeOffOutline size={26} color="#acb5bb" />
           )}
         </button>
       </div>
