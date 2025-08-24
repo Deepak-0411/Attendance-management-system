@@ -1,84 +1,126 @@
-/* Background */
-.loginContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: #212121;
-}
-
-/* Card */
-.loginCard {
-  width: 21rem;
-  padding: 2rem;
-  gap: 1.5rem;
-  background: #494949;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  border-radius: 12px;
-}
-
-.title {
-  color: #f0f7ff;
-  font-family: Righteous;
-  font-size: 1.8rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: 0.05rem;
-}
-
-/* Form */
-.loginForm {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 1rem;
+.mainContainer {
   width: 100%;
+  height: 100%;
+  background-color: #e9f3ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Input Fields */
+.container {
+  display: flex;
+  max-width: 33.375rem;
+  padding: 2rem clamp(1rem, 4.5vw, 2rem);
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 0.75rem;
+  background: #fff;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  box-shadow: -101px 104px 40px 0 rgba(0, 0, 0, 0),
+    -64px 66px 37px 0 rgba(0, 0, 0, 0.01), -36px 37px 31px 0 rgba(0, 0, 0, 0.05),
+    -16px 17px 23px 0 rgba(0, 0, 0, 0.09), -4px 4px 13px 0 rgba(0, 0, 0, 0.1);
+}
+.header {
+  display: flex;
+  flex-direction: column;
+  padding: 0rem 1.25rem;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  align-self: stretch;
+}
+.logo {
+  width: 6rem;
+}
+.heading {
+  color: #2e6de9;
+  font-family: Inter;
+  font-size: clamp(1rem, 4.5vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.015rem;
+}
+.title {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.btns,
+.rememberMe {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-/* Button */
-.loginButton {
-  width: 70%;
-  padding: 0.1rem;
+.checkBox {
+  width: 0.7rem;
+}
+.checkLabel {
+  margin-left: 0.3rem;
+  color: #000;
+  font-family: Inter;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.btn {
+  color: #1d4ed8;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.btn:hover {
+  text-decoration: underline;
   cursor: pointer;
-  transition: 0.3s;
-  border-radius: 2rem;
-  background: #000000;
-  font-size: 1.6rem;
-  line-height: normal;
-  letter-spacing: 0.1875rem;
-  color: #ffffff;
-  font-family: Jaldi;
+}
+
+.loginBtn {
+  color: white;
+  border-radius: 0.625rem;
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    #1d61e7;
+  box-shadow: 0 1px 2px 0 rgba(37, 62, 167, 0.48), 0 0 0 1px #375dfb;
+  font-weight: 600;
+  width: 100%;
+  font-family: Inter;
+  font-size: clamp(0.85rem, 1.6vw, 1rem);
+  font-weight: 500;
+  padding: 0.625rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+}
+.loginBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.oauthContainer {
+  width: 100%;
   text-align: center;
 }
-.loginButton:disabled {
-  opacity: 0.5;
+.oauthContainerP {
+  color: #000;
+  font-family: Inter;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
-
-/* Remember Me */
-.loginOptions {
-  color: rgb(0, 0, 0);
+.oauthContainerBtn {
   width: 100%;
+  padding: 0.625rem 1rem;
   display: flex;
-  align-items: center;
-  justify-content: start;
-}
-
-.loginOptions label {
-  cursor: pointer;
-}
-.checkBox {
-  display: none;
-}
-.loginOptionsSpan {
-  display: flex;
+  gap: 1rem;
   align-items: center;
   justify-content: center;
-  margin-right: 0.2rem;
-  font-family: Barlow;
+  border-radius: 0.625rem;
+  border: 1.5px solid #000;
+  background: #fff;
 }

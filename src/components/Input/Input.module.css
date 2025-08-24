@@ -22,9 +22,10 @@
 
 /* Input 2 – Full width, right-padding (possibly for icons/buttons) */
 .input2 {
-  border-radius: 0.3125rem;
+  border-radius: 0.625rem;
+  border-color: #E4E5E7;
   width: 100%;
-  padding: 0.34375rem 6.5rem 0.34375rem 0.375rem;
+  padding: .5rem;
 }
 
 /* Input 3 – Subtle border, focus styling */
