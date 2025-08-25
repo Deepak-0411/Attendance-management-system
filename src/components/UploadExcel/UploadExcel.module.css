@@ -14,6 +14,7 @@
 }
 
 .uploadContainerInput {
+  width: 100%;
   padding: 0.6rem;
   border: 0.1rem solid #ccc;
   border-radius: 0.5rem;
@@ -21,38 +22,16 @@
 }
 
 .uploadContainerBtn {
+  width: 100%;
   background-color: #4caf50;
   color: white;
-  padding: 10px 15px;
+  padding: .6rem;
   border: none;
-  border-radius: 5px;
+  border-radius: .625rem;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1rem;
 }
 .uploadContainerBtn:hover {
   background-color: #45a049;
 }
-.uploadContainerBtn:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
 
-.uploadContainerBtn:disabled::after {
-  content: " ⏳";
-}
-
-
-.closeBtn {
-  position: fixed;
-  top: 1.5rem;
-  right: 1.5rem;
-  background-color: #333;
-  color: white;
-  padding: 0.4rem;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-}
-.closeBtn:hover{
-  background-color: #4b4b4b;
-}
