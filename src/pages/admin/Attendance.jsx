@@ -83,7 +83,7 @@ const Attendance = () => {
     dateFilterContext,
     exportInputs: exportInputs,
     filterInputs: filterInputs,
-    searchBoxPlaceholder: "Search by name or ID",
+    searchBoxPlaceholder: "Search by rollno or course code",
     idKey: "rollNo",
     nameKey: "courseCode",
     addText: "+ Add Student",

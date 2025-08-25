@@ -65,6 +65,22 @@ const Login = ({ user = "faculty" }) => {
       toast.error(`Error: ${response.message}`);
     }
   };
+  const handleGoogleLogin = async (e) => {
+    e.preventDefault();
+
+    const response = await apiRequest({
+      url: "/auth/google",
+    });
+
+    if (response.status === "success") {
+      toast.success("LoggedIn Sucessfully!!! ");
+
+      navigate(reqForward);
+    } else {
+      console.error("Error:", response.message);
+      toast.error(`Error: ${response.message}`);
+    }
+  };
 
   return (
     <div className={styles.mainContainer}>
@@ -123,13 +139,15 @@ const Login = ({ user = "faculty" }) => {
             {loading ? <LoadingScrn size={"small"} color={"white"} /> : "Login"}
           </button>
         </form>
-        {user==="faculty"&&<div className={styles.oauthContainer}>
-          <p className={styles.oauthContainerP}>or</p>
-          <button className={styles.oauthContainerBtn}>
-            <FcGoogle size={26} />
-            Continue with Google
-          </button>
-        </div>}
+        {user === "faculty" && (
+          <div className={styles.oauthContainer}>
+            <p className={styles.oauthContainerP}>or</p>
+            <button className={styles.oauthContainerBtn} onClick={handleGoogleLogin}>
+              <FcGoogle size={26} />
+              Continue with Google
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

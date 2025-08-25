@@ -50,7 +50,7 @@ const Rooms = () => {
     exportInputs: exportInputs,
     exportFileName : "Rooms List",
     filterInputs: filterInputs,
-    searchBoxPlaceholder: "Search by name or ID",
+    searchBoxPlaceholder: "Search by name or roomNo",
     idKey: "roomNo",
     nameKey: "buildingName",
     addText: "+ Add Room",
