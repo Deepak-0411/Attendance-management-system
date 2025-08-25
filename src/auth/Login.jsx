@@ -109,7 +109,7 @@ const Login = ({ user = "faculty" }) => {
               <button
                 type="button"
                 className={styles.btn}
-                onClick={() => navigate("/alumni/forgetPassword")}
+                // onClick={() => navigate("/faculty/forgetPassword")}
               >
                 Forget Password
               </button>
