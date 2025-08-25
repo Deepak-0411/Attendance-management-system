@@ -3,6 +3,7 @@
 .input2,
 .input3,
 .input4 {
+  width: 100%;
   font-family: Barlow;
   font-size: 1rem;
   color: #000;
@@ -10,43 +11,38 @@
   transition: background 0.3s ease;
   background: #fff;
   border: 0.1rem solid #000;
+  border-radius: 0.625rem;
+  padding: 0.5rem;
 }
 
-/* Input 1 – Rounded, compact */
+/* used in header */
 .input1 {
   border-radius: 2rem;
-  max-width: 22rem;
+  width: auto;
+  max-width: 15rem;
   max-height: 2.6rem;
   padding: 0.35rem 0.8rem;
 }
 
-/* Input 2 – Full width, right-padding (possibly for icons/buttons) */
+/* Used in Login Page */
 .input2 {
-  border-radius: 0.625rem;
-  border-color: #E4E5E7;
-  width: 100%;
-  padding: .5rem;
+  border-color: #e4e5e7;
 }
 
-/* Input 3 – Subtle border, focus styling */
+/* used in single upload */
 .input3 {
-  width: 100%;
-  padding: 0.8rem;
-  border: 0.1rem solid #ddd;
-  border-radius: 0.2rem;
+  border-color: #e4e5e7;
+}
+
+/* used in faculty student search bar */
+.input4 {
+  padding: 0.34375rem 1rem 0.3em 1rem;
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 
 .input3:focus {
   border-color: #007bff;
-}
-
-/* Input 4 – Larger text and padding */
-.input4 {
-  border-radius: 0.6rem;
-  width: 100%;
-  padding: 0.34375rem 1rem 0.3em 1rem;
-  font-size: 1.2rem;
-  font-weight: 500;
 }
 
 /* Placeholder Styles */
