@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import LOGO from "../assets/logo.webp";
 import Input from "../components/Input/Input";
 import LoadingScrn from "../components/Spinner/Spinner";
@@ -13,6 +13,7 @@ const Login = ({ user = "faculty" }) => {
   const [password, setPassword] = useState("");
   const [remember] = useState(false);
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
 
   const navigate = useNavigate();
 
@@ -42,6 +43,21 @@ const Login = ({ user = "faculty" }) => {
     }
   })();
 
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const error = params.get("error");    
+
+    if (error) {
+      if (error === "faculty_not_registered") {
+        toast.error("You are not registered as a faculty member.");
+      } else if (error === "google_failed") {
+        toast.error("Google login failed. Please try again.");
+      } else {
+        toast.error(`Error: ${error}`);
+      }
+    }
+  }, [location]);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     if (!(userId && password)) return;
@@ -65,21 +81,9 @@ const Login = ({ user = "faculty" }) => {
       toast.error(`Error: ${response.message}`);
     }
   };
-  const handleGoogleLogin = async (e) => {
+  const handleGoogleLogin = (e) => {
     e.preventDefault();
-
-    const response = await apiRequest({
-      url: "/auth/google",
-    });
-
-    if (response.status === "success") {
-      toast.success("LoggedIn Sucessfully!!! ");
-
-      navigate(reqForward);
-    } else {
-      console.error("Error:", response.message);
-      toast.error(`Error: ${response.message}`);
-    }
+    window.location.href = "https://ams-gbu.up.railway.app/auth/google";
   };
 
   return (
@@ -142,7 +146,10 @@ const Login = ({ user = "faculty" }) => {
         {user === "faculty" && (
           <div className={styles.oauthContainer}>
             <p className={styles.oauthContainerP}>or</p>
-            <button className={styles.oauthContainerBtn} onClick={handleGoogleLogin}>
+            <button
+              className={styles.oauthContainerBtn}
+              onClick={handleGoogleLogin}
+            >
               <FcGoogle size={26} />
               Continue with Google
             </button>
