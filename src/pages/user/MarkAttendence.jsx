@@ -95,13 +95,17 @@ const MarkAttendence = () => {
       updatedList[currentIdx] = {
         ...updatedList[currentIdx],
         status: newStatus,
-        bookletNumber: sheetNo,
+        bookletNumber: newStatus === "Absent" ? "" : sheetNo,
       };
       setFilteredStudents(updatedList);
       setStudentList(
         fullStudentList.map((s) =>
           s.rollNo === student.rollNo
-            ? { ...s, status: newStatus, bookletNumber: sheetNo }
+            ? {
+                ...s,
+                status: newStatus,
+                bookletNumber: newStatus === "Absent" ? "" : sheetNo,
+              }
             : s
         )
       );

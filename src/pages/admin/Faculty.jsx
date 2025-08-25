@@ -50,7 +50,7 @@ const Faculty = () => {
     exportFileName: "Faculty List",
     filterInputs: filterInputs,
     searchBoxPlaceholder: "Search by name or ID",
-    idKey: "facultyNo",
+    idKey: "username",
     nameKey: "name",
     addText: "+ Add Faculty",
     formFields: {
@@ -65,7 +65,7 @@ const Faculty = () => {
       },
     },
     tableHeading: ["Faculty Name", "Faculty-ID"],
-    tableColumn: ["name", "facultyNo"],
+    tableColumn: ["name", "username"],
     dataList: facultyData,
     setDataList: setFacultyData,
   };

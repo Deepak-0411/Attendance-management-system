@@ -83,11 +83,11 @@ const ExamDuty = () => {
     exportInputs: exportInputs,
     filterInputs: filterInputs,
     searchBoxPlaceholder: "Search by name or ID",
-    idKey: "facultyNo",
+    idKey: "username",
     nameKey: "name",
     addText: "+ Assign Duty",
     formFields: {
-      facultyNo: { value: "", placeholder: "Faculty-ID", role: "text" },
+      username: { value: "", placeholder: "Faculty-ID", role: "text" },
       schoolName: {
         value: "",
         placeholder: "School Name",
@@ -125,7 +125,7 @@ const ExamDuty = () => {
     ],
     tableColumn: [
       "facultyName",
-      "facultyNo",
+      "username",
       "buildingName",
       "roomNo",
       "shift",

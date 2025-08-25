@@ -16,7 +16,7 @@ const Login = ({ user = "faculty" }) => {
 
   const navigate = useNavigate();
 
-  const { URL, reqForward, title, inputType,  } = (() => {
+  const { URL, reqForward, title, inputType } = (() => {
     switch (user) {
       case "admin":
         return {
@@ -50,7 +50,7 @@ const Login = ({ user = "faculty" }) => {
       url: URL,
       method: "POST",
       body: {
-        [user === "faculty" ? "email" : "username"]: userId,
+        username: userId,
         password: password,
       },
       setLoading,
