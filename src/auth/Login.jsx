@@ -123,13 +123,13 @@ const Login = ({ user = "faculty" }) => {
             {loading ? <LoadingScrn size={"small"} color={"white"} /> : "Login"}
           </button>
         </form>
-        <div className={styles.oauthContainer}>
+        {user==="faculty"&&<div className={styles.oauthContainer}>
           <p className={styles.oauthContainerP}>or</p>
           <button className={styles.oauthContainerBtn}>
             <FcGoogle size={26} />
             Continue with Google
           </button>
-        </div>
+        </div>}
       </div>
     </div>
   );
