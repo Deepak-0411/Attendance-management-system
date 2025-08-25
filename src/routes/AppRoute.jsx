@@ -51,8 +51,7 @@ function AppRoute() {
       {/* Faculty Routes */}
       <Route
         path="/faculty"
-        element={<FacultyLayout />}
-        // element={<ProtectedRoute element={<FacultyLayout />} user="faculty" />}
+        element={<ProtectedRoute element={<FacultyLayout />} user="faculty" />}
       >
         <Route index element={<Navigate to="/faculty/displayDuty" />} />
         <Route path="displayDuty" element={<DisplayDuty />} />
