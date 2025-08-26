@@ -45,7 +45,13 @@ const Login = ({ user = "faculty" }) => {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const error = params.get("error");    
+    const error = params.get("error");
+    const token = params.get("token");
+
+    if (token) {
+      const tokenURL = `/auth/add-token?token=${token}`;
+      handleLogin(null, true, tokenURL);
+    }
 
     if (error) {
       if (error === "faculty_not_registered") {
@@ -58,29 +64,43 @@ const Login = ({ user = "faculty" }) => {
     }
   }, [location]);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    if (!(userId && password)) return;
+  const handleLogin = async (e, forOauth, tokenURL) => {
+    if (e?.preventDefault) e.preventDefault();
 
-    const response = await apiRequest({
-      url: URL,
+    if (!forOauth && !(userId && password)) return;
+
+    const payload = {
       method: "POST",
-      body: {
+      setLoading,
+    };
+
+    if (forOauth) {
+      payload.url = tokenURL;
+    }
+
+    if (!forOauth) {
+      payload.body = {
         username: userId,
         password: password,
-      },
-      setLoading,
-    });
+      };
+      payload.url = URL;
+    }
+
+    const response = await apiRequest(payload);
 
     if (response.status === "success") {
-      toast.success("LoggedIn Sucessfully!!! ");
-
+      toast.success("LoggedIn Successfully!!!");
       navigate(reqForward);
     } else {
       console.error("Error:", response.message);
-      toast.error(`Error: ${response.message}`);
+      if (response.statusCode == "404") {
+        toast.error("We couldn’t complete your request. Please try again.");
+      } else {
+        toast.error(`Error: ${response.message}`);
+      }
     }
   };
+
   const handleGoogleLogin = (e) => {
     e.preventDefault();
     window.location.href = "https://ams-gbu.up.railway.app/auth/google";

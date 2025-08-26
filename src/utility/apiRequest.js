@@ -59,6 +59,7 @@ const apiRequest = async ({
       redirectTOLogin(data.message);
       return {
         status: "error",
+        statusCode: response.status,
         message: data?.message || data?.error || `${response.status}`,
         data,
       };
@@ -66,6 +67,7 @@ const apiRequest = async ({
 
     return {
       status: "success",
+      statusCode: response.status,
       message: "Request successful",
       data,
     };
@@ -73,6 +75,7 @@ const apiRequest = async ({
     redirectTOLogin(error.message);
     return {
       status: "error",
+      statusCode: response.status,
       message: error?.message || error?.error || `${response.status}`,
       data: null,
     };
