@@ -1,7 +1,7 @@
 import { useState } from "react";
 import FilterBar from "../Filterbar/FilterBar";
 import styles from "./DownloadFile.module.css";
-import { baseURl } from "../../utility/apiRequest";
+import { baseURL } from "../../utility/apiRequest";
 import { toast } from "react-toastify";
 
 const Downloadfile = ({
@@ -15,7 +15,7 @@ const Downloadfile = ({
   const handleDownload = async () => {
     setLoading(true);
     try {
-      const response = await fetch(baseURl + apiEndPoint, {
+      const response = await fetch(baseURL + apiEndPoint, {
         method: "GET",
         credentials: "include",
       });

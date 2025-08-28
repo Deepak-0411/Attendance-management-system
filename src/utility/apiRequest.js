@@ -1,6 +1,7 @@
 import { navigateTo } from "./navigation";
-const baseURl = "https://ams-gbu.up.railway.app";
-// const baseURl = "/api";
+
+const baseURL = "https://ams-gbu.up.railway.app";
+// const baseURL = "/api";
 
 const apiRequest = async ({
   url,
@@ -12,11 +13,11 @@ const apiRequest = async ({
   setLoading = () => {},
   setError = () => {},
 }) => {
-  const redirectTOLogin = (message) => {
+  const redirectToLogin = (message) => {
     const currentPath = window.location.pathname;
     const loginPaths = ["/admin/login", "/faculty/login"];
 
-    if (message === "No token provided.") {
+    if (message?.toLowerCase().includes("token")) {
       if (!loginPaths.includes(currentPath)) {
         if (currentPath.startsWith("/admin")) {
           navigateTo("/admin/login");
@@ -29,7 +30,7 @@ const apiRequest = async ({
 
   try {
     setLoading(true);
-    if (setError) setError(null);
+    setError(null);
 
     const isFormData = body instanceof FormData;
 
@@ -45,18 +46,18 @@ const apiRequest = async ({
       }),
     };
 
-    const response = await fetch(baseURl + url, options);
+    const response = await fetch(baseURL + url, options);
     const rawText = await response.text();
 
     let data;
     try {
       data = rawText ? JSON.parse(rawText) : {};
     } catch {
-      data = { message: rawText }; // fallback if not valid JSON
+      data = { message: rawText }; 
     }
 
     if (!response.ok) {
-      redirectTOLogin(data.message);
+      redirectToLogin(data.message);
       return {
         status: "error",
         statusCode: response.status,
@@ -72,11 +73,11 @@ const apiRequest = async ({
       data,
     };
   } catch (error) {
-    redirectTOLogin(error.message);
+    redirectToLogin(error.message);
     return {
       status: "error",
-      statusCode: response.status,
-      message: error?.message || error?.error || `${response.status}`,
+      statusCode: error?.status || 500,
+      message: error?.message || error?.error || "Network error",
       data: null,
     };
   } finally {
@@ -84,7 +85,8 @@ const apiRequest = async ({
   }
 };
 
-export { apiRequest, baseURl };
+export { apiRequest, baseURL };
+
 
 // apiRequest.js
 // import axios from "axios";
