@@ -1,6 +1,7 @@
 import { navigateTo } from "./navigation";
 
-const baseURL = "https://ams-gbu.up.railway.app";
+const baseURL = "https://ams-server-soict.vercel.app";
+// const baseURL = "https://ams-gbu.up.railway.app";
 // const baseURL = "/api";
 
 const apiRequest = async ({
