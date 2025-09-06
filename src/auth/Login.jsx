@@ -4,7 +4,7 @@ import LOGO from "../assets/logo.webp";
 import Input from "../components/Input/Input";
 import LoadingScrn from "../components/Spinner/Spinner";
 import styles from "../styles/modules/auth/Login.module.css";
-import { apiRequest } from "../utility/apiRequest";
+import { apiRequest, baseURL } from "../utility/apiRequest";
 import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
 
@@ -54,7 +54,7 @@ const Login = ({ user = "faculty" }) => {
     }
 
     if (error) {
-      if (error === "faculty_not_registered") {
+      if (error === "faculty-not-registered") {
         toast.error("You are not registered as a faculty member.");
       } else if (error === "google_failed") {
         toast.error("Google login failed. Please try again.");
@@ -103,7 +103,7 @@ const Login = ({ user = "faculty" }) => {
 
   const handleGoogleLogin = (e) => {
     e.preventDefault();
-    window.location.href = "https://ams-gbu.up.railway.app/auth/google";
+    window.location.href = `${baseURL}/auth/google`;
   };
 
   return (
