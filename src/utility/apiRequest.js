@@ -1,4 +1,5 @@
 // src/utils/apiRequest.js
+import { toast } from "react-toastify";
 import { navigateTo } from "./navigation";
 import { triggerOfflineHandler } from "./offlineHandler";
 
@@ -19,6 +20,7 @@ const apiRequest = async ({
     const loginPaths = ["/admin/login", "/faculty/login"];
 
     if (message?.toLowerCase().includes("token")) {
+      toast.info(`Session Expired. Please re-login`);
       if (!loginPaths.includes(currentPath)) {
         if (currentPath.startsWith("/admin")) {
           navigateTo("/admin/login");

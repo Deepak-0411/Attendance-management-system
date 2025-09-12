@@ -1,7 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { apiRequest } from "../../utility/apiRequest";
-import { toast } from "react-toastify";
 import LogoSpinner from "../../components/Spinner/LogoSpinner";
 import { useFilter } from "../../context/FilterContext";
 import { useData } from "../../context/DataContext";
@@ -32,7 +31,6 @@ const ProtectedRoute = ({ element, user }) => {
         setIsAuthorized(true);
       } else {
         console.error("Authorization Error:", response.message);
-        toast.info(`Session Expired. Please re-login`);
         setIsAuthorized(false);
       }
     };

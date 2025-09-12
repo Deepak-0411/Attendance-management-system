@@ -37,7 +37,7 @@ export default defineConfig({
         type: "module",
       },
       workbox: {
-        globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2}"],
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp,woff2}"],
         navigateFallback: '/index.html',
         runtimeCaching: [
           {
