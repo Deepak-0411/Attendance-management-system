@@ -1,8 +1,8 @@
+// src/utils/apiRequest.js
 import { navigateTo } from "./navigation";
+import { triggerOfflineHandler } from "./offlineHandler";
 
-// const baseURL = "https://ams-server-soict.vercel.app";
 const baseURL = "https://ams-gbu.up.railway.app";
-// const baseURL = "/api";
 
 const apiRequest = async ({
   url,
@@ -49,20 +49,19 @@ const apiRequest = async ({
 
     const response = await fetch(baseURL + url, options);
     const rawText = await response.text();
-
     let data;
+
     try {
       data = rawText ? JSON.parse(rawText) : {};
     } catch {
-      data = { message: rawText }; 
+      data = { message: rawText };
     }
 
     if (!response.ok) {
-      redirectToLogin(data.message);
       return {
         status: "error",
         statusCode: response.status,
-        message: data?.message || data?.error || `${response.status}`,
+        message: data?.message,
         data,
       };
     }
@@ -74,11 +73,28 @@ const apiRequest = async ({
       data,
     };
   } catch (error) {
-    redirectToLogin(error.message);
+    // offline handling
+    if (!navigator.onLine) {
+      const handler = triggerOfflineHandler();
+      if (handler?.trigger) handler.trigger(); // show offline page
+      if (handler?.retry)
+        handler.retryFn = () =>
+          apiRequest({
+            url,
+            method,
+            body,
+            bodyStringify,
+            headers,
+            credentials,
+            setLoading,
+            setError,
+          });
+    }
+
     return {
-      status: "error",
-      statusCode: error?.status || 500,
-      message: error?.message || error?.error || "Network error",
+      status: "offline",
+      statusCode: 0,
+      message: "No Internet connection",
       data: null,
     };
   } finally {
@@ -88,6 +104,93 @@ const apiRequest = async ({
 
 export { apiRequest, baseURL };
 
+// import { navigateTo } from "./navigation";
+
+// const baseURL = "https://ams-gbu.up.railway.app";
+
+// const apiRequest = async ({
+//   url,
+//   method = "GET",
+//   body = null,
+//   bodyStringify = true,
+//   headers = {},
+//   credentials = true,
+//   setLoading = () => {},
+//   setError = () => {},
+// }) => {
+//   const redirectToLogin = (message) => {
+//     const currentPath = window.location.pathname;
+//     const loginPaths = ["/admin/login", "/faculty/login"];
+
+//     if (message?.toLowerCase().includes("token")) {
+//       if (!loginPaths.includes(currentPath)) {
+//         if (currentPath.startsWith("/admin")) {
+//           navigateTo("/admin/login");
+//         } else {
+//           navigateTo("/faculty/login");
+//         }
+//       }
+//     }
+//   };
+
+//   try {
+//     setLoading(true);
+//     setError(null);
+
+//     const isFormData = body instanceof FormData;
+
+//     const options = {
+//       method,
+//       ...(credentials && { credentials: "include" }),
+//       headers: {
+//         ...(isFormData ? {} : { "Content-Type": "application/json" }),
+//         ...headers,
+//       },
+//       ...(body && {
+//         body: bodyStringify && !isFormData ? JSON.stringify(body) : body,
+//       }),
+//     };
+
+//     const response = await fetch(baseURL + url, options);
+//     const rawText = await response.text();
+
+//     let data;
+//     try {
+//       data = rawText ? JSON.parse(rawText) : {};
+//     } catch {
+//       data = { message: rawText };
+//     }
+
+//     if (!response.ok) {
+//       redirectToLogin(data.message);
+//       return {
+//         status: "error",
+//         statusCode: response.status,
+//         message: data?.message || data?.error || `${response.status}`,
+//         data,
+//       };
+//     }
+
+//     return {
+//       status: "success",
+//       statusCode: response.status,
+//       message: "Request successful",
+//       data,
+//     };
+//   } catch (error) {
+//     redirectToLogin(error.message);
+//     return {
+//       status: "error",
+//       statusCode: error?.status || 500,
+//       message: error?.message || error?.error || "Network error",
+//       data: null,
+//     };
+//   } finally {
+//     setLoading(false);
+//   }
+// };
+
+// export { apiRequest, baseURL };
 
 // apiRequest.js
 // import axios from "axios";
