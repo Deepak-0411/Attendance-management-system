@@ -76,7 +76,7 @@ const apiRequest = async ({
     // offline handling
     if (!navigator.onLine) {
       const handler = triggerOfflineHandler();
-      if (handler?.trigger) handler.trigger(); // show offline page
+      if (handler?.trigger) handler.trigger();
       if (handler?.retry)
         handler.retryFn = () =>
           apiRequest({
@@ -89,12 +89,17 @@ const apiRequest = async ({
             setLoading,
             setError,
           });
+      return {
+        status: "offline",
+        statusCode: 0,
+        message: "No Internet connection",
+        data: null,
+      };
     }
-
     return {
-      status: "offline",
-      statusCode: 0,
-      message: "No Internet connection",
+      status: "error",
+      statusCode: error?.status || 500,
+      message: error?.message || error?.error || "Network error",
       data: null,
     };
   } finally {

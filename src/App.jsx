@@ -24,8 +24,8 @@ function App() {
 
   useEffect(() => {
     setOfflineHandler({
-      retry: () => window.location.reload(), // optional retry
-      trigger: () => offlineContext.setOffline(true), // sets offline = true
+      retry: () => window.location.reload(), 
+      trigger: () => offlineContext.setOffline(true), 
     });
   }, []);
 

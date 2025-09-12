@@ -10,7 +10,7 @@ export default function GlobalOffline() {
   const handleRetry = async () => {
     setOffline(false);
     const retryFn = triggerOfflineHandler()?.retryFn;
-    if (retryFn) await retryFn(); // retry API without reloading page
+    if (retryFn) await retryFn(); 
   };
 
   return (
