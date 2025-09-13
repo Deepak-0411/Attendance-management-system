@@ -25,34 +25,24 @@ const SingleUpload = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
 
-    const response = await apiRequest({
+    await apiRequest({
       url: apiEndPointSingle,
       method: "POST",
       body: data,
       setLoading: setIsUploading,
+      onSuccess: (response) => {
+        toast.success(`Added successfully! ${response.data.message}`);
+      },
+      onFailure: (response) => {
+        console.error("Error:", response.message);
+        toast.error(
+          `Upload failed: ${
+            response.message || response.data.error || "Unknown error"
+          }`
+        );
+      },
     });
-
-    if (response.status === "success") {
-      toast.success(`Added successfully! ${response.data.message}`);
-    } else if (response.data?.error) {
-      toast.error(
-        `Upload failed: ${
-          response.message || response.data.error || "Unknown error 11"
-        }`,
-        {
-          autoClose: 5000,
-        }
-      );
-    } else {
-      console.error("Error:", response.message);
-      toast.error(
-        `Upload failed: ${
-          response.message || response.data.error || "Unknown error"
-        }`
-      );
-    }
   };
 
   return (

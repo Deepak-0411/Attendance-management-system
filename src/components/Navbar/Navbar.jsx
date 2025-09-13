@@ -15,18 +15,19 @@ const Navbar = () => {
     navigate("/devTeam");
   };
   const handleLogout = async () => {
-    const response = await apiRequest({
+    await apiRequest({
       url: "/api/root/logout",
       method: "POST",
       setLoading: setLogoutLoading,
+      onSuccess: (response) => {
+        dataReset();
+        navigate("/admin/login");
+      },
+      onFailure: (response) => {
+        dataReset();
+        navigate("/admin/login");
+      },
     });
-
-    if (response.status === "success") {
-      dataReset();
-      navigate("/admin/login");
-    } else {
-      toast.error("Failed to logout");
-    }
   };
 
   const navItems = [

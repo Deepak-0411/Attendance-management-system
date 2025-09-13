@@ -72,6 +72,18 @@ const Login = ({ user = "faculty" }) => {
     const payload = {
       method: "POST",
       setLoading,
+      onSuccess: (response) => {
+        toast.success("LoggedIn Successfully!!!");
+        navigate(reqForward);
+      },
+      onFailure: (response) => {
+        console.error("Error:", response.message);
+        if (response.statusCode == "404") {
+          toast.error("We couldn’t complete your request. Please try again.");
+        } else {
+          toast.error(`Error: ${response.message}`);
+        }
+      },
     };
 
     if (forOauth) {
@@ -86,19 +98,7 @@ const Login = ({ user = "faculty" }) => {
       payload.url = URL;
     }
 
-    const response = await apiRequest(payload);
-
-    if (response.status === "success") {
-      toast.success("LoggedIn Successfully!!!");
-      navigate(reqForward);
-    } else {
-      console.error("Error:", response.message);
-      if (response.statusCode == "404") {
-        toast.error("We couldn’t complete your request. Please try again.");
-      } else {
-        toast.error(`Error: ${response.message}`);
-      }
-    }
+     await apiRequest(payload);
   };
 
   const handleGoogleLogin = (e) => {

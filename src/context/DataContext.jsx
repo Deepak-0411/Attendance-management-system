@@ -25,7 +25,7 @@ export const DataProvider = ({ children }) => {
   const [toDate, setToDate] = useState(date);
 
   // Utility functions
-  const dataReset = (naam="all") => {
+  const dataReset = (naam = "all") => {
     if (naam === "all") {
       setHomeData([]);
       setAttendanceData([]);
@@ -42,44 +42,40 @@ export const DataProvider = ({ children }) => {
     }
   };
 
-  const getFacultyInfo = async (
-    setLoading = () => {},
-    setError = () => {}
-  ) => {
-    const response = await apiRequest({
+  const getFacultyInfo = async (setLoading = () => {}, setError = () => {}) => {
+    await apiRequest({
       url: "/api/invigilator/preview",
       method: "GET",
       setLoading,
       setError,
+      onSuccess: (response) => {
+        setFacultyName(response.data.faculty || []);
+        setFacultyDuty(response.data.entries || []);
+      },
+      onFailure: (response) => {
+        console.error("Error:", response.message);
+        toast.error(`Failed to load faculty info.`);
+      },
     });
-
-    if (response.status === "success") {      
-      setFacultyName(response.data.faculty || []);
-      setFacultyDuty(response.data.entries || []);
-    } else {
-      console.error("Error:", response.message);
-      toast.error(`Failed to load faculty info.`);
-    }
   };
 
   const fetchStudents = async (selectedShift, setLoading, setError) => {
     if (!selectedShift) return;
-    const response = await apiRequest({
+    await apiRequest({
       url: `/api/invigilator/studentList?shift=${selectedShift}`,
       method: "GET",
       setLoading,
       setError,
+      onSuccess: (response) => {
+        if (Array.isArray(response.data?.students)) {
+          setStudentList(response.data.students);
+        }
+      },
+      onFailure: (response) => {
+        setError("Failed to load students data.");
+        toast.error("Failed to load students data.");
+      },
     });
-
-    if (
-      response?.status === "success" &&
-      Array.isArray(response.data?.students)
-    ) {
-      setStudentList(response.data.students);
-    } else {
-      setError("Failed to load students data.");
-      toast.error("Failed to load students data.");
-    }
   };
 
   return (

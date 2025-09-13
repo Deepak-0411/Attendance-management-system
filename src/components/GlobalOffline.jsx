@@ -16,7 +16,7 @@ export default function GlobalOffline() {
 
   return (
     <div className="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center p-4">
-      <img src={noInternetImg} alt="no Internet"  className=" w-[10rem]"/>
+      <img src={noInternetImg} alt="no Internet"  className=" w-[12rem]"/>
       <h1 className="text-2xl font-bold">No Internet Connection</h1>
       <p className="mt-2 text-center">
         Please connect to the internet to continue using the app.

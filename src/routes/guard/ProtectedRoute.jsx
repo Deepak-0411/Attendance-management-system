@@ -17,22 +17,25 @@ const ProtectedRoute = ({ element, user }) => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const response = await apiRequest({
-        url: user === "faculty" ? "/api/soict/faculty-auth" : "/api/soict/admin-auth",
+      await apiRequest({
+        url:
+          user === "faculty"
+            ? "/api/soict/faculty-auth"
+            : "/api/soict/admin-auth",
         method: "GET",
+        onSuccess: async (response) => {
+          if (user === "faculty") {
+            await getFacultyInfo();
+          } else if (user === "admin" && isFiltersEmpty()) {
+            await loadFilterOptions();
+          }
+          setIsAuthorized(true);
+        },
+        onFailure: (response) => {
+          console.error("Authorization Error:", response.message);
+          setIsAuthorized(false);
+        },
       });
-
-      if (response.status === "success") {
-        if (user === "faculty") {
-          await getFacultyInfo();
-        } else if (user === "admin" && isFiltersEmpty()) {
-          await loadFilterOptions();
-        }
-        setIsAuthorized(true);
-      } else {
-        console.error("Authorization Error:", response.message);
-        setIsAuthorized(false);
-      }
     };
     checkAuth();
   }, []);

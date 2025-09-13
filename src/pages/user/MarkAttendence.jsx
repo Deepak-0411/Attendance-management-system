@@ -79,7 +79,7 @@ const MarkAttendence = () => {
       return;
     }
 
-    const response = await apiRequest({
+    await apiRequest({
       url: `/api/invigilator/markStatus`,
       method: "PATCH",
       body: {
@@ -88,32 +88,32 @@ const MarkAttendence = () => {
         status: newStatus,
       },
       setLoading,
+      onSuccess: (response) => {
+        const updatedList = [...filteredStudents];
+        updatedList[currentIdx] = {
+          ...updatedList[currentIdx],
+          status: newStatus,
+          bookletNumber: newStatus === "Absent" ? "" : sheetNo,
+        };
+        setFilteredStudents(updatedList);
+        setStudentList(
+          fullStudentList.map((s) =>
+            s.rollNo === student.rollNo
+              ? {
+                  ...s,
+                  status: newStatus,
+                  bookletNumber: newStatus === "Absent" ? "" : sheetNo,
+                }
+              : s
+          )
+        );
+        setSheetNo("");
+        toast.success(`Marked as ${newStatus}`);
+      },
+      onFailure: (response) => {
+        toast.error(`Failed to update status: ${response.message}`);
+      },
     });
-
-    if (response.status === "success") {
-      const updatedList = [...filteredStudents];
-      updatedList[currentIdx] = {
-        ...updatedList[currentIdx],
-        status: newStatus,
-        bookletNumber: newStatus === "Absent" ? "" : sheetNo,
-      };
-      setFilteredStudents(updatedList);
-      setStudentList(
-        fullStudentList.map((s) =>
-          s.rollNo === student.rollNo
-            ? {
-                ...s,
-                status: newStatus,
-                bookletNumber: newStatus === "Absent" ? "" : sheetNo,
-              }
-            : s
-        )
-      );
-      setSheetNo("");
-      toast.success(`Marked as ${newStatus}`);
-    } else {
-      toast.error(`Failed to update status: ${response.message}`);
-    }
   };
 
   const valueToShow = [

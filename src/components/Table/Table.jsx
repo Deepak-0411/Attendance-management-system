@@ -5,8 +5,12 @@ const Table = ({ tableHeadings, filteredData, idKey, tableColumn }) => {
   const { tableHeight } = useTableHeight();
 
   return (
-    <div className={styles.tableContainer} style={{ maxHeight: tableHeight }}>
-      <div className={styles.tableBox} >
+    <div
+      className={styles.tableContainer}
+      style={{ maxHeight: `calc(${tableHeight} - 2rem)` }} 
+      // did -2rem because of gap
+    >
+      <div className={styles.tableBox}>
         <table className={styles.table}>
           <thead className={styles.tableHead}>
             <tr>

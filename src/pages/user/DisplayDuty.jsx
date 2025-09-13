@@ -28,18 +28,18 @@ const DisplayDuty = () => {
     }
   }, []);
   const handleLogout = async () => {
-    const response = await apiRequest({
+    await apiRequest({
       url: "/api/faculty/logout",
       method: "POST",
       setLoading: setLogoutLoading,
+      onSuccess: (response) => {
+        dataReset();
+        navigate("/faculty/login");
+      },
+      onFailure: (response) => {
+        toast.error("Failed to logout");
+      },
     });
-
-    if (response.status === "success") {
-      dataReset();
-      navigate("/faculty/login");
-    } else {
-      toast.error("Failed to logout");
-    }
   };
 
   const handleClick = (shift, buildingName, roomNo, secondTeacher) => {

@@ -48,35 +48,35 @@ const Home = () => {
   const fetchData = async () => {
     setHomeData([]);
     setTotal(0);
-    const response = await apiRequest({
+    await apiRequest({
       url: `/api/home/attendancestatus?from=${homeFilter.fromDate}&to=${homeFilter.toDate}&schoolName=${homeFilter.school}`,
       method: "GET",
       setLoading,
+      onSuccess: (response) => {
+        const summary = response.data?.summary || {};
+        const rawCounts = summary.data || {};
+        const rawPercentages = summary.percentages || {};
+        setTotal(summary.total);
+
+        const formattedData = Object.entries(responseKeyToLabel).map(
+          ([responseKey, displayLabel]) => ({
+            name: displayLabel,
+            value: rawCounts[responseKey] || 0,
+            percentage: rawPercentages[responseKey] || "0.00",
+          })
+        );
+
+        setHomeData(formattedData);
+      },
+      onFailure: (response) => {
+        console.error("Error:", response.message);
+        toast.error(
+          `${
+            response.message || response.error || "Error: Failed to fetch data."
+          }`
+        );
+      },
     });
-
-    if (response.status === "success") {
-      const summary = response.data?.summary || {};
-      const rawCounts = summary.data || {};
-      const rawPercentages = summary.percentages || {};
-      setTotal(summary.total);
-
-      const formattedData = Object.entries(responseKeyToLabel).map(
-        ([responseKey, displayLabel]) => ({
-          name: displayLabel,
-          value: rawCounts[responseKey] || 0,
-          percentage: rawPercentages[responseKey] || "0.00",
-        })
-      );
-
-      setHomeData(formattedData);
-    } else {
-      console.error("Error:", response.message);
-      toast.error(
-        `${
-          response.message || response.error || "Error: Failed to fetch data."
-        }`
-      );
-    }
   };
 
   // useEffect(() => {

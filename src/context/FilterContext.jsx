@@ -59,7 +59,6 @@ export const FilterProvider = ({ children }) => {
   };
 
   const getProgrammeList = (schoolName) => {
-
     return schoolFilterData[schoolName]
       ? Object.keys(schoolFilterData[schoolName])
       : [];
@@ -99,17 +98,17 @@ export const FilterProvider = ({ children }) => {
 
   const loadFilterOptions = async () => {
     for (const api of adminAPIs) {
-      const response = await apiRequest({
+      await apiRequest({
         url: api.url,
         method: "GET",
+        onSuccess: (response) => {
+          api.setDataList(response.data);
+        },
+        onFailure: (response) => {
+          console.error("Error:", response.message);
+          toast.error(`Error: Failed to get ${api.key}`);
+        },
       });
-
-      if (response.status === "success") {
-        api.setDataList(response.data);
-      } else {
-        console.error("Error:", response.message);
-        toast.error(`Error: Failed to get ${api.key}`);
-      }
     }
   };
 

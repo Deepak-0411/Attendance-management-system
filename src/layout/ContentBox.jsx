@@ -41,18 +41,18 @@ const ContentBox = ({
   const { isFiltersEmpty, loadFilterOptions } = useFilter();
 
   const fetchData = async () => {
-    const response = await apiRequest({
+    await apiRequest({
       url: apiGet,
       method: "GET",
       setLoading,
-    });    
-
-    if (response.status === "success") {
-      setDataList(response.data.entries);
-    } else {
-      console.error("Error:", response.message);
-      toast.error(`Error:${response.message ||"Failed to fetch data."}`);
-    }
+      onSuccess: (response) => {
+        setDataList(response.data.entries);
+      },
+      onFailure: (response) => {
+        console.error("Error:", response.message);
+        toast.error(`Error:${response.message || "Failed to fetch data."}`);
+      },
+    });
   };
 
   useEffect(() => {

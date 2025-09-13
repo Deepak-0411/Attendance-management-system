@@ -23,38 +23,32 @@ const UploadExcel = ({ apiEndPoint }) => {
     const formData = new FormData();
     formData.append("file", file);
 
-    const response = await apiRequest({
+    await apiRequest({
       url: apiEndPoint,
       method: "POST",
       body: formData,
       bodyStringify: false,
       setLoading: setIsUploading,
-    });
+      onSuccess: (response) => {
+        toast.success(`File uploaded successfully! ${response.message}`);
 
-    if (response.status === "success") {
-      toast.success(`File uploaded successfully! ${response.message}`);
-      if (response.data.skipped > 0) {
-        setData(response.data);
-        setShowUploadInfo(true);
-      }
-    } else if (response.data?.error) {
-      console.error("Error:", response.message || response.data.error);
-      toast.error(
-        `Upload failed: ${
-          response.message || response.data.error || "Unknown error"
-        }`,
-        {
-          autoClose: 5000,
+        if (response.data?.skipped > 0) {
+          setData(response.data);
+          setShowUploadInfo(true);
         }
-      );
-    } else {
-      console.error("Error:", response.message);
-      toast.error(
-        `Upload failed: ${
-          response.message || response.data.error || "Unknown error"
-        }`
-      );
-    }
+      },
+
+      onFailure: (response) => {
+        console.error("Error:", response.message || response.data?.error);
+
+        toast.error(
+          `Upload failed: ${
+            response.message || response.data?.error || "Unknown error"
+          }`,
+          { autoClose: 5000 }
+        );
+      },
+    });
   };
 
   return (
