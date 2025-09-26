@@ -10,6 +10,9 @@ import { apiRequest } from "../../utility/apiRequest";
 import Overlay from "../../components/Overlay/Overlay";
 
 const MarkAttendence = () => {
+  const testImgUrl =
+    "https://devforum-uploads.s3.dualstack.us-east-2.amazonaws.com/uploads/optimized/4X/0/7/6/0765f5f1281f3ed298427cc2117cdf5dbb649389_2_498x500.jpeg";
+
   const {
     studentlist: fullStudentList,
     fetchStudents,
@@ -129,6 +132,7 @@ const MarkAttendence = () => {
       "Scanned no",
       isEditingSheet ? (
         <input
+          id="input1"
           type="text"
           inputMode="numeric"
           className={styles.inputField}
@@ -145,9 +149,9 @@ const MarkAttendence = () => {
       ) : (
         <span
           onDoubleClick={() => setIsEditingSheet(true)}
-          style={{ background: "#76767640" }}
+          className=" bg-[#76767640] p-1.5 rounded-[10px]"
         >
-          {sheetNo || "No sheet scanned yet"}
+          {sheetNo || "Not scanned"}
         </span>
       ),
     ],
@@ -178,6 +182,14 @@ const MarkAttendence = () => {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
+        {/* Student pfp */}
+        <div className={styles.pfpBox}>
+          <img
+            className={styles.pfp}
+            src={student?.pfp || testImgUrl}
+            alt="student image"
+          />
+        </div>
         {/* Student Details */}
         <div className={styles.detailsContainer}>
           {valueToShow.map(([label, value]) => (

@@ -129,9 +129,9 @@ const Students = () => {
               >
                 <div className={styles.contentData}>
                   <p className={styles.contentDataP}>
-                    {student.rollNo || "N/A"}
+                    {student.name || "N/A"}
                   </p>
-                  <p className={styles.contentDataP}>{student.name || "N/A"}</p>
+                  <p className={styles.contentDataP}>{student.rollNo || "N/A"}</p>
                 </div>
                 <div className={styles.contentStatusBox}>
                   <p
@@ -147,7 +147,7 @@ const Students = () => {
               </div>
             ))
           ) : (
-            <p className={styles.noResults}>No student found</p>
+            <p className={styles.noResults}>No student assigned</p>
           )}
         </div>
       </div>

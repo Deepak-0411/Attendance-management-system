@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import { navigateTo } from "./navigation";
 import { triggerOfflineHandler } from "./offlineHandler";
 
-const baseURL = "https://ams-gbu.up.railway.app";
+const baseURL = "https://api.harshuh.site";
 
 const defaultConfig = {
   method: "GET",
