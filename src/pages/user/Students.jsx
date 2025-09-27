@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ErrorBox from "../../components/ErrorBox/ErrorBox";
 import useTableHeight from "../../utility/setHeight";
 import styles from "../../styles/modules/public/Students.module.css";
@@ -67,9 +67,7 @@ const Students = () => {
     return (
       <ErrorBox
         error={error}
-        onClick={() =>
-          fetchStudents(selectedShift, setLoading, setError)
-        }
+        onClick={() => fetchStudents(selectedShift, setLoading, setError)}
       />
     );
 
@@ -122,16 +120,16 @@ const Students = () => {
             <Spinner color="white" fullPage size="large" />
           ) : filteredStudents.length ? (
             filteredStudents.map((student, index) => (
-              <div
+              <button
                 key={student.rollNo}
                 className={styles.content}
                 onClick={() => handleClick(index)}
               >
                 <div className={styles.contentData}>
+                  <p className={styles.contentDataP}>{student.name || "N/A"}</p>
                   <p className={styles.contentDataP}>
-                    {student.name || "N/A"}
+                    {student.rollNo || "N/A"}
                   </p>
-                  <p className={styles.contentDataP}>{student.rollNo || "N/A"}</p>
                 </div>
                 <div className={styles.contentStatusBox}>
                   <p
@@ -144,7 +142,7 @@ const Students = () => {
                     {student.status?.toLowerCase() || "not yet marked"}
                   </p>
                 </div>
-              </div>
+              </button>
             ))
           ) : (
             <p className={styles.noResults}>No student assigned</p>

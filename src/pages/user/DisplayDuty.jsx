@@ -78,7 +78,7 @@ const DisplayDuty = () => {
         <div className={styles.contentBox}>
           {facultyDuty.length > 0 ? (
             facultyDuty.map((duty, index) => (
-              <div
+              <button
                 key={index}
                 className={styles.content}
                 onClick={() =>
@@ -101,7 +101,7 @@ const DisplayDuty = () => {
                     {duty.capacity || "N/A"}
                   </p>
                 </div>
-              </div>
+              </button>
             ))
           ) : (
             <p className={styles.noData}>No duty assigned</p>
