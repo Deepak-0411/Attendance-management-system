@@ -28,7 +28,6 @@ body {
   width: 100%;
   max-width: 100vw;
   background-color: #212121;
-  overscroll-behavior: none;
 }
 #root {
   width: 100%;
