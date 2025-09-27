@@ -106,6 +106,7 @@ const ContentBox = ({
             dataToSend={formFields}
             apiEndPointSingle={apiEndPointSingle}
             apiEndPointBulk={apiEndPointBulk}
+            parent={title}
           />
         </Overlay>
       )}

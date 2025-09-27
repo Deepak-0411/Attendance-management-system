@@ -6,7 +6,7 @@
   overflow: auto;
 }
 .content {
-  margin: 1.5rem 1rem 2rem 1rem;
+  margin: 1.5rem 1rem 1.5rem 1rem;
   /* overflow-y: hidden; */
   border-radius: 0.8rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);

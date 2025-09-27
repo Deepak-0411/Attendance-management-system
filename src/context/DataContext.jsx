@@ -24,6 +24,23 @@ export const DataProvider = ({ children }) => {
   const [fromDate, setFromDate] = useState(date);
   const [toDate, setToDate] = useState(date);
 
+  // Overlay skipped data
+  const [skippedData, setSkippedData] = useState(null);
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [overylayParent, setOverlayParent] = useState(null);
+
+  const showSkippedData = (data, parent) => {
+    setSkippedData(data);
+    setShowOverlay(true);
+    setOverlayParent(parent);
+  };
+
+  const hideSkippedData = () => {
+    setShowOverlay(false);
+    setSkippedData(null);
+    setOverlayParent(null);
+  };
+
   // Utility functions
   const dataReset = (naam = "all") => {
     if (naam === "all") {
@@ -120,6 +137,13 @@ export const DataProvider = ({ children }) => {
         dataReset,
         getFacultyInfo,
         fetchStudents,
+
+        // skipped data overlay
+        skippedData,
+        showOverlay,
+        overylayParent,
+        showSkippedData,
+        hideSkippedData,
       }}
     >
       {children}

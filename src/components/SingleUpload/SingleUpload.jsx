@@ -10,6 +10,7 @@ const SingleUpload = ({
   dataToSend = {},
   apiEndPointSingle,
   apiEndPointBulk,
+  parent
 }) => {
   const [isUploading, setIsUploading] = useState(false);
   const [showBulkUpload, setShowBulkUpload] = useState(false);
@@ -49,7 +50,7 @@ const SingleUpload = ({
     <div className={styles.container}>
       {showBulkUpload && (
         <Overlay onClose={() => setShowBulkUpload(false)}>
-          <UploadExcel apiEndPoint={apiEndPointBulk} />
+          <UploadExcel apiEndPoint={apiEndPointBulk} parent={parent} />
         </Overlay>
       )}
 

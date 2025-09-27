@@ -6,6 +6,7 @@ import { FilterProvider } from "./context/FilterContext";
 import { useEffect, useState } from "react";
 import { useOffline } from "./context/OfflineContext";
 import { setOfflineHandler } from "./utility/offlineHandler";
+import GlobalSkippedDataOverlay from "./components/GlobalSkippedDataOverlay";
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
@@ -24,8 +25,8 @@ function App() {
 
   useEffect(() => {
     setOfflineHandler({
-      retry: () => window.location.reload(), 
-      trigger: () => offlineContext.setOffline(true), 
+      retry: () => window.location.reload(),
+      trigger: () => offlineContext.setOffline(true),
     });
   }, []);
 
@@ -34,6 +35,7 @@ function App() {
     <DataProvider>
       <FilterProvider>
         <AppRoutes />
+        <GlobalSkippedDataOverlay />
         <ToastContainer
           position={isMobile ? "top-center" : "top-right"}
           autoClose={3000}
