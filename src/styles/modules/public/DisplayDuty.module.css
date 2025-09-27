@@ -91,7 +91,7 @@
   font-size: 2.5rem;
 }
 .logoutBtnBox{
-  position: absolute;
+  position: fixed;
   bottom: 2.1rem;
   right: 2.1rem;
 }
