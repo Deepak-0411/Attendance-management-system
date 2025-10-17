@@ -272,15 +272,17 @@ const UploadExcel = ({ apiEndPoint, title }) => {
           <p>Drag & drop a file here, or click to select</p>
         )}
       </div>
-
       {/* Upload button */}
-      <button
-        className={styles.uploadContainerBtn}
-        onClick={handleUpload}
-        disabled={isUploading}
-      >
-        {isUploading ? "Uploading..." : "Upload"}
-      </button>
+      <div className=" w-full">
+        <span class={styles.uploadNote}>only spreadsheet is allowed *</span>
+        <button
+          className={styles.uploadContainerBtn}
+          onClick={handleUpload}
+          disabled={isUploading}
+        >
+          {isUploading ? "Uploading..." : "Upload"}
+        </button>
+      </div>
     </div>
   );
 };

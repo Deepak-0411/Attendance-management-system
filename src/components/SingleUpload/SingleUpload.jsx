@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { apiRequest } from "../../utility/apiRequest";
 import Input from "../Input/Input";
 import Overlay from "../Overlay/Overlay";
+import validateImage from "../../utility/validateImage";
 
 const SingleUpload = ({
   dataToSend = {},
@@ -25,17 +26,44 @@ const SingleUpload = ({
     else return title;
   };
 
+  const handleImageChange = (name, e) => {
+    const file = e.target.files[0];
+
+    if (!file) {
+      setData((prev) => ({ ...prev, [name]: null }));
+      return;
+    }
+
+    if (validateImage(file)) {
+      setData((prev) => ({ ...prev, [name]: file }));
+    } else {
+      e.target.value = "";
+    }
+  };
+
   const handleChange = (name, value) => {
     setData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+
+    Object.entries(data).forEach(([key, value]) => {
+      if (value instanceof File) {
+        formData.append(key, value);
+      } else {
+        formData.append(key, value);
+      }
+    });
+
     const uploadPromise = new Promise((resolve, reject) => {
       apiRequest({
         url: apiEndPointSingle,
         method: "POST",
-        body: data,
+        body: formData,
+        bodyStringify: false, // important for FormData
         setLoading: setIsUploading,
         onSuccess: (response) => {
           toast.success(`${response.data.message}`);
@@ -43,12 +71,12 @@ const SingleUpload = ({
         },
         onFailure: (response) => {
           console.error("Error:", response.message);
-          reject(response);
           toast.error(
             `Upload failed: ${
-              response.message || response.data.error || "Unknown error"
+              response.message || response.data?.error || "Unknown error"
             }`
           );
+          reject(response);
         },
       });
     });
@@ -78,6 +106,7 @@ const SingleUpload = ({
             <div key={key}>
               <Input
                 type={3}
+                label={field.label}
                 role={field.role}
                 name={key}
                 placeholder={field.placeholder}
@@ -88,7 +117,11 @@ const SingleUpload = ({
                     : []
                 }
                 value={data[key] || ""}
-                setValue={(value) => handleChange(key, value)}
+                setValue={(value) =>
+                  field.role === "image"
+                    ? handleImageChange(key, value)
+                    : handleChange(key, value)
+                }
               />
             </div>
           );

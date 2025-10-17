@@ -101,6 +101,7 @@ const StudentDetails = () => {
       },
       studentImg: {
         role: "image",
+        label: "Student image"
       },
     },
     tableHeading: ["Name", "Roll no."],

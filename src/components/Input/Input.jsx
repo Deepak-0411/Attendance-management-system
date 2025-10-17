@@ -5,6 +5,7 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 const Input = ({
   id = "",
   type,
+  label,
   role,
   required,
   placeholder,
@@ -22,11 +23,12 @@ const Input = ({
   const inputClass = styles[`input${type}`] || styles.input3;
   const filterInput = type === 3 ? styles.input3 : styles.filterInput;
 
-  // Common onChange handler
   const handleChange = (e) => setValue(e.target.value);
 
+  let inputElement;
+
   if (role === "number") {
-    return (
+    inputElement = (
       <input
         id={finalId}
         type="text"
@@ -44,10 +46,8 @@ const Input = ({
         required={required}
       />
     );
-  }
-
-  if (role === "password") {
-    return (
+  } else if (role === "password") {
+    inputElement = (
       <div className={styles.passwordContainer}>
         <input
           id={finalId}
@@ -73,10 +73,8 @@ const Input = ({
         </button>
       </div>
     );
-  }
-
-  if (role === "select") {
-    return (
+  } else if (role === "select") {
+    inputElement = (
       <select
         id={finalId}
         name={name}
@@ -93,10 +91,8 @@ const Input = ({
         ))}
       </select>
     );
-  }
-
-  if (role === "date") {
-    return (
+  } else if (role === "date") {
+    inputElement = (
       <input
         id={finalId}
         name={name}
@@ -110,20 +106,45 @@ const Input = ({
         max={max}
       />
     );
+  } else if (role === "image") {
+    inputElement = (
+      <input
+        id={finalId}
+        name={name}
+        className={filterInput}
+        type="file"
+        value={value}
+        accept="image/*"
+        onChange={ setValue}
+      />
+    );
+  } else {
+    inputElement = (
+      <input
+        id={finalId}
+        type={role}
+        name={name}
+        placeholder={placeholder}
+        value={value}
+        onChange={handleChange}
+        className={inputClass}
+        required={required}
+      />
+    );
   }
 
-  // Default text-like inputs (text, email, etc.)
   return (
-    <input
-      id={finalId}
-      type={role}
-      name={name}
-      placeholder={placeholder}
-      value={value}
-      onChange={handleChange}
-      className={inputClass}
-      required={required}
-    />
+    <div className={styles.inputWrapper}>
+      {label && (
+        <label
+          htmlFor={finalId}
+          className="block mb-1 ml-1 text-sm font-medium text-gray-900 cursor-pointer"
+        >
+          {label}
+        </label>
+      )}
+      {inputElement}
+    </div>
   );
 };
 

@@ -3,12 +3,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem 1rem;
+  padding: 1.8rem 1.5rem;
   border-radius: 0.8rem;
-  gap: 1rem;
+  gap: .5rem;
   background-color: #ffffff;
   width: 22rem;
-  margin: 1.2rem auto;
   text-align: center;
   position: relative;
 }
@@ -48,8 +47,14 @@
   border-radius: .625rem;
   cursor: pointer;
   font-size: 1rem;
+  position: relative;
 }
 .uploadContainerBtn:hover {
   background-color: #45a049;
 }
-
+.uploadNote {
+  display: block;
+  color: red;
+  font-size: 11px;
+  margin-bottom: 4px;
+}
