@@ -1,8 +1,8 @@
 import { toast } from "react-toastify";
 
  const validateImage = (file, maxSizeMB = 3) => {
-    const allowedExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp"];
-    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+    const allowedExtensions = [".jpg", ".jpeg", ".png", ".webp"];
+    const allowedTypes = ["image/jpeg", "image/png", , "image/webp"];
 
     const fileExtension = file.name
       .substring(file.name.lastIndexOf("."))
