@@ -68,26 +68,23 @@ const CourseDetails = () => {
     addText: "+ Add Course",
     formFields: {
       schoolName: {
-        value: "",
         placeholder: "School Name",
         role: "select",
         options: () => getSchoolList(),
       },
       programme: {
-        value: "",
         placeholder: "Programme",
         role: "select",
         options: (formData) => getProgrammeList(formData.schoolName),
       },
       branch: {
-        value: "",
         placeholder: "Branch",
         role: "select",
         options: (formData) =>
           getBranchList(formData.schoolName, formData.programme),
       },
-      courseName: { value: "", placeholder: "Course Name", role: "text" },
-      courseCode: { value: "", placeholder: "Course Code", role: "text" },
+      courseName: { placeholder: "Course Name", role: "text" },
+      courseCode: { placeholder: "Course Code", role: "text" },
     },
     tableHeading: ["Course Name", "Course Code"],
     tableColumn: ["courseName", "courseCode"],

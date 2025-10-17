@@ -10,7 +10,7 @@ const SingleUpload = ({
   dataToSend = {},
   apiEndPointSingle,
   apiEndPointBulk,
-  parent
+  title,
 }) => {
   const [isUploading, setIsUploading] = useState(false);
   const [showBulkUpload, setShowBulkUpload] = useState(false);
@@ -20,28 +20,44 @@ const SingleUpload = ({
     )
   );
 
+  const getName = () => {
+    if (title.at(-1) == "s") return title.slice(0, -1);
+    else return title;
+  };
+
   const handleChange = (name, value) => {
     setData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    const uploadPromise = new Promise((resolve, reject) => {
+      apiRequest({
+        url: apiEndPointSingle,
+        method: "POST",
+        body: data,
+        setLoading: setIsUploading,
+        onSuccess: (response) => {
+          toast.success(`${response.data.message}`);
+          resolve(response);
+        },
+        onFailure: (response) => {
+          console.error("Error:", response.message);
+          reject(response);
+          toast.error(
+            `Upload failed: ${
+              response.message || response.data.error || "Unknown error"
+            }`
+          );
+        },
+      });
+    });
 
-    await apiRequest({
-      url: apiEndPointSingle,
-      method: "POST",
-      body: data,
-      setLoading: setIsUploading,
-      onSuccess: (response) => {
-        toast.success(`Added successfully! ${response.data.message}`);
-      },
-      onFailure: (response) => {
-        console.error("Error:", response.message);
-        toast.error(
-          `Upload failed: ${
-            response.message || response.data.error || "Unknown error"
-          }`
-        );
+    toast.promise(uploadPromise, {
+      pending: {
+        render: `Uploading ${getName()}...`,
+        type: "info",
+        autoClose: false,
       },
     });
   };
@@ -50,7 +66,7 @@ const SingleUpload = ({
     <div className={styles.container}>
       {showBulkUpload && (
         <Overlay onClose={() => setShowBulkUpload(false)}>
-          <UploadExcel apiEndPoint={apiEndPointBulk} parent={parent} />
+          <UploadExcel apiEndPoint={apiEndPointBulk} title={title} />
         </Overlay>
       )}
 

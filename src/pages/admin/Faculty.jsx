@@ -54,11 +54,10 @@ const Faculty = () => {
     nameKey: "name",
     addText: "+ Add Faculty",
     formFields: {
-      name: { value: "", placeholder: "Name", role: "text" },
-      username: { value: "", placeholder: "Username (email)", role: "email" },
-      password: { value: "", placeholder: "Password", role: "password" },
+      name: { placeholder: "Name", role: "text" },
+      username: { placeholder: "Username (email)", role: "email" },
+      password: { placeholder: "Password", role: "password" },
       schoolName: {
-        value: "",
         placeholder: "School Name",
         role: "select",
         options: () => getSchoolList(),

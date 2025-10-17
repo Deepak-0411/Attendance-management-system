@@ -87,33 +87,29 @@ const ExamDuty = () => {
     nameKey: "name",
     addText: "+ Assign Duty",
     formFields: {
-      username: { value: "", placeholder: "Faculty-ID", role: "text" },
+      username: { placeholder: "Faculty-ID", role: "text" },
       schoolName: {
-        value: "",
         placeholder: "School Name",
         role: "select",
         options: () => getSchoolList(),
       },
       buildingName: {
-        value: "",
         placeholder: "Building Name",
         role: "select",
         options: (formData) => getBuildingName(formData.schoolName),
       },
       roomNo: {
-        value: "",
         placeholder: "Room No.",
         role: "select",
         options: (formData) =>
           getRoomNo(formData.schoolName, formData.buildingName),
       },
       shift: {
-        value: "",
         placeholder: "Shift",
         role: "select",
-        options: ()=>([1, 2]),
+        options: () => [1, 2],
       },
-      date: { value: "", placeholder: "Date", role: "date" },
+      date: { placeholder: "Date", role: "date" },
     },
     tableHeading: [
       "Faculty Name",

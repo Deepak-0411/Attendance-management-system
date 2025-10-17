@@ -117,7 +117,7 @@ import { toast } from "react-toastify";
 import { apiRequest } from "../../utility/apiRequest";
 import { useData } from "../../context/DataContext";
 
-const UploadExcel = ({ apiEndPoint, parent }) => {
+const UploadExcel = ({ apiEndPoint, title }) => {
   const [file, setFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const { showSkippedData } = useData();
@@ -185,7 +185,7 @@ const UploadExcel = ({ apiEndPoint, parent }) => {
   //       toast.success(`File uploaded successfully! ${response.message}`);
 
   //       if (response.data?.skipped > 0) {
-  //         showSkippedData(response.data,parent);
+  //         showSkippedData(response.data,title);
   //       }
   //     },
   //     onFailure: (response) => {
@@ -209,28 +209,28 @@ const UploadExcel = ({ apiEndPoint, parent }) => {
     formData.append("file", file);
 
     const uploadPromise = new Promise(async (resolve, reject) => {
-      try {
-        await apiRequest({
-          url: apiEndPoint,
-          method: "POST",
-          body: formData,
-          bodyStringify: false,
-          setLoading: setIsUploading,
-          onSuccess: (response) => {
-            if (response.data?.skipped > 0) {
-              showSkippedData(response.data, parent);
+      apiRequest({
+        url: apiEndPoint,
+        method: "POST",
+        body: formData,
+        bodyStringify: false,
+        setLoading: setIsUploading,
+        onSuccess: (response) => {
+          if (response.data?.skipped > 0) {
+            try {
+              showSkippedData(response.data, title);
+            } catch (err) {
+              return reject(err);
             }
-            resolve(response);
-          },
-          onFailure: (response) => {
-            const errorMsg =
-              response.message || response.data?.error || "Unknown error";
-            reject(new Error(errorMsg));
-          },
-        });
-      } catch (err) {
-        reject(err);
-      }
+          }
+          resolve(response);
+        },
+        onFailure: (response) => {
+          const errorMsg =
+            response.message || response.data?.error || "Unknown error";
+          reject(new Error(errorMsg));
+        },
+      });
     });
 
     toast.promise(uploadPromise, {
@@ -241,7 +241,7 @@ const UploadExcel = ({ apiEndPoint, parent }) => {
         // position: "bottom-right",
       },
       success: {
-        render: "File uploaded successfully! 🎉",
+        render: "File uploaded successfully!",
         type: "success",
         autoClose: 5000,
         // position: "top-right",

@@ -71,38 +71,36 @@ const StudentDetails = () => {
     nameKey: "name",
     addText: "+ Add Student",
     formFields: {
-      rollNo: { value: "", placeholder: "Roll No", role: "text" },
-      name: { value: "", placeholder: "Student Name", role: "text" },
+      rollNo: { placeholder: "Roll No", role: "text" },
+      name: { placeholder: "Student Name", role: "text" },
       year: {
-        value: "",
         placeholder: "Year",
         role: "select",
         options: () => Object.keys(sem),
       },
       schoolName: {
-        value: "",
         placeholder: "School Name",
         role: "select",
         options: () => getSchoolList(),
       },
       programme: {
-        value: "",
         placeholder: "Programme",
         role: "select",
         options: (formData) => getProgrammeList(formData.schoolName),
       },
       branch: {
-        value: "",
         placeholder: "Branch",
         role: "select",
         options: (formData) =>
           getBranchList(formData.schoolName, formData.programme),
       },
       semester: {
-        value: "",
         placeholder: "Semester",
         role: "select",
         options: (formData) => sem[formData.year],
+      },
+      studentImg: {
+        role: "image",
       },
     },
     tableHeading: ["Name", "Roll no."],

@@ -48,7 +48,7 @@ const Rooms = () => {
     filterBox: true,
     dateFilter: false,
     exportInputs: exportInputs,
-    exportFileName : "Rooms List",
+    exportFileName: "Rooms List",
     filterInputs: filterInputs,
     searchBoxPlaceholder: "Search by name or roomNo",
     idKey: "roomNo",
@@ -56,22 +56,19 @@ const Rooms = () => {
     addText: "+ Add Room",
     formFields: {
       schoolName: {
-        value: "",
         placeholder: "School Name",
         role: "select",
         options: () => getSchoolList(),
       },
       buildingName: {
-        value: "",
         placeholder: "Building Name",
         role: "text",
       },
       roomNo: {
-        value: "",
         placeholder: "Room No.",
         role: "text",
       },
-      capacity: { value: "", placeholder: "Capacity", role: "number" },
+      capacity: { placeholder: "Capacity", role: "number" },
     },
     tableHeading: ["Building Name", "Room No", "Capacity"],
     tableColumn: ["buildingName", "roomNo", "capacity"],
