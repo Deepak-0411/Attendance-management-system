@@ -113,9 +113,9 @@ const Input = ({
         name={name}
         className={filterInput}
         type="file"
-        value={value}
         accept="image/*"
         onChange={ setValue}
+        required={required}
       />
     );
   } else {

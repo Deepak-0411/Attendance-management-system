@@ -124,3 +124,25 @@
   border: 1.5px solid #000;
   background: #fff;
 }
+
+.devTeamDiv {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-bottom: 0.4rem;
+}
+.devTeam {
+  color: black;
+  font-size: 0.9rem;
+  font-weight: 400;
+  user-select: none;
+  cursor: pointer;
+}
+.devName {
+  color: #5a4fcf;
+}

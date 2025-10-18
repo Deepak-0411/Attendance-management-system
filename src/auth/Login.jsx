@@ -64,6 +64,10 @@ const Login = ({ user = "faculty" }) => {
     }
   }, [location]);
 
+  const handleDevClick = () => {
+    navigate("/devTeam");
+  };
+
   const handleLogin = async (e, forOauth, tokenURL) => {
     if (e?.preventDefault) e.preventDefault();
 
@@ -98,7 +102,7 @@ const Login = ({ user = "faculty" }) => {
       payload.url = URL;
     }
 
-     await apiRequest(payload);
+    await apiRequest(payload);
   };
 
   const handleGoogleLogin = (e) => {
@@ -175,6 +179,14 @@ const Login = ({ user = "faculty" }) => {
             </button>
           </div>
         )}
+      </div>
+
+      {/* dev team name */}
+      <div className={styles.devTeamDiv}>
+        <button className={styles.devTeam} onClick={handleDevClick}>
+          Designed & Developed By
+          <span className={styles.devName}> Team GBU</span>
+        </button>
       </div>
     </div>
   );
