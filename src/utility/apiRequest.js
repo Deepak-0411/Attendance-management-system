@@ -2,7 +2,8 @@ import { toast } from "react-toastify";
 import { navigateTo } from "./navigation";
 import { triggerOfflineHandler } from "./offlineHandler";
 
-const baseURL = "https://api.harshuh.site";
+// const baseURL = "https://api.harshuh.site";
+const baseURL ="https://gbu-ams.vercel.app"
 
 const defaultConfig = {
   method: "GET",
