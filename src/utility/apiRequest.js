@@ -3,7 +3,8 @@ import { navigateTo } from "./navigation";
 import { triggerOfflineHandler } from "./offlineHandler";
 
 // const baseURL = "https://api.harshuh.site";
-const baseURL ="https://gbu-ams.vercel.app"
+const baseURL = "https://gbu-ams.vercel.app";
+// recommiting to deploy.
 
 const defaultConfig = {
   method: "GET",
@@ -26,7 +27,7 @@ const handleTokenExpiry = (message) => {
     const currentPath = window.location.pathname;
     if (!["/admin/login", "/faculty/login"].includes(currentPath)) {
       navigateTo(
-        currentPath.startsWith("/admin") ? "/admin/login" : "/faculty/login"
+        currentPath.startsWith("/admin") ? "/admin/login" : "/faculty/login",
       );
     }
   }
@@ -49,7 +50,7 @@ const shouldRetry = (error) => {
 const retryWithBackoff = async (
   fn,
   { retries, delay, backoff },
-  attempt = 0
+  attempt = 0,
 ) => {
   try {
     return await fn();
