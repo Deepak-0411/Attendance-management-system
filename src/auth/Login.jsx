@@ -182,12 +182,12 @@ const Login = ({ user = "faculty" }) => {
       </div>
 
       {/* dev team name */}
-      <div className={styles.devTeamDiv}>
+      {/* <div className={styles.devTeamDiv}>
         <button className={styles.devTeam} onClick={handleDevClick}>
           Designed & Developed By
           <span className={styles.devName}> Team GBU</span>
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -378,12 +378,13 @@ const Navbar = () => {
             </>
           )}
         </button>
-        <div className={styles.devTeamDiv}>
+        {/* Dev Team */}
+        {/* <div className={styles.devTeamDiv}>
           <button className={styles.devTeam} onClick={handleDevClick}>
             Designed & Developed By
             <span className={styles.devName}> Team GBU</span>
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
