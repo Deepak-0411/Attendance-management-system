@@ -149,7 +149,7 @@ const Login = ({ user = "faculty" }) => {
                 Remember me
               </label>
             </div>
-            {user === "faculty" && (
+            {/* {user === "faculty" && (
               <button
                 type="button"
                 className={styles.btn}
@@ -157,7 +157,7 @@ const Login = ({ user = "faculty" }) => {
               >
                 Forget Password
               </button>
-            )}
+            )} */}
           </div>
           <button
             type="submit"

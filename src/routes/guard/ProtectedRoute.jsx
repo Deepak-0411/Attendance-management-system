@@ -12,7 +12,7 @@ const ProtectedRoute = ({ element, user }) => {
   const [defaultRoot, setDefaultRoot] = useState("/faculty/login");
 
   useEffect(() => {
-    if (window.innerWidth > 600) setDefaultRoot("/admin/login");
+    if (user === "admin") setDefaultRoot("/admin/login");
   }, []);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const ProtectedRoute = ({ element, user }) => {
             ? "/api/soict/faculty-auth"
             : "/api/soict/admin-auth",
         method: "GET",
-        onSuccess: async (response) => {
+        onSuccess: async (_) => {
           if (user === "faculty") {
             await getFacultyInfo();
           } else if (user === "admin" && isFiltersEmpty()) {
