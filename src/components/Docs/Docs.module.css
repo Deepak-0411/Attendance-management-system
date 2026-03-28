@@ -1,0 +1,348 @@
+.main {
+  background-color: #f0f7ff;
+  border-radius: 1rem;
+  max-height: 90%;
+  max-width: 90%;
+  overflow: hidden;
+}
+
+/* Scroll Container */
+.scrollContainer {
+  padding: 48px 32px 80px 32px;
+  overflow: auto;
+  height: 90vh;
+}
+
+/* Container */
+.container {
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+/* Header */
+.header {
+  margin-bottom: 8px;
+}
+
+.tag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #2563eb;
+  margin-bottom: 12px;
+}
+
+.title {
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #475569;
+  line-height: 1.7;
+  /* max-width: 600px; */
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: #dde8f5;
+  margin: 40px 0;
+}
+
+/* Sections */
+.section {
+  margin-bottom: 8px;
+}
+
+.sectionTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.sectionDesc {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.bodyText {
+  font-size: 15px;
+  color: #334155;
+  line-height: 1.75;
+  margin-bottom: 14px;
+}
+
+/* Credentials */
+.credGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.credCard {
+  background: #ffffff;
+  border: 1px solid #dde8f5;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.credHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.credRole {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.credLoginLink {
+  font-size: 12px;
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.credRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  background: #f8fafc;
+  border-radius: 7px;
+  padding: 8px 12px;
+}
+
+.credLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+  width: 62px;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.credValue {
+  font-size: 13px;
+  color: #1e293b;
+  flex: 1;
+  word-break: break-all;
+}
+
+.copyBtn {
+  font-size: 11px;
+  color: #2563eb;
+  background: none;
+  border: 1px solid #bfdbfe;
+  border-radius: 5px;
+  padding: 3px 8px;
+  cursor: pointer;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.credDashLink {
+  display: block;
+  margin-top: 14px;
+  text-align: center;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 7px;
+  padding: 9px;
+  border: 1px solid #bfdbfe;
+}
+
+/* Role Cards */
+.roleGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.roleCard {
+  background: #ffffff;
+  border: 1px solid #dde8f5;
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+
+.roleCardLabel {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #2563eb;
+  margin-bottom: 8px;
+}
+
+.roleCardText {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.65;
+}
+
+/* Flow */
+.flowList {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+.flowItem {
+  display: flex;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid #e8f0fb;
+}
+
+.flowLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 48px;
+  padding-top: 2px;
+}
+
+.flowStep {
+  font-size: 12px;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+}
+
+.flowActor {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.flowRight {
+  flex: 1;
+}
+
+.flowTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.flowDesc {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.65;
+}
+
+/* Methods */
+.methodGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.methodCard {
+  background: #ffffff;
+  border: 1px solid #dde8f5;
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+
+.methodName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.methodDesc {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.65;
+}
+
+/* Routes */
+.routesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.routeGroupLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #94a3b8;
+  margin-bottom: 10px;
+}
+
+.routeList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.routeItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 12px;
+  background: #ffffff;
+  border: 1px solid #dde8f5;
+  border-radius: 7px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.routeLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.routePath {
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+/* Footer */
+.footer {
+  padding-top: 8px;
+}
+
+.footerText {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.footerLink {
+  color: #64748b;
+  text-decoration: none;
+  border-bottom: 1px solid #cbd5e1;
+}

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useOffline } from "./context/OfflineContext";
 import { setOfflineHandler } from "./utility/offlineHandler";
 import GlobalSkippedDataOverlay from "./components/GlobalSkippedDataOverlay";
+import Docsbtn from "./components/Docsbtn";
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
@@ -36,6 +37,7 @@ function App() {
       <FilterProvider>
         <AppRoutes />
         <GlobalSkippedDataOverlay />
+        <Docsbtn />
         <ToastContainer
           position={isMobile ? "top-center" : "top-right"}
           autoClose={3000}
