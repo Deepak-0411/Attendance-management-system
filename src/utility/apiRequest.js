@@ -3,7 +3,7 @@ import { navigateTo } from "./navigation";
 import { triggerOfflineHandler } from "./offlineHandler";
 
 // const baseURL = "https://api.harshuh.site";
-const baseURL = "https://gbu-ams.vercel.app";
+const baseURL = "https://apiams.vercel.app";
 // recommiting to deploy.
 
 const defaultConfig = {

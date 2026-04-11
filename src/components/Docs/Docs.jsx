@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 
 const credentials = {
   admin: {
-    email: "admin@college.edu",
-    password: "Admin@1234",
+    email: "root",
+    password: "1124",
     loginPath: "/admin/login",
     dashboardPath: "/admin/home",
   },
   faculty: {
-    email: "faculty@college.edu",
-    password: "Faculty@1234",
+    email: "heyharsh.dev@gmail.com",
+    password: "1124",
     loginPath: "/faculty/login",
     dashboardPath: "/faculty/displayDuty",
   },
@@ -288,6 +288,27 @@ export default function Docs() {
               . Source on{" "}
               <a
                 href="https://github.com/Deepak-0411/Attendance-management-system"
+                className={styles.footerLink}
+                target="_blank"
+                rel="noreferrer"
+              >
+                GitHub
+              </a>
+              .
+            </p>
+            <p className={styles.footerText}>
+              Backend by{" "}
+              <a
+                href="https://github.com/Deepak-0411"
+                className={styles.footerLink}
+                target="_blank"
+                rel="noreferrer"
+              >
+                harshuh
+              </a>
+              . Source on{" "}
+              <a
+                href="https://github.com/harshuh/ams-backend"
                 className={styles.footerLink}
                 target="_blank"
                 rel="noreferrer"

@@ -99,10 +99,10 @@ const StudentDetails = () => {
         role: "select",
         options: (formData) => sem[formData.year],
       },
-      studentImg: {
-        role: "image",
-        label: "Student image"
-      },
+      // studentImg: {
+      //   role: "image",
+      //   label: "Student image"
+      // },
     },
     tableHeading: ["Name", "Roll no."],
     tableColumn: ["name", "rollNo"],

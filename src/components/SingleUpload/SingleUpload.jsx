@@ -17,8 +17,8 @@ const SingleUpload = ({
   const [showBulkUpload, setShowBulkUpload] = useState(false);
   const [data, setData] = useState(
     Object.fromEntries(
-      Object.entries(dataToSend).map(([key, obj]) => [key, obj.value])
-    )
+      Object.entries(dataToSend).map(([key, obj]) => [key, obj.value]),
+    ),
   );
 
   const getName = () => {
@@ -48,22 +48,22 @@ const SingleUpload = ({
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
+    // const formData = new FormData();
 
-    Object.entries(data).forEach(([key, value]) => {
-      if (value instanceof File) {
-        formData.append(key, value);
-      } else {
-        formData.append(key, value);
-      }
-    });
+    // Object.entries(data).forEach(([key, value]) => {
+    //   if (value instanceof File) {
+    //     formData.append(key, value);
+    //   } else {
+    //     formData.append(key, value);
+    //   }
+    // });
 
     const uploadPromise = new Promise((resolve, reject) => {
       apiRequest({
         url: apiEndPointSingle,
         method: "POST",
-        body: formData,
-        bodyStringify: false, // important for FormData
+        body: data,
+        // bodyStringify: false, // important for FormData
         setLoading: setIsUploading,
         onSuccess: (response) => {
           toast.success(`${response.data.message}`);
@@ -74,7 +74,7 @@ const SingleUpload = ({
           toast.error(
             `Upload failed: ${
               response.message || response.data?.error || "Unknown error"
-            }`
+            }`,
           );
           reject(response);
         },
